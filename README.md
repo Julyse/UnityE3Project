@@ -5,14 +5,14 @@ Ce tutoriel explique comment configurer et utiliser Git pour gérer un projet Un
 
 ## Préparation (à realiser une seule fois)
 
-Vous devez d'abord configurer votre environnement de développement avant de commencer à utiliser Git. Voici les étapes à suivre :
+Vous devez d'abord configurer votre environnement de développement avant de commencer à utiliser Git.
  - Installez Unity 6000.0.42
  - Installez VS Code avec l’extension Git intégrée.
  - Installez Git sur votre machine.
  - Créer un compte GitHub avec votre adresse ESIEE.
  - Configurer votre compte GitHub dans VS Code.
 
-Le projet est hébergé sur GitHub. Vous devez le cloner sur votre machine locale pour y travailler. Voici comment procéder :
+Le projet est hébergé sur GitHub. Vous devez le cloner sur votre machine locale pour y travailler.
  - Ouvrez VS Code et accédez à l’onglet *Source Control*.
  - Cliquez sur "Clone Repository" et selectionnez le dépôt GitHub que vous souhaitez cloner.
  - Choisissez un emplacement sur votre disque dur pour cloner le projet.
@@ -100,7 +100,7 @@ Soyez prudent, car cela remplace l’historique distant. Assurez-vous que vous �
 
 ### Etape 6 : Créer une Pull Request (PR)
 
-Une fois que vous avez poussé vos modifications vers le dépôt distant, vous pouvez créer une Pull Request (PR) pour demander la fusion de votre branche avec `origin/main`. Voici comment procéder. 
+Une fois que vous avez poussé vos modifications vers le dépôt distant, vous pouvez créer une Pull Request (PR) pour demander la fusion de votre branche avec `origin/main`. 
 
 - Accédez à votre dépôt sur GitHub.
 - Cliquez sur l'onglet "Pull Requests" puis sur le bouton "New Pull Request".
@@ -109,3 +109,17 @@ Une fois que vous avez poussé vos modifications vers le dépôt distant, vous p
 - Une fois la PR créée, vous pouvez demander à un autre développeur de la réviser. Il peut laisser des commentaires ou approuver la PR.
 - Une fois que la PR est approuvée, vous pouvez la fusionner avec `origin/main` en cliquant sur le bouton **Rebase and Merge**.
 - Supprimer votre branche après la fusion.
+
+
+### Etape 7 : Nettoyer votre dépôt local
+
+Une fois que votre PR est fusionnée, vous pouver revenir à `origin/main` et supprimer votre branche locale. 
+ - Dans l’onglet *Source Control*, cliquez sur le menu contextuel `...` à droite du sous-onglet *CHANGES*.
+ - Sélectionnez "Branch > Checkout to..." et choisissez `origin/main`.
+ - Cliquez à nouveau sur le menu contextuel `...` et sélectionnez "Branch > Delete Branch...".
+ - Choisissez la branche que vous venez de fusionner pour la supprimer localement.
+ - Ouvrez le terminal intégré de VS Code et exécutez la commande suivante pour supprimer la référence distante de la branche fusionnée.
+
+```bash
+git fetch --prune
+```
