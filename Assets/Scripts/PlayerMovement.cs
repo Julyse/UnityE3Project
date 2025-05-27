@@ -7,6 +7,8 @@ public class PlayerMovementTutorial : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
 
     public float groundDrag;
 
@@ -18,11 +20,9 @@ public class PlayerMovementTutorial : MonoBehaviour
     public float gravityScale = 2f;
     bool readyToJump;
 
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
-
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -38,7 +38,12 @@ public class PlayerMovementTutorial : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-
+    public MovementState state;
+    public enum MovementState { 
+        walking,
+        sprinting,
+        air
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -53,6 +58,7 @@ public class PlayerMovementTutorial : MonoBehaviour
         grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
 
         MyInput();
+        stateHandler();
         SpeedControl();
 
         // handle drag
@@ -85,6 +91,24 @@ public class PlayerMovementTutorial : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
     }
+    private void stateHandler()
+    {
+        if (grounded && Input.GetKey(sprintKey))
+        {
+            state = MovementState.sprinting;
+            moveSpeed = sprintSpeed;
+        }
+
+        else if (grounded)
+        {
+            state = MovementState.walking;
+            moveSpeed = walkSpeed;
+        }
+        else
+        {
+            state = MovementState.air;
+        }
+    }
 
     private void MovePlayer()
     {
@@ -92,12 +116,12 @@ public class PlayerMovementTutorial : MonoBehaviour
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         // on ground
-        if(grounded){
+        if (grounded) {
             Debug.Log("Grounded: " + grounded);
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
         // in air
-        else if(!grounded)
+        else if (!grounded)
         {
             Debug.Log("Grounded: " + grounded);
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
