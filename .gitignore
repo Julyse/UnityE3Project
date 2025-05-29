@@ -10,7 +10,7 @@
 /.vscode
 
 # Unity Folders
-/[Ll]ibrary/
+/Library/
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
