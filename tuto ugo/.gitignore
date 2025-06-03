@@ -8,8 +8,8 @@
 
 # Visual Studio Code
 /.vscode
-
-# Unity Folders
+/.vs/UnityE3Project
+# Unity Folders<
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -17,6 +17,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -58,10 +59,13 @@ ExportedObj/
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
+<<<<<<< HEAD
 *.mdb.meta
 
 # Unity3D generated file on crash reports
 sysinfo.txt
+=======
+>>>>>>> main
 
 # Builds
 *.apk
