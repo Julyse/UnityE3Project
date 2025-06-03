@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f1fc5bb90ac285e4486771552d63bcb8
-PrefabImporter:
+guid: f58d25b9e504a4f41ab4a71cf87c1845
+DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
@@ -10,5 +10,5 @@ AssetOrigin:
   productId: 162153
   packageName: Low-Poly Simple Nature Pack
   packageVersion: 1.24
-  assetPath: Assets/SimpleNaturePack/Prefabs/Grass_01.prefab
+  assetPath: Assets/SimpleNaturePack/SimpleNaturePack_2020.3_URP_v1.24.unitypackage
   uploadId: 582302
