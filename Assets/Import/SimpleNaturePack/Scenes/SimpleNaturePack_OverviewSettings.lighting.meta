@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9f76e17aa63b556478e505ba7acd0a49
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 162153
+  packageName: Low-Poly Simple Nature Pack
+  packageVersion: 1.24
+  assetPath: Assets/SimpleNaturePack/Scenes/SimpleNaturePack_OverviewSettings.lighting
+  uploadId: 582302
