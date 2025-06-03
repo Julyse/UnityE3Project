@@ -86,6 +86,7 @@
     <Compile Include="Assets\Import\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\ContrastStretch.cs" />
     <Compile Include="Assets\Import\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\CameraMotionBlur.cs" />
     <Compile Include="Assets\Import\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs" />
+    <Compile Include="Assets\Scripts\AnimatorController.cs" />
     <Compile Include="Assets\Scripts\Movement_builtin.cs" />
     <Compile Include="Assets\Import\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndGrain.cs" />
     <Compile Include="Assets\Import\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\GlobalFog.cs" />
