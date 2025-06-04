@@ -25508,7 +25508,7 @@ GameObject:
   - component: {fileID: 3519241973742546398}
   m_Layer: 0
   m_Name: ZipTransform
-  m_TagString: Untagged
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25524,7 +25524,7 @@ GameObject:
   - component: {fileID: 3519241972290715928}
   m_Layer: 0
   m_Name: ZipTransform
-  m_TagString: Untagged
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26822,7 +26822,7 @@ GameObject:
   - component: {fileID: 8285259873067533119}
   m_Layer: 0
   m_Name: Zipline (1)
-  m_TagString: zipline
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26841,7 +26841,7 @@ GameObject:
   - component: {fileID: 8285259874500358137}
   m_Layer: 0
   m_Name: Zipline
-  m_TagString: zipline
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28041,7 +28041,7 @@ GameObject:
   - component: {fileID: 2149561941893593909}
   m_Layer: 0
   m_Name: cube
-  m_TagString: Untagged
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28060,7 +28060,7 @@ GameObject:
   - component: {fileID: 2149561944017541107}
   m_Layer: 0
   m_Name: cube
-  m_TagString: Untagged
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30226,7 +30226,7 @@ GameObject:
   - component: {fileID: 232009925987334296}
   m_Layer: 0
   m_Name: cube (1)
-  m_TagString: Untagged
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30245,7 +30245,7 @@ GameObject:
   - component: {fileID: 232009924669854814}
   m_Layer: 0
   m_Name: cube (1)
-  m_TagString: Untagged
+  m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

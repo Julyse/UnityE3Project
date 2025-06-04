@@ -14,81 +14,175 @@ public class Zipline : MonoBehaviour
 
     private void Awake()
     {
+        // Vérifications de configuration
+        if (targetZip == null)
+        {
+            Debug.LogError("TargetZip n'est pas assigné sur " + gameObject.name);
+        }
+        
+        if (ZipTransform == null)
+        {
+            Debug.LogError("ZipTransform n'est pas assigné sur " + gameObject.name);
+        }
     }
 
     private void Update()
     {
         if (!zipping || localZip == null) return;
         
-        localZip.GetComponent<Rigidbody>().AddForce((targetZip.ZipTransform.position - ZipTransform.position).normalized * zipSpeed * Time.deltaTime, ForceMode.Acceleration);
-
-        if (Vector3.Distance(localZip.transform.position, targetZip.ZipTransform.position) <= arrivalThreshold)
+        // Calcul de la direction vers la cible
+        Vector3 direction = (targetZip.ZipTransform.position - localZip.transform.position).normalized;
+        
+        // Application de la force
+        Rigidbody zipRb = localZip.GetComponent<Rigidbody>();
+        if (zipRb != null)
         {
+            zipRb.AddForce(direction * zipSpeed * Time.deltaTime, ForceMode.Acceleration);
+        }
+
+        // Vérification de l'arrivée
+        float distance = Vector3.Distance(localZip.transform.position, targetZip.ZipTransform.position);
+        if (distance <= arrivalThreshold)
+        {
+            Debug.Log("Zipline terminée - Distance: " + distance);
             ResetZipline();
         }
     }
 
     public void StartZipline(GameObject player)
     {
-        if (zipping) return;
+        if (zipping)
+        {
+            Debug.Log("Zipline déjà en cours");
+            return;
+        }
         
+        if (targetZip == null || ZipTransform == null)
+        {
+            Debug.LogError("Configuration zipline incomplète");
+            return;
+        }
+        
+        Debug.Log("Démarrage de la zipline de " + gameObject.name + " vers " + targetZip.gameObject.name);
+        
+        // Création de la sphère de transport
         localZip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        localZip.name = "ZiplineTransport";
         localZip.transform.position = ZipTransform.position;
         localZip.transform.localScale = new Vector3(zipScale, zipScale, zipScale);
-        localZip.AddComponent<Rigidbody>().useGravity = false;
-        localZip.GetComponent<Collider>().isTrigger = true;
+        
+        // Configuration de la physique
+        Rigidbody zipRb = localZip.AddComponent<Rigidbody>();
+        zipRb.useGravity = false;
+        zipRb.linearDamping = 1f; // Ajout d'un peu de friction pour contrôler la vitesse
+        
+        Collider zipCollider = localZip.GetComponent<Collider>();
+        zipCollider.isTrigger = true;
 
-        player.GetComponent<Rigidbody>().useGravity = false;
-        player.GetComponent<Rigidbody>().isKinematic = true;
-        player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        
-        // Désactiver les composants de contrôle du joueur si ils existent
-        var thirdPersonInput = player.GetComponent<MonoBehaviour>();
-        if (thirdPersonInput != null && thirdPersonInput.GetType().Name == "vThirdPersonInput")
+        // Configuration du joueur
+        Rigidbody playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb != null)
         {
-            thirdPersonInput.enabled = false;
+            playerRb.useGravity = false;
+            playerRb.isKinematic = true;
+            playerRb.linearVelocity = Vector3.zero;
         }
         
-        var thirdPersonController = player.GetComponent<MonoBehaviour>();
-        if (thirdPersonController != null && thirdPersonController.GetType().Name == "vThirdPersonController")
-        {
-            thirdPersonController.enabled = false;
-        }
+        // Désactivation des contrôles du joueur
+        DisablePlayerControls(player);
         
-        player.transform.parent = localZip.transform;
+        // Attachement du joueur à la sphère de transport
+        player.transform.SetParent(localZip.transform);
+        player.transform.localPosition = Vector3.zero;
+        
         zipping = true;
+        Debug.Log("Zipline démarrée avec succès");
+    }
+
+    private void DisablePlayerControls(GameObject player)
+    {
+        // Recherche et désactivation des composants de contrôle
+        MonoBehaviour[] components = player.GetComponents<MonoBehaviour>();
+        
+        foreach (MonoBehaviour component in components)
+        {
+            string componentName = component.GetType().Name;
+            if (componentName.Contains("Input") || componentName.Contains("Controller") || componentName.Contains("Movement"))
+            {
+                component.enabled = false;
+                Debug.Log("Composant désactivé: " + componentName);
+            }
+        }
+    }
+    
+    private void EnablePlayerControls(GameObject player)
+    {
+        // Recherche et réactivation des composants de contrôle
+        MonoBehaviour[] components = player.GetComponents<MonoBehaviour>();
+        
+        foreach (MonoBehaviour component in components)
+        {
+            string componentName = component.GetType().Name;
+            if (componentName.Contains("Input") || componentName.Contains("Controller") || componentName.Contains("Movement"))
+            {
+                component.enabled = true;
+                Debug.Log("Composant réactivé: " + componentName);
+            }
+        }
     }
 
     private void ResetZipline()
     {
         if (!zipping || localZip == null) return;
 
+        Debug.Log("Réinitialisation de la zipline");
+
+        // Récupération et libération du joueur
         if (localZip.transform.childCount > 0)
         {
             GameObject player = localZip.transform.GetChild(0).gameObject;
-            player.GetComponent<Rigidbody>().useGravity = true;
-            player.GetComponent<Rigidbody>().isKinematic = false;
-            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             
-            // Réactiver les composants de contrôle du joueur si ils existent
-            var thirdPersonInput = player.GetComponent<MonoBehaviour>();
-            if (thirdPersonInput != null && thirdPersonInput.GetType().Name == "vThirdPersonInput")
+            // Positionnement du joueur à la destination
+            player.transform.SetParent(null);
+            player.transform.position = targetZip.ZipTransform.position;
+            
+            // Configuration de la physique du joueur
+            Rigidbody playerRb = player.GetComponent<Rigidbody>();
+            if (playerRb != null)
             {
-                thirdPersonInput.enabled = true;
+                playerRb.useGravity = true;
+                playerRb.isKinematic = false;
+                playerRb.linearVelocity = Vector3.zero;
             }
             
-            var thirdPersonController = player.GetComponent<MonoBehaviour>();
-            if (thirdPersonController != null && thirdPersonController.GetType().Name == "vThirdPersonController")
-            {
-                thirdPersonController.enabled = true;
-            }
-            
-            player.transform.parent = null;
+            // Réactivation des contrôles
+            EnablePlayerControls(player);
         }
         
-        Destroy(localZip);
+        // Nettoyage
+        if (localZip != null)
+        {
+            Destroy(localZip);
+        }
+        
         localZip = null;
         zipping = false;
-        Debug.Log("Zipline reset");
+        Debug.Log("Zipline réinitialisée avec succès");
+    }
+    
+    // Visualisation dans l'éditeur
+    private void OnDrawGizmos()
+    {
+        if (ZipTransform != null && targetZip != null && targetZip.ZipTransform != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(ZipTransform.position, targetZip.ZipTransform.position);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(ZipTransform.position, 0.5f);
+            
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(targetZip.ZipTransform.position, 0.5f);
+        }
     }
 }

@@ -21,37 +21,52 @@ public class ZiplinePlayer : MonoBehaviour
         
         if (Input.GetKeyDown(ziplineKey) && canUseZipline && currentZipline != null)
         {
+            Debug.Log("Tentative d'utilisation de la zipline");
             currentZipline.StartZipline(gameObject);
         }
     }
     
     private void CheckForZipline()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position + new Vector3(0, checkOffset, 0), checkRadius, Vector3.up);
+        // Utilisation d'OverlapSphere au lieu de SphereCastAll
+        Vector3 checkPosition = transform.position + new Vector3(0, checkOffset, 0);
+        Collider[] colliders = Physics.OverlapSphere(checkPosition, checkRadius);
+        
         bool foundZipline = false;
         
-        foreach (RaycastHit hit in hits)
+        foreach (Collider collider in colliders)
         {
-            if (hit.collider.tag == "Zipline")
+            // Utilisation de CompareTag au lieu de ==
+            if (collider.CompareTag("Zipline"))
             {
                 foundZipline = true;
-                currentZipline = hit.collider.GetComponent<Zipline>();
-                break;
+                currentZipline = collider.GetComponent<Zipline>();
+                
+                // Vérification que le composant Zipline existe
+                if (currentZipline != null)
+                {
+                    Debug.Log("Zipline détectée : " + collider.name);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("Objet avec tag Zipline mais sans composant Zipline : " + collider.name);
+                }
             }
         }
         
         if (foundZipline && !canUseZipline)
         {
-            // Montrer le message
             ShowMessage(true);
             canUseZipline = true;
+            Debug.Log("Zipline disponible");
         }
         else if (!foundZipline && canUseZipline)
         {
-            // Cacher le message
             ShowMessage(false);
             canUseZipline = false;
             currentZipline = null;
+            Debug.Log("Zipline non disponible");
         }
     }
     
@@ -67,10 +82,17 @@ public class ZiplinePlayer : MonoBehaviour
             messageText.text = messageContent;
         }
         
-        // Alternative : utiliser Debug.Log si vous n'avez pas d'UI
         if (show)
         {
             Debug.Log(messageContent);
         }
+    }
+    
+    // Méthode pour visualiser la zone de détection dans l'éditeur
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3 checkPosition = transform.position + new Vector3(0, checkOffset, 0);
+        Gizmos.DrawWireSphere(checkPosition, checkRadius);
     }
 }
