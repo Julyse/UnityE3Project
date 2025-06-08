@@ -1,0 +1,62 @@
+# =============== #
+# Unity Generated  #
+# =============== #
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+
+# ========== #
+# Autres IDE #
+# ========== #
+
+# VS / VSCode / Rider
+.vscode/
+.idea/
+*.sln
+*.csproj
+*.csproj.user
+*.unityproj
+*.user
+*.pidb
+*.booproj
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# ========== #
+# Autres     #
+# ========== #
+
+# Crash Reports
+sysinfo.txt
+
+# Unity Collaborate
+.collab/
+
+# Autres fichiers Unity auto-générés
+MemoryCaptures/
+AssetImportState/
+.autosave/
+
+# ========== #
+# Git LFS    #
+# ========== #
+# Uncomment if using Git LFS
+# *.psd
+# *.png
+# *.jpg
+# *.mp4
+# *.mov
+# *.zip
+# *.dll
+# *.dylib
+# *.so
+
