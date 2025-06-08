@@ -14,27 +14,29 @@ public class DonneesManager : MonoBehaviour
     private TMP_Text distanceText;
     private TMP_Text niveauText;
     private TMP_Text chronoText;
+    private TMP_Text FPSText;
 
     private Vector3 positionPrecedente;
     private float distanceParcourue = 0f;
     private float chrono;
+    private float deltaTime = 0.0f;
 
     void Awake()
     {
-        // Singleton simple
+        
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
     void Start()
     {
-        // Récupère les TextMeshPro dans les enfants
+        
         vitesseText = transform.Find("Vitesse").GetComponent<TMP_Text>();
         altitudeText = transform.Find("Altitude").GetComponent<TMP_Text>();
         distanceText = transform.Find("Distance parcourue").GetComponent<TMP_Text>();
         niveauText = transform.Find("Niveau").GetComponent<TMP_Text>();
         chronoText = transform.Find("Chrono").GetComponent<TMP_Text>();
-
+        FPSText = transform.Find("FPS").GetComponent<TMP_Text>();  
         positionPrecedente = fakePlayerTransform.position;
         niveauText.text = nomNiveau;
     }
@@ -45,9 +47,9 @@ public class DonneesManager : MonoBehaviour
             return;
 
         float vitesse = fakePlayerRb.linearVelocity.magnitude * 3.6f;
-        float altitude = fakePlayerTransform.position.y;
+        float altitude = fakePlayerTransform.position.y+10f;
 
-        // Calcul de la distance parcourue en cumulant les déplacements
+        // Calcul de la distance parcourue 
         float distanceStep = Vector3.Distance(positionPrecedente, fakePlayerTransform.position);
         distanceParcourue += distanceStep;
         positionPrecedente = fakePlayerTransform.position;
@@ -58,6 +60,11 @@ public class DonneesManager : MonoBehaviour
         altitudeText.text = "Altitude : " + altitude.ToString("F1") + " m";
         distanceText.text = "Distance : " + distanceParcourue.ToString("F1") + " m";
         chronoText.text = "Temps : " + FormatTime(chrono);
+
+        // Calcul et affichage des FPS
+        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.001f; // lissage
+        float fps = 1.0f / deltaTime;
+        FPSText.text = "FPS : " + Mathf.Ceil(fps).ToString();
     }
 
     string FormatTime(float time)
