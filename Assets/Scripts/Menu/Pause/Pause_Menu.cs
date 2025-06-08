@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
             {
@@ -40,15 +40,19 @@ public class PauseMenu : MonoBehaviour
         PausePanelMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.lockState = CursorLockMode.None; // Déverrouille le curseur
+        Cursor.visible = true;  
     }
 
     public void ResumeGame()
     {
         PausePanelMenu.SetActive(false);
         PausePanelOption.SetActive(false);
-
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked; // Verrouille le curseur (ex: FPS)
+        Cursor.visible = false;                   // Cache le curseur
+
     }
 
     public void MainMenu()
