@@ -18,7 +18,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     bool readyToJump;
 
     [Header("Falling")]
-    [Tooltip("Combien de fois plus forte que la gravité normale lorsqu'en l'air")]
     public float fallMultiplier = 2.5f;
 
     [Header("Crouching")]
@@ -32,9 +31,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Ground Check (Sphere)")]
-    [Tooltip("Empty GameObject placé à la base du joueur")]
     public Transform groundCheck;
-    [Tooltip("Rayon pour détecter le sol")]
     public float groundDistance = 0.2f;
     public LayerMask whatIsGround;
     bool grounded;
@@ -52,9 +49,17 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     Rigidbody rb;
 
+    [Header("Animation")]
+    public Animator animator;
+    private bool isWalking;
+    private bool isRunning;
+    private bool isIdle;
+    private bool isInAir;
+
     public MovementState state;
     public enum MovementState
     {
+        idling,
         walking,
         sprinting,
         crouching,
@@ -65,24 +70,27 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        // Désactive la gravité Unity intégrée, on gérera la gravité nous-mêmes
         rb.useGravity = false;
 
         readyToJump = true;
         startYScale = transform.localScale.y;
+
+        if (animator == null)
+        {
+            Debug.LogWarning("No Animator assigned on the player. Please drag your Animator into the Inspector, and add Bool parameters 'IsIdle', 'IsWalking', 'IsRunning', 'IsInAir', and Trigger 'IsJumping'.");
+        }
     }
 
     private void Update()
     {
-        // Ground Check via Sphere
+        Debug.DrawRay(transform.position, transform.forward * 2f, Color.red);
+
         grounded = Physics.CheckSphere(
             groundCheck.position,
             groundDistance,
             whatIsGround
         );
-        Debug.Log("Grounded: " + grounded);
 
-        // Debug dans la GameView (ligne verticale)
         Debug.DrawLine(
             groundCheck.position,
             groundCheck.position + Vector3.down * groundDistance,
@@ -93,7 +101,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         SpeedControl();
         StateHandler();
 
-        // handle drag
         rb.linearDamping = grounded ? groundDrag : 0f;
     }
 
@@ -107,12 +114,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         if (!grounded && !OnSlope())
         {
-            rb.AddForce(Physics.gravity * fallMultiplier,
-                        ForceMode.Acceleration);
+            rb.AddForce(Physics.gravity * fallMultiplier, ForceMode.Acceleration);
         }
         else if (grounded)
         {
-            // remets la gravité normale quand au sol
             rb.AddForce(Physics.gravity, ForceMode.Acceleration);
         }
     }
@@ -131,19 +136,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale =
-                new Vector3(transform.localScale.x,
-                            crouchYScale,
-                            transform.localScale.z);
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
 
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale =
-                new Vector3(transform.localScale.x,
-                            startYScale,
-                            transform.localScale.z);
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
     }
 
@@ -154,43 +153,66 @@ public class PlayerMovementAdvanced : MonoBehaviour
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
         }
-        else if (grounded && Input.GetKey(sprintKey))
+        else if (!grounded)
         {
-            state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
-        }
-        else if (grounded)
-        {
-            state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            state = MovementState.air;
         }
         else
         {
-            state = MovementState.air;
+            if (Input.GetKey(sprintKey))
+            {
+                state = MovementState.sprinting;
+                moveSpeed = sprintSpeed;
+            }
+            else
+            {
+                bool anyHorizontal = !Mathf.Approximately(horizontalInput, 0f);
+                bool anyVertical   = !Mathf.Approximately(verticalInput, 0f);
+
+                if (anyHorizontal || anyVertical)
+                {
+                    state = MovementState.walking;
+                    moveSpeed = walkSpeed;
+                }
+                else
+                {
+                    state = MovementState.idling;
+                    moveSpeed = 0f;
+                }
+            }
+        }
+
+        isIdle    = (state == MovementState.idling);
+        isWalking = (state == MovementState.walking);
+        isRunning = (state == MovementState.sprinting);
+        isInAir   = (state == MovementState.air);
+
+        if (animator != null)
+        {
+            animator.SetBool("IsIdle",    isIdle);
+            animator.SetBool("IsWalking", isWalking);
+            animator.SetBool("IsRunning", isRunning);
+            animator.SetBool("IsInAir",   isInAir);
         }
     }
 
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput +
-                        orientation.right   * horizontalInput;
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f,
-                        ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
             if (rb.linearVelocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
         else if (grounded)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f,
-                        ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
         else
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier,
-                        ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
 
@@ -214,6 +236,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void Jump()
     {
+        if (animator != null)
+        {
+            animator.SetTrigger("IsJumping");
+        }
         exitingSlope = true;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -226,27 +252,24 @@ public class PlayerMovementAdvanced : MonoBehaviour
     }
 
     private bool OnSlope()
-{
-    if (Physics.Raycast(
-        groundCheck.position,               // cast from the sphere center
-        Vector3.down,
-        out slopeHit,
-        groundDistance + 0.3f))             // sphere-radius + small offset
     {
-        //Debug.Log("Slope Hit: " + slopeHit.normal);
-        float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-        return angle < maxSlopeAngle && angle != 0;
+        if (Physics.Raycast(
+            groundCheck.position,
+            Vector3.down,
+            out slopeHit,
+            groundDistance + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+        return false;
     }
-    return false;
-}
-
 
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 
-    // Affiche en permanence la sphère de GroundCheck dans la Scene (editor)
     private void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
