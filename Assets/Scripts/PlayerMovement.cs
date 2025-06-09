@@ -37,7 +37,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     bool grounded;
 
     [Header("Slope Handling")]
-    public float maxSlopeAngle;
+    public float maxSlopeAngle = 50f;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
@@ -77,7 +77,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         if (animator == null)
         {
-            Debug.LogWarning("No Animator assigned on the player. Please drag your Animator into the Inspector, and add Bool parameters 'IsIdle', 'IsWalking', 'IsRunning', 'IsInAir', and Trigger 'IsJumping'.");
+            Debug.LogWarning("No Animator assigned on the player.");
         }
     }
 
@@ -125,7 +125,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput   = Input.GetAxisRaw("Vertical");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
@@ -167,7 +167,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
             else
             {
                 bool anyHorizontal = !Mathf.Approximately(horizontalInput, 0f);
-                bool anyVertical   = !Mathf.Approximately(verticalInput, 0f);
+                bool anyVertical = !Mathf.Approximately(verticalInput, 0f);
 
                 if (anyHorizontal || anyVertical)
                 {
@@ -182,17 +182,17 @@ public class PlayerMovementAdvanced : MonoBehaviour
             }
         }
 
-        isIdle    = (state == MovementState.idling);
+        isIdle = (state == MovementState.idling);
         isWalking = (state == MovementState.walking);
         isRunning = (state == MovementState.sprinting);
-        isInAir   = (state == MovementState.air);
+        isInAir = (state == MovementState.air);
 
         if (animator != null)
         {
-            animator.SetBool("IsIdle",    isIdle);
+            animator.SetBool("IsIdle", isIdle);
             animator.SetBool("IsWalking", isWalking);
             animator.SetBool("IsRunning", isRunning);
-            animator.SetBool("IsInAir",   isInAir);
+            animator.SetBool("IsInAir", isInAir);
         }
     }
 
@@ -202,9 +202,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
-            if (rb.linearVelocity.y > 0)
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+
+            float uphillBoost = Mathf.Lerp(1f, 1.2f, 1f - slopeHit.normal.y);
+            rb.AddForce(slopeMoveDirection * moveSpeed * 10f * uphillBoost, ForceMode.Force);
+
+            if (rb.linearVelocity.y > 0.1f)
+                rb.AddForce(Vector3.down * 5f, ForceMode.Force);
         }
         else if (grounded)
         {
@@ -277,3 +281,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
     }
 }
+
+
+
