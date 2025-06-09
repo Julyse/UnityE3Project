@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Import/BOXOPHOBIC+.meta
 guid: 3df81c5ddd357ea4b9c2782df8589360
 folderAsset: yes
 DefaultImporter:
+========
+guid: 2d9ef87bf31bd1d4fa02d5fdb0bcbbdb
+NativeFormatImporter:
+>>>>>>>> main:Assets/Materials/ZiplineMaterials.mat.meta
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
