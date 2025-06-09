@@ -1,62 +1,109 @@
+# This .gitignore file should be placed at the root of your Unity project directory
+#
+# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
+#
+
+# Mac OS
+.DS_Store
+
+# Visual Studio Code
+/.vscode
+/.vs/UnityE3Project
+# Unity Folders<
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+
+# MemoryCaptures can get excessive in size.
+# They also could contain extremely sensitive data
+/[Mm]emoryCaptures/
+
 # =============== #
-# Unity Generated  #
+# Visual Studio   #
 # =============== #
 
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-
-# ========== #
-# Autres IDE #
-# ========== #
-
-# VS / VSCode / Rider
-.vscode/
-.idea/
-*.sln
 *.csproj
 *.csproj.user
 *.unityproj
 *.user
 *.pidb
 *.booproj
+*.svd
 
-# Mac
+# =============== #
+# OS files        #
+# =============== #
+
 .DS_Store
-
-# Windows
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Icon?
 Thumbs.db
-desktop.ini
 
-# ========== #
-# Autres     #
-# ========== #
+# =============== #
+# Crash Reports   #
+# =============== #
 
-# Crash Reports
 sysinfo.txt
+=======
+>>>>>>> main
 
-# Unity Collaborate
-.collab/
+# =============== #
+# Builds          #
+# =============== #
 
-# Autres fichiers Unity auto-générés
-MemoryCaptures/
-AssetImportState/
-.autosave/
+*.apk
+*.aab
+*.app
+*.exe
+*.ipa
+*.xcodeproj
+*.xcworkspace
 
-# ========== #
-# Git LFS    #
-# ========== #
-# Uncomment if using Git LFS
-# *.psd
-# *.png
-# *.jpg
-# *.mp4
-# *.mov
-# *.zip
-# *.dll
-# *.dylib
-# *.so
+# =============== #
+# Unity Asset Store #
+# =============== #
+
+*.unitypackage
+
+# =============== #
+# Autres fichiers volumineux à exclure #
+# =============== #
+
+*.dll
+*.pdb
+*.mdb
+*.log
+*.stacktrace
+
+# =============== #
+# JetBrains Rider #
+# =============== #
+
+.idea/
+*.sln.iml
+
+# =============== #
+# VSCode          #
+# =============== #
+
+.vscode/
+
+# =============== #
+# Autres configs  #
+# =============== #
+
+.env
+*.bak
+*.old
+
+
 
