@@ -23,7 +23,7 @@
 *.user
 *.pidb
 *.booproj
-
+.vs/
 # Mac
 .DS_Store
 
