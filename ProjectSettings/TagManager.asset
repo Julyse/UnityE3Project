@@ -6,6 +6,7 @@ TagManager:
   tags:
   - zipline
   - Zipline
+  - Audio
   layers:
   - Default
   - TransparentFX

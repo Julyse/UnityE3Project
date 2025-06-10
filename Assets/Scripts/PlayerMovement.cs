@@ -28,7 +28,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     [Header("Ledge Grab")]
     public float ledgeDetectionRadius = 1f;
     public float ledgeGrabSmoothing = 15f;
-    public float playerHandsOffset = 1.8f; // Height from player origin to hands
+    public float playerHandsOffset = 1.8f;
     private bool isGrabbingLedge = false;
     private bool canGrabLedge = true;
     private Vector3 ledgePosition;
@@ -66,7 +66,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private bool isIdle;
     private bool isInAir;
 
+    private Sound_Music audioManager;
+    private float footstepTimer = 0f;
+    private float footstepCooldown = 0.4f;
+
     public MovementState state;
+    private MovementState previousState;
+
     public enum MovementState
     {
         idling,
@@ -75,6 +81,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
         crouching,
         air,
         ledgeGrab
+    }
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Sound_Music>();
     }
 
     private void Start()
@@ -90,6 +101,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             Debug.LogWarning("No Animator assigned on the player.");
         }
+
+        previousState = state;
     }
 
     private void Update()
@@ -103,25 +116,16 @@ public class PlayerMovementAdvanced : MonoBehaviour
             HandleLedgeGrabInput();
         }
 
-        grounded = Physics.CheckSphere(
-            groundCheck.position,
-            groundDistance,
-            whatIsGround
-        );
-
-        Debug.DrawLine(
-            groundCheck.position,
-            groundCheck.position + Vector3.down * groundDistance,
-            grounded ? Color.green : Color.red
-        );
+        grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
 
         if (!isGrabbingLedge)
         {
             MyInput();
             SpeedControl();
         }
-        
+
         StateHandler();
+        HandleFootsteps();
 
         rb.linearDamping = grounded ? groundDrag : 0f;
     }
@@ -228,6 +232,80 @@ public class PlayerMovementAdvanced : MonoBehaviour
             animator.SetBool("IsInAir", isInAir);
             animator.SetBool("IsGrabbingLedge", isGrabbingLedge);
         }
+
+        if (state != previousState)
+        {
+            switch (state)
+            {
+                case MovementState.idling:
+                    break;
+
+                case MovementState.walking:
+                    // handled in HandleFootsteps
+                    break;
+
+                case MovementState.sprinting:
+                    // handled in HandleFootsteps
+                    break;
+
+                case MovementState.air:
+                    break;
+
+                case MovementState.crouching:
+                    audioManager.PlaySFX(audioManager.Crouch);
+                    break;
+
+                case MovementState.ledgeGrab:
+                    // Optional ledge grab sound
+                    break;
+            }
+
+            previousState = state;
+        }
+    }
+
+    private void HandleFootsteps()
+    {
+        if (state == MovementState.walking || state == MovementState.sprinting)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                int rand = Random.Range(1, 6);
+
+                if (state == MovementState.walking)
+                {
+                    footstepCooldown = 0.5f; // slower footsteps
+                    switch (rand)
+                    {
+                        case 1: audioManager.PlaySFX(audioManager.WalkStepGrass1); break;
+                        case 2: audioManager.PlaySFX(audioManager.WalkStepGrass2); break;
+                        case 3: audioManager.PlaySFX(audioManager.WalkStepGrass3); break;
+                        case 4: audioManager.PlaySFX(audioManager.WalkStepGrass4); break;
+                        case 5: audioManager.PlaySFX(audioManager.WalkStepGrass5); break;
+                    }
+                }
+                else if (state == MovementState.sprinting)
+                {
+                    footstepCooldown = 0.25f; // faster footsteps
+                    switch (rand)
+                    {
+                        case 1: audioManager.PlaySFX(audioManager.RunStepGrass1); break;
+                        case 2: audioManager.PlaySFX(audioManager.RunStepGrass2); break;
+                        case 3: audioManager.PlaySFX(audioManager.RunStepGrass3); break;
+                        case 4: audioManager.PlaySFX(audioManager.RunStepGrass4); break;
+                        case 5: audioManager.PlaySFX(audioManager.RunStepGrass5); break;
+                    }
+                }
+
+                footstepTimer = footstepCooldown;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f; // Reset timer when not walking/sprinting
+        }
     }
 
     private void MovePlayer()
@@ -237,7 +315,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         if (OnSlope() && !exitingSlope)
         {
             Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-
             float uphillBoost = Mathf.Lerp(1f, 1.2f, 1f - slopeHit.normal.y);
             rb.AddForce(slopeMoveDirection * moveSpeed * 10f * uphillBoost, ForceMode.Force);
 
@@ -278,9 +355,18 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             animator.SetTrigger("IsJumping");
         }
+
         exitingSlope = true;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+        int rand = Random.Range(1, 21);
+
+        switch (rand)
+        {
+            case 1: audioManager.PlaySFX(audioManager.CriSaut1); break;
+            case 2: audioManager.PlaySFX(audioManager.CriSaut2); break;
+        }
     }
 
     private void ResetJump()
@@ -291,11 +377,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private bool OnSlope()
     {
-        if (Physics.Raycast(
-            groundCheck.position,
-            Vector3.down,
-            out slopeHit,
-            groundDistance + 0.3f))
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out slopeHit, groundDistance + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
@@ -303,50 +385,29 @@ public class PlayerMovementAdvanced : MonoBehaviour
         return false;
     }
 
-    private Vector3 GetSlopeMoveDirection()
-    {
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    }
-
     private void LedgeGrab()
     {
-        // Only check for ledges when we're in the air and not moving up too fast
         if (!grounded && canGrabLedge && rb.linearVelocity.y < 5f)
         {
-            // Simple forward detection first
             Vector3 forwardCheckOrigin = transform.position + Vector3.up * 1.5f;
             Vector3 forwardDir = orientation.forward;
             RaycastHit hit;
-            
-            // Direct forward check
-            if (Physics.Raycast(forwardCheckOrigin, forwardDir, out hit, ledgeDetectionRadius, whatIsGround))
+
+            if (Physics.Raycast(forwardCheckOrigin, forwardDir, out hit, ledgeDetectionRadius, whatIsGround) ||
+                Physics.SphereCast(forwardCheckOrigin, 0.3f, forwardDir, out hit, ledgeDetectionRadius, whatIsGround))
             {
-                Debug.Log($"[LedgeGrab] Direct hit at distance: {hit.distance}");
                 TryGrabAtPoint(hit.point, hit.normal);
                 return;
             }
-            
-            // Sphere cast for better detection
-            if (Physics.SphereCast(forwardCheckOrigin, 0.3f, forwardDir, out hit, ledgeDetectionRadius, whatIsGround))
-            {
-                Debug.Log($"[LedgeGrab] Sphere cast hit at distance: {hit.distance}");
-                TryGrabAtPoint(hit.point, hit.normal);
-                return;
-            }
-            
-            // Check in a wider arc if simple detection failed
+
             for (int i = -2; i <= 2; i++)
             {
                 Vector3 checkDir = Quaternion.Euler(0, i * 15f, 0) * forwardDir;
-                
-                // Check at multiple heights
                 for (float h = 1.0f; h <= 2.0f; h += 0.3f)
                 {
                     Vector3 origin = transform.position + Vector3.up * h;
-                    
                     if (Physics.Raycast(origin, checkDir, out hit, ledgeDetectionRadius, whatIsGround))
                     {
-                        Debug.Log($"[LedgeGrab] Arc detection hit at height {h}, angle {i * 15f}");
                         TryGrabAtPoint(hit.point, hit.normal);
                         return;
                     }
@@ -357,94 +418,63 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void TryGrabAtPoint(Vector3 hitPoint, Vector3 hitNormal)
     {
-        // Very simple validation - just check if the point is at a reasonable height
         float heightDifference = hitPoint.y - transform.position.y;
-        
-        Debug.Log($"[TryGrabAtPoint] Height difference: {heightDifference}");
-        
         if (heightDifference > 0.3f && heightDifference < 3f)
         {
-            Debug.Log("[TryGrabAtPoint] Valid height - grabbing!");
             GrabLedge(hitPoint, hitNormal);
-        }
-        else
-        {
-            Debug.Log($"[TryGrabAtPoint] Invalid height difference: {heightDifference}");
         }
     }
 
     private void GrabLedge(Vector3 ledgePos, Vector3 wallNormal)
     {
-        Debug.Log($"[GrabLedge] Grabbing ledge at position: {ledgePos}");
-        
         isGrabbingLedge = true;
         ledgePosition = ledgePos;
         ledgeNormal = wallNormal;
-        
-        // Completely stop all velocity
+
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
-        
-        // Calculate grab position - player hangs with hands at ledge level
+
         grabTargetPosition = ledgePosition - wallNormal * 0.3f - Vector3.up * playerHandsOffset;
-        
-        // Immediately move to grab position
         transform.position = grabTargetPosition;
         rb.position = grabTargetPosition;
-        
-        // Face the ledge
+
         Vector3 lookDirection = -wallNormal;
         lookDirection.y = 0;
         transform.rotation = Quaternion.LookRotation(lookDirection);
-        
-        Debug.Log($"[GrabLedge] Player hands offset: {playerHandsOffset}, target position: {grabTargetPosition}");
     }
 
     private void MaintainLedgePosition()
     {
-        // Keep the player firmly at the grab position
         rb.MovePosition(grabTargetPosition);
-        
-        // Maintain rotation facing the wall
+
         Vector3 lookDirection = -ledgeNormal;
         lookDirection.y = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), Time.fixedDeltaTime * 10f);
-        
-        // Cancel any residual velocity
+
         rb.linearVelocity = Vector3.zero;
     }
 
     private void HandleLedgeGrabInput()
     {
-        // Only allow climbing up
         if (Input.GetKeyDown(jumpKey))
         {
-            Debug.Log("[HandleLedgeGrabInput] Jump key pressed - climbing up");
             ClimbUpLedge();
         }
     }
 
     private void ClimbUpLedge()
     {
-        Debug.Log("[ClimbUpLedge] Starting climb");
-        
         isGrabbingLedge = false;
         canGrabLedge = false;
         rb.useGravity = true;
-        
-        // Calculate climb end position - slightly forward from the ledge
+
         Vector3 climbEndPosition = ledgePosition + Vector3.up * 0.2f - ledgeNormal * 0.8f;
-        
-        // Teleport to climbing position with upward boost
         transform.position = climbEndPosition;
         rb.linearVelocity = (Vector3.up * 4f) + (-ledgeNormal * 2f);
-        
-        Debug.Log($"[ClimbUpLedge] Climbed to position: {climbEndPosition}");
-        
-        // Prevent immediate re-grab
+
         Invoke(nameof(EnableLedgeGrab), 0.8f);
-        
+
         if (animator != null)
         {
             animator.SetTrigger("ClimbLedge");
@@ -454,32 +484,25 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void EnableLedgeGrab()
     {
         canGrabLedge = true;
-        Debug.Log("[EnableLedgeGrab] Ledge grab re-enabled");
     }
 
     private void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
-        
-        // Ground check
+
         Gizmos.color = grounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-        
-        // Ledge detection visualization
+
         if (!isGrabbingLedge && orientation != null)
         {
-            // Draw detection radius
             Vector3 forwardCheckOrigin = transform.position + Vector3.up * 1.5f;
             Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
             Gizmos.DrawWireSphere(forwardCheckOrigin, ledgeDetectionRadius);
-            
-            // Draw forward detection ray
             Gizmos.color = Color.yellow;
             Gizmos.DrawRay(forwardCheckOrigin, orientation.forward * ledgeDetectionRadius);
         }
         else if (isGrabbingLedge)
         {
-            // Show current ledge position
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(ledgePosition, 0.2f);
             Gizmos.color = Color.green;
