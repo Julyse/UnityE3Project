@@ -19,6 +19,7 @@
 # ========== #
 # VS / VSCode / Rider
 .vscode/
+.vs/
 .idea/
 *.sln
 *.csproj
