@@ -40,7 +40,7 @@ public class PlateformeChute : MonoBehaviour
         rb.isKinematic = true; // désactive la physique
         transform.position = startPosition;
         transform.rotation = startRotation;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
         isFalling = false;
