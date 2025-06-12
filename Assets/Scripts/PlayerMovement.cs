@@ -83,10 +83,18 @@ public class PlayerMovementAdvanced : MonoBehaviour
         ledgeGrab
     }
 
-    private void Awake()
+   private void Awake()
+{
+    GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
+    if (audioObject != null)
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Sound_Music>();
+        audioManager = audioObject.GetComponent<Sound_Music>();
     }
+    else
+    {
+        Debug.LogError("No GameObject with 'Audio' tag found in the scene!");
+    }
+}
 
     private void Start()
     {
