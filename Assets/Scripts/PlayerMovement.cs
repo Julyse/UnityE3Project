@@ -26,6 +26,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private float startYScale;
 
     [Header("Ledge Grab")]
+    public bool ledgeGrabEnabled = true; // NEW: Toggle for ledge grabbing
     public float ledgeDetectionRadius = 1f;
     public float ledgeGrabSmoothing = 15f;
     public float playerHandsOffset = 1.8f;
@@ -39,6 +40,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode toggleLedgeGrabKey = KeyCode.L; // NEW: Key to toggle ledge grab
 
     [Header("Ground Check (Sphere)")]
     public Transform groundCheck;
@@ -83,18 +85,18 @@ public class PlayerMovementAdvanced : MonoBehaviour
         ledgeGrab
     }
 
-   private void Awake()
-{
-    GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
-    if (audioObject != null)
+    private void Awake()
     {
-        audioManager = audioObject.GetComponent<Sound_Music>();
+        GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
+        if (audioObject != null)
+        {
+            audioManager = audioObject.GetComponent<Sound_Music>();
+        }
+        else
+        {
+            Debug.LogError("No GameObject with 'Audio' tag found in the scene!");
+        }
     }
-    else
-    {
-        Debug.LogError("No GameObject with 'Audio' tag found in the scene!");
-    }
-}
 
     private void Start()
     {
@@ -115,11 +117,18 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void Update()
     {
-        if (!isGrabbingLedge)
+        // NEW: Handle ledge grab toggle input
+        if (Input.GetKeyDown(toggleLedgeGrabKey))
+        {
+            ToggleLedgeGrab();
+        }
+
+        // Only check for ledge grabbing if it's enabled
+        if (!isGrabbingLedge && ledgeGrabEnabled)
         {
             LedgeGrab();
         }
-        else
+        else if (isGrabbingLedge)
         {
             HandleLedgeGrabInput();
         }
@@ -148,6 +157,34 @@ public class PlayerMovementAdvanced : MonoBehaviour
         else
         {
             MaintainLedgePosition();
+        }
+    }
+
+    // NEW: Method to toggle ledge grabbing
+    private void ToggleLedgeGrab()
+    {
+        ledgeGrabEnabled = !ledgeGrabEnabled;
+        
+        // If we're currently grabbing a ledge and ledge grab is disabled, release the ledge
+        if (!ledgeGrabEnabled && isGrabbingLedge)
+        {
+            ReleaseLedge();
+        }
+        
+        Debug.Log("Ledge grabbing " + (ledgeGrabEnabled ? "enabled" : "disabled"));
+    }
+
+    // NEW: Method to release ledge (useful when disabling ledge grab while grabbing)
+    private void ReleaseLedge()
+    {
+        if (isGrabbingLedge)
+        {
+            isGrabbingLedge = false;
+            rb.useGravity = true;
+            canGrabLedge = false;
+            
+            // Add a small delay before allowing ledge grab again
+            Invoke(nameof(EnableLedgeGrab), 0.5f);
         }
     }
 
@@ -260,7 +297,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
                     break;
 
                 case MovementState.crouching:
-                    audioManager.PlaySFX(audioManager.Crouch);
+                    if (audioManager != null)
+                        audioManager.PlaySFX(audioManager.Crouch);
                     break;
 
                 case MovementState.ledgeGrab:
@@ -285,25 +323,31 @@ public class PlayerMovementAdvanced : MonoBehaviour
                 if (state == MovementState.walking)
                 {
                     footstepCooldown = 0.5f; // slower footsteps
-                    switch (rand)
+                    if (audioManager != null)
                     {
-                        case 1: audioManager.PlaySFX(audioManager.WalkStepGrass1); break;
-                        case 2: audioManager.PlaySFX(audioManager.WalkStepGrass2); break;
-                        case 3: audioManager.PlaySFX(audioManager.WalkStepGrass3); break;
-                        case 4: audioManager.PlaySFX(audioManager.WalkStepGrass4); break;
-                        case 5: audioManager.PlaySFX(audioManager.WalkStepGrass5); break;
+                        switch (rand)
+                        {
+                            case 1: audioManager.PlaySFX(audioManager.WalkStepGrass1); break;
+                            case 2: audioManager.PlaySFX(audioManager.WalkStepGrass2); break;
+                            case 3: audioManager.PlaySFX(audioManager.WalkStepGrass3); break;
+                            case 4: audioManager.PlaySFX(audioManager.WalkStepGrass4); break;
+                            case 5: audioManager.PlaySFX(audioManager.WalkStepGrass5); break;
+                        }
                     }
                 }
                 else if (state == MovementState.sprinting)
                 {
                     footstepCooldown = 0.25f; // faster footsteps
-                    switch (rand)
+                    if (audioManager != null)
                     {
-                        case 1: audioManager.PlaySFX(audioManager.RunStepGrass1); break;
-                        case 2: audioManager.PlaySFX(audioManager.RunStepGrass2); break;
-                        case 3: audioManager.PlaySFX(audioManager.RunStepGrass3); break;
-                        case 4: audioManager.PlaySFX(audioManager.RunStepGrass4); break;
-                        case 5: audioManager.PlaySFX(audioManager.RunStepGrass5); break;
+                        switch (rand)
+                        {
+                            case 1: audioManager.PlaySFX(audioManager.RunStepGrass1); break;
+                            case 2: audioManager.PlaySFX(audioManager.RunStepGrass2); break;
+                            case 3: audioManager.PlaySFX(audioManager.RunStepGrass3); break;
+                            case 4: audioManager.PlaySFX(audioManager.RunStepGrass4); break;
+                            case 5: audioManager.PlaySFX(audioManager.RunStepGrass5); break;
+                        }
                     }
                 }
 
@@ -368,12 +412,15 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
-        int rand = Random.Range(1, 21);
-
-        switch (rand)
+        if (audioManager != null)
         {
-            case 1: audioManager.PlaySFX(audioManager.CriSaut1); break;
-            case 2: audioManager.PlaySFX(audioManager.CriSaut2); break;
+            int rand = Random.Range(1, 21);
+
+            switch (rand)
+            {
+                case 1: audioManager.PlaySFX(audioManager.CriSaut1); break;
+                case 2: audioManager.PlaySFX(audioManager.CriSaut2); break;
+            }
         }
     }
 
@@ -501,7 +548,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         Gizmos.color = grounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
 
-        if (!isGrabbingLedge && orientation != null)
+        // Only show ledge grab gizmos if ledge grabbing is enabled
+        if (!isGrabbingLedge && orientation != null && ledgeGrabEnabled)
         {
             Vector3 forwardCheckOrigin = transform.position + Vector3.up * 1.5f;
             Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
