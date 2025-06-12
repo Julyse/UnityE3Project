@@ -4372,19 +4372,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2878432010046006495, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99999726
+      value: 0.9999972
       objectReference: {fileID: 0}
     - target: {fileID: 2878432010046006495, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0023742814
+      value: 0.0023742581
       objectReference: {fileID: 0}
     - target: {fileID: 2878432010046006495, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000015802138
+      value: 0.00001580214
       objectReference: {fileID: 0}
     - target: {fileID: 2878432010046006495, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000004474343
+      value: -0.0000044743438
       objectReference: {fileID: 0}
     - target: {fileID: 4157350841311436172, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4420,19 +4420,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4881753973229196453, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99902683
+      value: 0.9990268
       objectReference: {fileID: 0}
     - target: {fileID: 4881753973229196453, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0441077
+      value: -0.044107728
       objectReference: {fileID: 0}
     - target: {fileID: 4881753973229196453, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000016022768
+      value: 0.000015993028
       objectReference: {fileID: 0}
     - target: {fileID: 4881753973229196453, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000003741978
+      value: -0.0000037350317
       objectReference: {fileID: 0}
     - target: {fileID: 4972839567774833267, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: m_FollowOffset.y
@@ -4532,7 +4532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8793316787257718711, guid: d789f38914629f24fba1319f67c6828a, type: 3}
       propertyPath: ledgeGrabEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
