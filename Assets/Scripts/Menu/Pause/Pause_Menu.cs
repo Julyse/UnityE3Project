@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Pause_Menu : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     public GameObject PausePanelMenu;
     public GameObject PausePanelOption;
@@ -9,7 +9,7 @@ public class Pause_Menu : MonoBehaviour
 
     public Transform fakePlayerTransform; // R�f�rence au joueur
     public Rigidbody fakePlayerRb;        // R�f�rence au Rigidbody du joueur
-    public Vector3 pointDeDepart;        // Position initiale m�moris�e
+    private Vector3 pointDeDepart;        // Position initiale m�moris�e
 
     void Start()
     {
@@ -80,19 +80,13 @@ public class Pause_Menu : MonoBehaviour
 
     public void RestartLevel()
     {
-        fakePlayerTransform.position = pointDeDepart;
-        fakePlayerRb.linearVelocity = Vector3.zero;
         Time.timeScale = 1f;
         isPaused = false;
         PausePanelMenu.SetActive(false);
         PausePanelOption.SetActive(false);
 
-      
-    }
-     public void MettreAJourCheckPoint()
-    {
-        
-       pointDeDepart=fakePlayerTransform.position;
-        
+        // Replacer le joueur et stopper son mouvement
+        fakePlayerTransform.position = pointDeDepart;
+        fakePlayerRb.linearVelocity = Vector3.zero;
     }
 }
