@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scenes/Prefabs/New Folder/EventSystem.prefab.meta
-guid: f5f19a07c098b634fae9e07fccaf109c
-========
-guid: 30474dd5ca5a9984cbe7abcb5336992b
->>>>>>>> main:Assets/Prefab/Menu prefabs/New Folder/EventSystem.prefab.meta
+guid: 088734e1931457a41bbc6775c7b375d1
 PrefabImporter:
   externalObjects: {}
   userData: 

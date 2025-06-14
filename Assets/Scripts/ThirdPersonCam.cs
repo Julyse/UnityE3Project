@@ -32,7 +32,7 @@ public class ThirdPersonCam : MonoBehaviour
     
     void Update()
     {
-        if (Pause_Menu.isPaused)
+        if (PauseMenu.isPaused)
             return;
             
         // Handle player rotation
