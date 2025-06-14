@@ -21,12 +21,9 @@ public class ThirdPersonCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< Updated upstream
-=======
         if (Pause_Menu.isPaused)
             return;
 
->>>>>>> Stashed changes
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
         orientation.forward = viewDir.normalized;
 
