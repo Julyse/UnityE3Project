@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
   m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
@@ -28,11 +29,14 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 ========
+=======
+>>>>>>> main
   m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 3}
+<<<<<<< HEAD
   - {fileID: 13}
   m_Position:
     serializedVersion: 2
@@ -139,6 +143,9 @@ MonoBehaviour:
   - {fileID: 6}
   - {fileID: 11}
 >>>>>>> main
+=======
+  - {fileID: 14}
+>>>>>>> main
   m_Position:
     serializedVersion: 2
     x: 0
@@ -148,6 +155,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
+<<<<<<< HEAD
 <<<<<<< HEAD
   controlID: 938
   draggingID: 0
@@ -317,6 +325,11 @@ MonoBehaviour:
   m_LastSelected: 0
 --- !u!114 &12
 >>>>>>> main
+=======
+  controlID: 938
+  draggingID: 0
+--- !u!114 &2
+>>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,10 +351,14 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     x: 1099
     y: 479
     width: 820
     height: 515
+<<<<<<< HEAD
 =======
     x: 307
     y: 24
@@ -366,6 +383,8 @@ MonoBehaviour:
     height: 682.8
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+>>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -380,6 +399,9 @@ MonoBehaviour:
   m_ViewTransforms:
     m_KeySerializationHelper:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     - {fileID: 4817608186485135536, guid: aab9cddfa3a771d4da197f66ee95978f, type: 2}
     - {fileID: -7577032818321875332, guid: cc69a7302b3ceee47b1db7006685c7bd, type: 2}
     m_ValueSerializationHelper:
@@ -407,6 +429,7 @@ MonoBehaviour:
       e11: 0.68790877
       e12: 0
       e13: 187.26517
+<<<<<<< HEAD
 =======
     - {fileID: -7577032818321875332, guid: cc69a7302b3ceee47b1db7006685c7bd, type: 2}
     m_ValueSerializationHelper:
@@ -418,6 +441,8 @@ MonoBehaviour:
       e11: 0.5220063
       e12: 0
       e13: 155.19794
+>>>>>>> main
+=======
 >>>>>>> main
       e20: 0
       e21: 0
@@ -437,6 +462,9 @@ MonoBehaviour:
   blendTreeGraph: {fileID: 0}
   blendTreeGraphGUI: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
   m_AutoLiveLink: 0
   m_MiniTool: 0
   m_LockTracker:
@@ -444,6 +472,7 @@ MonoBehaviour:
   m_CurrentEditor: 0
   m_LayerEditor:
     m_SelectedLayerIndex: 0
+<<<<<<< HEAD
 =======
   m_AutoLiveLink: 1
   m_MiniTool: 0
@@ -456,6 +485,8 @@ MonoBehaviour:
 --- !u!114 &13
 ========
   m_PreviewWindow: {fileID: 0}
+>>>>>>> main
+=======
 >>>>>>> main
 --- !u!114 &3
 MonoBehaviour:
@@ -477,12 +508,16 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     width: 1099
     height: 941
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
   controlID: 117
+<<<<<<< HEAD
 =======
     width: 752
     height: 708.8
@@ -490,6 +525,8 @@ MonoBehaviour:
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
   controlID: 13873
+>>>>>>> main
+=======
 >>>>>>> main
   draggingID: 0
 --- !u!114 &4
@@ -512,12 +549,16 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     width: 1099
     height: 530
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
   controlID: 118
+<<<<<<< HEAD
 =======
     width: 752
     height: 368.8
@@ -525,6 +566,8 @@ MonoBehaviour:
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
   controlID: 13874
+>>>>>>> main
+=======
 >>>>>>> main
   draggingID: 0
 --- !u!114 &5
@@ -545,11 +588,16 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 295
     height: 530
 =======
     width: 200.8
     height: 368.8
+>>>>>>> main
+=======
+    width: 295
+    height: 530
 >>>>>>> main
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
@@ -560,8 +608,11 @@ MonoBehaviour:
   m_LastSelected: 0
 --- !u!114 &6
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -579,19 +630,27 @@ MonoBehaviour:
   m_TitleContent:
     m_Text: Hierarchy
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000, type: 0}
 =======
     m_Image: {fileID: -3734745235275155857, guid: 0000000000000000d000000000000000, type: 0}
+>>>>>>> main
+=======
+    m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000, type: 0}
 >>>>>>> main
     m_Tooltip: 
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     x: 0
     y: 79
     width: 294
     height: 504
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
     x: 0
@@ -604,6 +663,8 @@ MonoBehaviour:
     width: 199.8
     height: 342.8
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -620,6 +681,7 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_SelectedIDs: e6bb0000
       m_LastClickedID: 0
       m_ExpandedIDs: 2adcffff2edcffff60e1ffff48e6ffff56e6ffff5ae6ffff6ee6ffffe8eeffffd8faffff
@@ -631,6 +693,11 @@ MonoBehaviour:
 ========
       m_ExpandedIDs: f67efcff3086fcff2489fcff668cfcffa095fcff0cdcfcfff2e0fcff28e5fcff46e8fcff18e9fcff14edfcffe2edfcff86f0fcff64f1fcffecf3fcff84f8fcffa6fafcff74fbfcff7afffcff4800fdff4404fdff4609fdff140afdff7c0ffdff1650fdff0051fdff4a5afdff0063fdff2c68fdff0c3c02007847020014480200e65d0200025e0200786402000c750200a8750200
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+      m_SelectedIDs: e6bb0000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 2adcffff2edcffff60e1ffff48e6ffff56e6ffff5ae6ffff6ee6ffffe8eeffffd8faffff
 >>>>>>> main
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -649,6 +716,7 @@ MonoBehaviour:
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
         m_ClientGUIView: {fileID: 5}
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
@@ -656,6 +724,9 @@ MonoBehaviour:
 ========
         m_ClientGUIView: {fileID: 5}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+        m_ClientGUIView: {fileID: 5}
 >>>>>>> main
       m_SearchString: 
     m_ExpandedScenes: []
@@ -665,10 +736,13 @@ MonoBehaviour:
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 4c969a2b90040154d917609493e03593
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
 --- !u!114 &14
 ========
+>>>>>>> main
+=======
 >>>>>>> main
 --- !u!114 &7
 MonoBehaviour:
@@ -681,15 +755,22 @@ MonoBehaviour:
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Name: GameView
 =======
   m_Name: SceneView
+>>>>>>> main
+=======
+  m_Name: GameView
 >>>>>>> main
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     x: 295
     y: 0
     width: 804
@@ -703,6 +784,7 @@ MonoBehaviour:
   m_Selected: 1
   m_LastSelected: 1
 --- !u!114 &8
+<<<<<<< HEAD
 =======
     x: 200.8
     y: 0
@@ -718,6 +800,8 @@ MonoBehaviour:
   m_LastSelected: 1
 --- !u!114 &8
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -735,22 +819,30 @@ MonoBehaviour:
   m_TitleContent:
     m_Text: Scene
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000, type: 0}
 =======
     m_Image: {fileID: 8634526014445323508, guid: 0000000000000000d000000000000000, type: 0}
+>>>>>>> main
+=======
+    m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000, type: 0}
 >>>>>>> main
     m_Tooltip: 
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
     x: 350
     y: 24
     width: 953
     height: 504
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 ========
@@ -759,6 +851,8 @@ MonoBehaviour:
     width: 549.2
     height: 342.8
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -803,15 +897,21 @@ MonoBehaviour:
       id: unity-scene-view-toolbar
       index: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":25.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 25}
+<<<<<<< HEAD
 =======
       contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 0}
+>>>>>>> main
+=======
 >>>>>>> main
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -838,15 +938,21 @@ MonoBehaviour:
       id: unity-transform-toolbar
       index: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       contents: '{"m_Layout":2,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":25.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 25}
+<<<<<<< HEAD
 =======
       contents: '{"m_Layout":2,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 0}
+>>>>>>> main
+=======
 >>>>>>> main
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -873,12 +979,16 @@ MonoBehaviour:
       id: Orientation
       index: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":67.5,"y":86.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 67.5, y: 86}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
+<<<<<<< HEAD
 =======
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-30.89996337890625,"y":86.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":1,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
@@ -886,6 +996,8 @@ MonoBehaviour:
       snapOffset: {x: -30.899963, y: 86}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 1
+>>>>>>> main
+=======
 >>>>>>> main
       layout: 4
       size: {x: 0, y: 0}
@@ -1036,17 +1148,23 @@ MonoBehaviour:
       id: Scene View/Particles
       index: 6
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":24.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 0, y: 0}
       snapOffsetDelta: {x: 24, y: 0}
+<<<<<<< HEAD
 =======
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
+>>>>>>> main
+=======
 >>>>>>> main
       snapCorner: 0
       layout: 4
@@ -1170,15 +1288,21 @@ MonoBehaviour:
       id: unity-scene-view-camera-mode-toolbar
       index: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":25.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 25}
+<<<<<<< HEAD
 =======
       contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 0}
+>>>>>>> main
+=======
 >>>>>>> main
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -1233,15 +1357,21 @@ MonoBehaviour:
       id: Overlays/OverlayMenu
       index: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":25.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 25}
+<<<<<<< HEAD
 =======
       contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 0}
+>>>>>>> main
+=======
 >>>>>>> main
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -1293,9 +1423,13 @@ MonoBehaviour:
     - dockPosition: 1
       containerId: overlay-container--right
 <<<<<<< HEAD
+<<<<<<< HEAD
       displayed: 0
 =======
       displayed: 1
+>>>>>>> main
+=======
+      displayed: 0
 >>>>>>> main
       id: SceneView/CamerasOverlay
       index: 9
@@ -1364,6 +1498,7 @@ MonoBehaviour:
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: 0, y: 0, z: 0}
     speed: 2
     m_Value: {x: 0, y: 0, z: 0}
@@ -1377,6 +1512,11 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 24.239176, y: 6.843988, z: 196.72382}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+    m_Target: {x: 0, y: 0, z: 0}
+    speed: 2
+    m_Value: {x: 0, y: 0, z: 0}
 >>>>>>> main
   m_RenderMode: 0
   m_CameraMode:
@@ -1424,8 +1564,11 @@ MonoBehaviour:
     m_gridOpacity: 0.5
   m_Rotation:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
     m_Target: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
     speed: 2
@@ -1434,6 +1577,7 @@ MonoBehaviour:
     m_Target: 10
     speed: 2
     m_Value: 10
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 ========
@@ -1446,11 +1590,14 @@ MonoBehaviour:
     m_Value: 333.0867
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+>>>>>>> main
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_Speed: 2
     m_SpeedNormalized: 1
@@ -1462,6 +1609,10 @@ MonoBehaviour:
     m_Speed: 0.36
     m_SpeedNormalized: 0.17958981
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+    m_Speed: 2
+    m_SpeedNormalized: 1
 >>>>>>> main
     m_SpeedMin: 0.001
     m_SpeedMax: 2
@@ -1477,6 +1628,7 @@ MonoBehaviour:
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SceneView: {fileID: 8}
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
@@ -1484,6 +1636,9 @@ MonoBehaviour:
 ========
     m_SceneView: {fileID: 8}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+    m_SceneView: {fileID: 8}
 >>>>>>> main
     m_CameraOverscanSettings:
       m_Opacity: 50
@@ -1495,10 +1650,14 @@ MonoBehaviour:
   m_LastDebugDrawMode:
     drawMode: 35
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     name: 
     section: 
   m_ViewIsLockedToObject: 0
 --- !u!114 &9
+<<<<<<< HEAD
 =======
     name: Contributors / Receivers
     section: Lighting
@@ -1508,6 +1667,8 @@ MonoBehaviour:
 ========
 --- !u!114 &9
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1525,19 +1686,27 @@ MonoBehaviour:
   m_TitleContent:
     m_Text: Game
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
 =======
     m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000, type: 0}
+>>>>>>> main
+=======
+    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
 >>>>>>> main
     m_Tooltip: 
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     x: 295
     y: 79
     width: 802
     height: 504
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
     x: 306
@@ -1550,6 +1719,8 @@ MonoBehaviour:
     width: 965.2
     height: 346.8
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1569,6 +1740,7 @@ MonoBehaviour:
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_TargetSize: {x: 802, y: 483}
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
@@ -1576,6 +1748,9 @@ MonoBehaviour:
 ========
   m_TargetSize: {x: 965.2, y: 325.8}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+  m_TargetSize: {x: 802, y: 483}
 >>>>>>> main
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
@@ -1592,10 +1767,14 @@ MonoBehaviour:
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     m_HBaseRangeMin: -401
     m_HBaseRangeMax: 401
     m_VBaseRangeMin: -241.5
     m_VBaseRangeMax: 241.5
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
     m_HBaseRangeMin: -369
@@ -1609,6 +1788,8 @@ MonoBehaviour:
     m_VBaseRangeMax: 130.31999
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+>>>>>>> main
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1618,9 +1799,13 @@ MonoBehaviour:
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_EnableMouseInput: 0
 =======
     m_EnableMouseInput: 1
+>>>>>>> main
+=======
+    m_EnableMouseInput: 0
 >>>>>>> main
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
@@ -1631,10 +1816,14 @@ MonoBehaviour:
       x: 0
       y: 21
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       width: 802
       height: 483
     m_Scale: {x: 1, y: 1}
     m_Translation: {x: 401, y: 241.5}
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
       width: 738
@@ -1648,6 +1837,8 @@ MonoBehaviour:
     m_Translation: {x: 482.60004, y: 162.9}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+>>>>>>> main
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -1655,6 +1846,9 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
       x: -401
       y: -241.5
       width: 802
@@ -1662,6 +1856,7 @@ MonoBehaviour:
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 802, y: 504}
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
       x: -369
@@ -1681,6 +1876,8 @@ MonoBehaviour:
   m_LastWindowPixelSize: {x: 1206.5, y: 433.5}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+>>>>>>> main
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1688,10 +1885,13 @@ MonoBehaviour:
   m_RenderTexture: {fileID: 0}
   m_showToolbar: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
 --- !u!114 &16
 ========
+>>>>>>> main
+=======
 >>>>>>> main
 --- !u!114 &10
 MonoBehaviour:
@@ -1710,6 +1910,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 530
     width: 1099
     height: 411
@@ -1718,6 +1919,11 @@ MonoBehaviour:
     width: 752
     height: 340
 >>>>>>> main
+=======
+    y: 530
+    width: 1099
+    height: 411
+>>>>>>> main
   m_MinSize: {x: 231, y: 276}
   m_MaxSize: {x: 10001, y: 10026}
   m_ActualView: {fileID: 11}
@@ -1725,15 +1931,21 @@ MonoBehaviour:
   - {fileID: 11}
   - {fileID: 12}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
   - {fileID: 13}
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &11
+<<<<<<< HEAD
 =======
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &11
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1751,6 +1963,7 @@ MonoBehaviour:
   m_TitleContent:
     m_Text: Project
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
@@ -1759,15 +1972,22 @@ MonoBehaviour:
     m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000, type: 0}
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+>>>>>>> main
     m_Tooltip: 
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     x: 0
     y: 609
     width: 1098
     height: 385
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
     x: 0
@@ -1780,6 +2000,8 @@ MonoBehaviour:
     width: 751
     height: 314
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1794,6 +2016,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SearchFilter:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_NameFilter: anima
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
@@ -1801,6 +2024,9 @@ MonoBehaviour:
 ========
     m_NameFilter: 
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+    m_NameFilter: anima
 >>>>>>> main
     m_ClassNames: []
     m_AssetLabels: []
@@ -1810,6 +2036,9 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     m_SearchArea: 1
     m_Folders:
     - Assets
@@ -1817,6 +2046,7 @@ MonoBehaviour:
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
     m_OriginalText: anima
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
     m_SearchArea: 0
@@ -1827,15 +2057,21 @@ MonoBehaviour:
     m_AnyWithAssetOrigin: 0
     m_OriginalText: animator
 >>>>>>> main
+=======
+>>>>>>> main
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Assets
 =======
   - Assets/Scripts
+>>>>>>> main
+=======
+  - Assets
 >>>>>>> main
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\nicos\OneDrive\Documents\GitHub\UnityE3Project
@@ -1843,10 +2079,14 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 34be0000
     m_LastClickedID: 48692
     m_ExpandedIDs: 0000000034be000060be000000ca9a3b
+<<<<<<< HEAD
 =======
     scrollPos: {x: 0, y: 3}
     m_SelectedIDs: 4cbe0000
@@ -1877,6 +2117,8 @@ MonoBehaviour:
     m_ExpandedIDs: 00000000a83a0200ae3a0200b63a0200303b0200fc5c0200b4750200b8860200e2860200ee8602004c8e02001e8f020000ca9a3bffffff7f
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+>>>>>>> main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1906,6 +2148,7 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 0000000034be0000
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
@@ -1913,6 +2156,9 @@ MonoBehaviour:
 ========
     m_ExpandedIDs: 00000000a83a0200ae3a0200b63a0200303b0200fc5c0200b4750200ee8602004c8e02001e8f020000ca9a3bffffff7f
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
+    m_ExpandedIDs: 0000000034be0000
 >>>>>>> main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1940,10 +2186,14 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     m_SelectedInstanceIDs: e6bb0000
     m_LastClickedInstanceID: 48102
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000092b90100
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
     m_SelectedInstanceIDs: 
@@ -1956,6 +2206,8 @@ MonoBehaviour:
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1983,6 +2235,7 @@ MonoBehaviour:
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
@@ -1995,10 +2248,16 @@ MonoBehaviour:
 --- !u!114 &17
 ========
     m_GridSize: 68
+=======
+    m_GridSize: 64
+>>>>>>> main
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 149
 --- !u!114 &12
+<<<<<<< HEAD
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2016,15 +2275,20 @@ MonoBehaviour:
   m_TitleContent:
     m_Text: Console
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000, type: 0}
 =======
     m_Image: {fileID: -4950941429401207979, guid: 0000000000000000d000000000000000, type: 0}
+>>>>>>> main
+=======
+    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000, type: 0}
 >>>>>>> main
     m_Tooltip: 
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
 <<<<<<< HEAD
     y: 609
     width: 1303
@@ -2040,6 +2304,11 @@ MonoBehaviour:
     height: 157.20001
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 >>>>>>> main
+=======
+    y: 609
+    width: 1303
+    height: 385
+>>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2052,10 +2321,14 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!114 &13
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
 --- !u!114 &18
+>>>>>>> main
+=======
+--- !u!114 &13
 >>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2242,6 +2515,9 @@ MonoBehaviour:
   m_ShowBusConnections: 0
   m_ShowBusConnectionsOfSelection: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2310,8 +2586,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<<< HEAD:UserSettings/Layouts/default-6000.dwlt
+>>>>>>> main
+=======
 >>>>>>> main
   m_Script: {fileID: 12019, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -2326,15 +2605,21 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
     x: 1099
     y: 79
     width: 820
     height: 374
+<<<<<<< HEAD
 =======
     x: 1047
     y: 24
     width: 873
     height: 915
+>>>>>>> main
+=======
 >>>>>>> main
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2351,9 +2636,13 @@ MonoBehaviour:
   m_InstanceIDsLockedBeforeSerialization: 
   m_PreviewResizer:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_CachedPref: 160
 =======
     m_CachedPref: 151
+>>>>>>> main
+=======
+    m_CachedPref: 160
 >>>>>>> main
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
@@ -2365,6 +2654,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2405,6 +2697,9 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>>> main:UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+>>>>>>> main
+=======
 >>>>>>> main

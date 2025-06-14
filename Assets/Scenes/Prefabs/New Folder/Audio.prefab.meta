@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Prefabs/New Folder/Audio.prefab.meta
 guid: 56506e2e471a84749ab043090306d45a
+========
+guid: 4cc5200f0e6277e4ca9e6ee7781f89e5
+>>>>>>>> main:Assets/Prefab/Menu prefabs/New Folder/Audio.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
