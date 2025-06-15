@@ -89,10 +89,7 @@ public class Pause_Menu : MonoBehaviour
 
       
     }
-     public void MettreAJourCheckPoint()
-    {
+    
         
-       pointDeDepart=fakePlayerTransform.position;
-        
-    }
+    
 }
