@@ -668,6 +668,25 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
+--- !u!114 &598820430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598820413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  NodeID: 18
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
+  Audio: {fileID: 0}
 --- !u!1 &825069787
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,6 +720,11 @@ Transform:
   - {fileID: 94561182}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &914960508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1453080188770411763, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+  m_PrefabInstance: {fileID: 915455686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &915455686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -709,9 +733,87 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: json
+      value: "{\"Options\":[{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":42.0001526,\"yPos\":167.666748},\"ID\":2,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Une
+        l\xE9gende ? C'est moi !\\n\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":246.666748,\"yPos\":181.000122},\"ID\":3,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Qu'est
+        ce que tu racontes ? \",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":513.3333,\"yPos\":182.3335},\"ID\":4,\"ParamActions\":[{\"__type\":\"EditableSetBoolParamAction:#DialogueEditor\",\"ParameterName\":\"TriggerAnimation\",\"Value\":true}],\"TMPFontGUID\":null,\"Text\":\"**Regarder
+        silencieusement et se gratter le ventre**\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":8}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":102.666748,\"yPos\":483.667},\"ID\":6,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Pourquoi
+        des bananes? \",\"parentUIDs\":[5],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":8}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":392.000153,\"yPos\":482.333618},\"ID\":7,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Tu
+        parles trop. O\xF9 je commence ? \",\"parentUIDs\":[5],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":56.666748,\"yPos\":932.0001},\"ID\":13,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"J\u2019adore
+        les chapeaux. \\n\",\"parentUIDs\":[10],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":16}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":305.666748,\"yPos\":833.0001},\"ID\":14,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Est-ce
+        qu\u2019il y a\u2026 un tutu rose ? \\n\",\"parentUIDs\":[10],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":532.6669,\"yPos\":928.0001},\"ID\":15,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"J\u2019adore
+        les chapeaux.\\n\",\"parentUIDs\":[10],\"SpeechUID\":-1}],\"Parameters\":[{\"__type\":\"EditableBoolParameter:#DialogueEditor\",\"ParameterName\":\"TriggerAnimation\",\"BoolValue\":false}],\"SpeechNodes\":[{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":2},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":3},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":4}],\"EditorInfo\":{\"isRoot\":true,\"xPos\":254.666687,\"yPos\":22},\"ID\":0,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"\xA1Ay
+        caramba ! Qui voil\xE0 ? Un petit singe\u2026 pr\xEAt \xE0 devenir une l\xE9gende
+        ?! \\n\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba
+        Character\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":6},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":7}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":280.666748,\"yPos\":342.6669},\"ID\":5,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"
+        \xABL\xE0-haut, bien au-dessus des nuages, se trouve l\u2019Arbre \xE0 Bananes
+        Dor\xE9. Ta mission ? Grimper, grimper, grimper\u2026 et r\xE9colter un maximum
+        de bananes sacr\xE9es ! \xBB\",\"parentUIDs\":[2,3,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":10}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":244.000061,\"yPos\":601.3335},\"ID\":8,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Ha
+        ha ! Bonne question, mi amigo ! Chaque banane sacr\xE9e te permettra de d\xE9bloquer...
+        du style ! \",\"parentUIDs\":[6,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":13},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":14},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":15}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":274.000122,\"yPos\":702.666748},\"ID\":10,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"\xAB
+        Tu veux un chapeau g\xE9ant ? Des lunettes \xE9toil\xE9es ? Un  ? Ramasse
+        les bananes et fais-toi plaisir ! \",\"parentUIDs\":[8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":287.666748,\"yPos\":895.0001},\"ID\":16,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Bien
+        s\xFBr qu\u2019il y a un tutu rose. Ce jeu est bas\xE9 sur le bon go\xFBt,
+        voyons ! \",\"parentUIDs\":[14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[],\"EditorInfo\":{\"isRoot\":false,\"xPos\":302.666748,\"yPos\":1032.99854},\"ID\":17,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Allez
+        maintenant, va briller, va bondir, et grimpe comme si ta moustache en d\xE9pendait
+        ! \",\"parentUIDs\":[16,13,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960149752245649133, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746069319254904780, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: ScrollSpeed
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746069319254904780, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: OptionImageSliced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746069319254904781, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -364
+      objectReference: {fileID: 0}
     - target: {fileID: 3450722569379537029, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
       propertyPath: m_Name
       value: Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4664777420274995397, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4664777420274995397, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 91.74
       objectReference: {fileID: 0}
     - target: {fileID: 5251260136715105552, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -758,6 +860,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9116389454038068463, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      propertyPath: monkeyAnimator
+      value: 
+      objectReference: {fileID: 8366867225936157299}
+    - target: {fileID: 9116389454038068463, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
       propertyPath: myConversation
       value: 
       objectReference: {fileID: 915455687}
@@ -765,19 +871,37 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1453080188770411763, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915455689}
     - targetCorrespondingSourceObject: {fileID: 5376619970767505332, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 598820429}
+    - targetCorrespondingSourceObject: {fileID: 5376619970767505332, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 598820430}
   m_SourcePrefab: {fileID: 100100000, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
 --- !u!114 &915455687 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1933545117269449823, guid: a1997c80e8b9f3a4aabb4981599b7ee7, type: 3}
   m_PrefabInstance: {fileID: 915455686}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 914960508}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &915455689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914960508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 840b41495a97b614aabfdf9cd3eaa307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &948763285
@@ -5173,7 +5297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2626731236495751121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.002417023, y: -0.00004506802, z: 0.000012759458, w: 0.9999971}
+  m_LocalRotation: {x: 0.0024170377, y: -0.000045068078, z: 0.000012759474, w: 0.9999971}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10386,8 +10510,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2518377593923390454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0006892144, y: 0.011542429, z: 0.001262799, w: 0.9999324}
-  m_LocalPosition: {x: 0, y: -0.83, z: 7}
+  m_LocalRotation: {x: -0.0014087403, y: -0.75484544, z: 0.00029178028, w: 0.65590125}
+  m_LocalPosition: {x: -52.01, y: -23.304, z: 10.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10395,7 +10519,7 @@ Transform:
   - {fileID: 3617380032672468038}
   - {fileID: 1451754566310044076}
   m_Father: {fileID: 5544487143648831891}
-  m_LocalEulerAnglesHint: {x: -0.081, y: 1.323, z: 0.144}
+  m_LocalEulerAnglesHint: {x: -0.081, y: -98.024, z: 0.144}
 --- !u!4 &4471239205562961186
 Transform:
   m_ObjectHideFlags: 0
@@ -12467,7 +12591,7 @@ Transform:
   m_GameObject: {fileID: 1821809218535401659}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10992512, y: -0.58578116, z: 0.08059841, w: 0.7989248}
-  m_LocalPosition: {x: 6.6761637, y: 1.1700001, z: 4.895526}
+  m_LocalPosition: {x: -45.333836, y: -21.304, z: 8.665527}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16301,8 +16425,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330645893663162760}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000005904836, y: 0.00000003012968, z: -0.000000007828458, w: 1}
-  m_LocalPosition: {x: 0.0000010529271, y: -0.00000004536283, z: -0.0000001617255}
+  m_LocalRotation: {x: -0.000029796156, y: -0.000008636, z: 0.000002422681, w: 1}
+  m_LocalPosition: {x: 0.000003638114, y: 0.00000030982116, z: 0.0000011045602}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21147,8 +21271,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293934767623424197}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.04406496, y: -0.000045583176, z: 0.000010644112, w: 0.9990287}
-  m_LocalPosition: {x: 0.0000010529271, y: -0.00000004536283, z: -0.0000001617255}
+  m_LocalRotation: {x: -0.04406499, y: -0.000045612425, z: 0.000010650941, w: 0.99902874}
+  m_LocalPosition: {x: 0.000003638114, y: 0.00000030982116, z: 0.0000011045602}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
