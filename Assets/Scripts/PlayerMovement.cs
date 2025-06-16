@@ -75,6 +75,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public MovementState state;
     private MovementState previousState;
 
+    [Header("Movement Lock")]
+    private bool isMovementLocked = false;
+    public bool IsMovementLocked => isMovementLocked;
     public enum MovementState
     {
         idling,
@@ -84,7 +87,22 @@ public class PlayerMovementAdvanced : MonoBehaviour
         air,
         ledgeGrab
     }
+    private void OnEnable()
+    {
+    GameEvents.OnPlayerMovementLockChanged += HandleMovementLockChanged;
+    GameEvents.OnPlayerControlsLockChanged += HandleMovementLockChanged;    }
+    private void OnDisable()
+    {
+        GameEvents.OnPlayerMovementLockChanged -= HandleMovementLockChanged;
+        GameEvents.OnPlayerControlsLockChanged -= HandleMovementLockChanged;
+    }
+    private void HandleMovementLockChanged(bool isLocked)
+{
+    LockMovement(isLocked);
+}
 
+    // Méthode publique pour verrouiller le mouvement
+ 
     private void Awake()
     {
         GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
@@ -115,13 +133,20 @@ public class PlayerMovementAdvanced : MonoBehaviour
         previousState = state;
     }
 
-    private void Update()
+private void Update()
+{
+    // NEW: Handle ledge grab toggle input
+    if (Input.GetKeyDown(toggleLedgeGrabKey))
     {
-        // NEW: Handle ledge grab toggle input
-        if (Input.GetKeyDown(toggleLedgeGrabKey))
-        {
-            ToggleLedgeGrab();
-        }
+        ToggleLedgeGrab();
+    }
+
+    // Si le mouvement est verrouillé, on ne fait que les checks de base
+    if (isMovementLocked)
+    {
+        grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
+        return;
+    }
 
         // Only check for ledge grabbing if it's enabled
         if (!isGrabbingLedge && ledgeGrabEnabled)
@@ -147,9 +172,14 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb.linearDamping = grounded ? groundDrag : 0f;
     }
 
-    private void FixedUpdate()
+private void FixedUpdate()
+{
+    // Si le mouvement est verrouillé, on applique juste la gravité
+    if (isMovementLocked)
     {
-        if (!isGrabbingLedge)
+        ApplyCustomGravity();
+        return;
+    }        if (!isGrabbingLedge)
         {
             MovePlayer();
             ApplyCustomGravity();
@@ -164,13 +194,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void ToggleLedgeGrab()
     {
         ledgeGrabEnabled = !ledgeGrabEnabled;
-        
+
         // If we're currently grabbing a ledge and ledge grab is disabled, release the ledge
         if (!ledgeGrabEnabled && isGrabbingLedge)
         {
             ReleaseLedge();
         }
-        
+
         Debug.Log("Ledge grabbing " + (ledgeGrabEnabled ? "enabled" : "disabled"));
     }
 
@@ -182,7 +212,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
             isGrabbingLedge = false;
             rb.useGravity = true;
             canGrabLedge = false;
-            
+
             // Add a small delay before allowing ledge grab again
             Invoke(nameof(EnableLedgeGrab), 0.5f);
         }
@@ -202,6 +232,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void MyInput()
     {
+        if (isMovementLocked) return;
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -275,7 +306,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
             animator.SetBool("IsWalking", isWalking);
             animator.SetBool("IsRunning", isRunning);
             animator.SetBool("IsInAir", isInAir);
-            animator.SetBool("IsGrabbingLedge", isGrabbingLedge);
         }
 
         if (state != previousState)
@@ -565,4 +595,27 @@ public class PlayerMovementAdvanced : MonoBehaviour
             Gizmos.DrawWireSphere(grabTargetPosition, 0.15f);
         }
     }
+public void LockMovement(bool lockState)
+{
+    isMovementLocked = lockState;
+    
+    if (lockState)
+    {
+        // Arrête immédiatement le mouvement
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+        rb.angularVelocity = Vector3.zero;
+        
+        // Force l'état idle
+        state = MovementState.idling;
+        moveSpeed = 0f;
+        
+        // Met à jour l'animation
+        if (animator != null)
+        {
+            animator.SetBool("IsIdle", true);
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
+        }
+    }
+}
 }
