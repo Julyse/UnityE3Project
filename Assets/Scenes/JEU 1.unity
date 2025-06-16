@@ -571,6 +571,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5202732821079344928, guid: cebfacc247a640945a2c30b442202fca, type: 3}
   m_PrefabInstance: {fileID: 275237178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &305670719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 305670722}
+  - component: {fileID: 305670721}
+  - component: {fileID: 305670720}
+  m_Layer: 0
+  m_Name: DebugMenuUICreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &305670720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305670719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8216ac3fa3c6a747a0697b6b3fa913b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleKey: 284
+  debugMenuPanel: {fileID: 0}
+  playerTransform: {fileID: 4463274710038700139}
+  startPosition: {fileID: 3053835140926634351}
+  endPosition: {fileID: 2513431245196143182}
+  teleportStartButton: {fileID: 0}
+  teleportEndButton: {fileID: 0}
+  teleportCheckpointButton: {fileID: 0}
+  resetGameButton: {fileID: 0}
+  checkpointDropdown: {fileID: 0}
+--- !u!114 &305670721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305670719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfd5087f0aac5441ba601c178e94f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  createOnStart: 1
+--- !u!4 &305670722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305670719}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 142.34329, y: -91.16905, z: 110.49475}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &583160169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -682,6 +750,64 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
   Audio: {fileID: 0}
+--- !u!1 &722446867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722446868}
+  - component: {fileID: 722446869}
+  m_Layer: 5
+  m_Name: DebugMenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &722446868
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722446867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7691971540158234459}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &722446869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722446867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8216ac3fa3c6a747a0697b6b3fa913b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleKey: 284
+  debugMenuPanel: {fileID: 0}
+  playerTransform: {fileID: 0}
+  startPosition: {fileID: 0}
+  endPosition: {fileID: 0}
+  teleportStartButton: {fileID: 0}
+  teleportEndButton: {fileID: 0}
+  teleportCheckpointButton: {fileID: 0}
+  resetGameButton: {fileID: 0}
+  checkpointDropdown: {fileID: 0}
 --- !u!1 &825069787
 GameObject:
   m_ObjectHideFlags: 0
@@ -5449,7 +5575,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2626731236495751121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0024170524, y: -0.000045068078, z: 0.000012759475, w: 0.9999971}
+  m_LocalRotation: {x: 0.002417023, y: -0.000045068093, z: 0.0000127594785, w: 0.9999971}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17542,8 +17668,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330645893663162760}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000029796156, y: -0.000008635671, z: 0.00000242259, w: 1}
-  m_LocalPosition: {x: 0.000003638114, y: 0.00000030982116, z: 0.0000011045602}
+  m_LocalRotation: {x: -0.00002980428, y: -0.000008635674, z: 0.000002422589, w: 1}
+  m_LocalPosition: {x: 0.0000024909252, y: 0.0000012923662, z: 0.0000046074847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19377,6 +19503,7 @@ RectTransform:
   - {fileID: 6706030736024250765}
   - {fileID: 4214272234256784681}
   - {fileID: 2224101438005575867}
+  - {fileID: 722446868}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -22520,8 +22647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293934767623424197}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.044064984, y: -0.000045607987, z: 0.000010649905, w: 0.9990287}
-  m_LocalPosition: {x: 0.000003638114, y: 0.00000030982116, z: 0.0000011045602}
+  m_LocalRotation: {x: -0.044064976, y: -0.000045612425, z: 0.000010650941, w: 0.9990287}
+  m_LocalPosition: {x: 0.0000024909252, y: 0.0000012923662, z: 0.0000046074847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22701,3 +22828,4 @@ SceneRoots:
   - {fileID: 825069788}
   - {fileID: 5544487143648831891}
   - {fileID: 5251260136554630102}
+  - {fileID: 305670722}
