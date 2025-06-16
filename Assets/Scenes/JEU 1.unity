@@ -5016,26 +5016,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 18
-  json: "{\"Options\":[{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":326.0002,\"yPos\":169.000076},\"ID\":2,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Une
-    l\xE9gende ? C'est moi !\\n\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":530.6668,\"yPos\":182.33345},\"ID\":3,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Qu'est
-    ce que tu racontes ? \",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":797.3334,\"yPos\":183.666824},\"ID\":4,\"ParamActions\":[{\"__type\":\"EditableSetBoolParamAction:#DialogueEditor\",\"ParameterName\":\"TriggerAnimation\",\"Value\":true}],\"TMPFontGUID\":null,\"Text\":\"**Regarder
-    silencieusement et se gratter le ventre**\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":8}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":386.6668,\"yPos\":485.000366},\"ID\":6,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Pourquoi
-    des bananes? \",\"parentUIDs\":[5],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":8}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":676.000244,\"yPos\":483.667},\"ID\":7,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Tu
-    parles trop. O\xF9 je commence ? \",\"parentUIDs\":[5],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":340.6668,\"yPos\":933.3335},\"ID\":13,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"J\u2019adore
-    les chapeaux. \\n\",\"parentUIDs\":[10],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":16}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":589.6668,\"yPos\":834.3335},\"ID\":14,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Est-ce
-    qu\u2019il y a\u2026 un tutu rose ? \\n\",\"parentUIDs\":[10],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":816.666931,\"yPos\":929.3335},\"ID\":15,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"J\u2019adore
-    les chapeaux.\\n\",\"parentUIDs\":[10],\"SpeechUID\":-1}],\"Parameters\":[{\"__type\":\"EditableBoolParameter:#DialogueEditor\",\"ParameterName\":\"TriggerAnimation\",\"BoolValue\":false}],\"SpeechNodes\":[{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":2},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":3},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":4}],\"EditorInfo\":{\"isRoot\":true,\"xPos\":538.666748,\"yPos\":23.3333282},\"ID\":0,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"\xA1Ay
+  json: "{\"Options\":[{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":418.3335,\"yPos\":-216.333313},\"ID\":2,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Une
+    l\xE9gende ? C'est moi !\\n\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":623.000061,\"yPos\":-202.999939},\"ID\":3,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Qu'est
+    ce que tu racontes ? \",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":5}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":889.6667,\"yPos\":-201.666565},\"ID\":4,\"ParamActions\":[{\"__type\":\"EditableSetBoolParamAction:#DialogueEditor\",\"ParameterName\":\"TriggerAnimation\",\"Value\":true}],\"TMPFontGUID\":null,\"Text\":\"**Regarder
+    silencieusement et se gratter le ventre**\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":8}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":475.666748,\"yPos\":99.66702},\"ID\":6,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Pourquoi
+    des bananes? \",\"parentUIDs\":[5],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":8}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":768.3335,\"yPos\":98.33365},\"ID\":7,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Tu
+    parles trop. O\xF9 je commence ? \",\"parentUIDs\":[5],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":433.0001,\"yPos\":548},\"ID\":13,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"J\u2019adore
+    les chapeaux. \\n\",\"parentUIDs\":[10],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":16}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":682.000061,\"yPos\":449.000122},\"ID\":14,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Est-ce
+    qu\u2019il y a\u2026 un tutu rose ? \\n\",\"parentUIDs\":[10],\"SpeechUID\":-1},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":909.0002,\"yPos\":544},\"ID\":15,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"J\u2019adore
+    les chapeaux.\\n\",\"parentUIDs\":[10],\"SpeechUID\":-1}],\"Parameters\":[{\"__type\":\"EditableBoolParameter:#DialogueEditor\",\"ParameterName\":\"TriggerAnimation\",\"BoolValue\":false}],\"SpeechNodes\":[{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":2},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":3},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":4}],\"EditorInfo\":{\"isRoot\":true,\"xPos\":631.000061,\"yPos\":-362.000061},\"ID\":0,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"\xA1Ay
     caramba ! Qui voil\xE0 ? Un petit singe\u2026 pr\xEAt \xE0 devenir une l\xE9gende
-    ?! \\n\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":6},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":7}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":564.6668,\"yPos\":344.000244},\"ID\":5,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"
+    ?! \\n\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":6},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":7}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":657.0001,\"yPos\":-42.6664734},\"ID\":5,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"
     \xABL\xE0-haut, bien au-dessus des nuages, se trouve l\u2019Arbre \xE0 Bananes
     Dor\xE9. Ta mission ? Grimper, grimper, grimper\u2026 et r\xE9colter un maximum
-    de bananes sacr\xE9es ! \xBB\",\"parentUIDs\":[2,3,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":10}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":528.0001,\"yPos\":602.6669},\"ID\":8,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Ha
+    de bananes sacr\xE9es ! \xBB\",\"parentUIDs\":[2,3,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":10}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":620.333435,\"yPos\":217.333527},\"ID\":8,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Ha
     ha ! Bonne question, mi amigo ! Chaque banane sacr\xE9e te permettra de d\xE9bloquer...
-    du style ! \",\"parentUIDs\":[6,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":13},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":14},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":15}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":558.0002,\"yPos\":704.0001},\"ID\":10,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"\xAB
+    du style ! \",\"parentUIDs\":[6,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":13},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":14},{\"__type\":\"EditableOptionConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":15}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":650.3335,\"yPos\":318.666779},\"ID\":10,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"\xAB
     Tu veux un chapeau g\xE9ant ? Des lunettes \xE9toil\xE9es ? Un  ? Ramasse les
-    bananes et fais-toi plaisir ! \",\"parentUIDs\":[8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":571.6668,\"yPos\":896.3335},\"ID\":16,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Bien
+    bananes et fais-toi plaisir ! \",\"parentUIDs\":[8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[{\"__type\":\"EditableSpeechConnection:#DialogueEditor\",\"Conditions\":[],\"NodeUID\":17}],\"EditorInfo\":{\"isRoot\":false,\"xPos\":664.0001,\"yPos\":511.000153},\"ID\":16,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Bien
     s\xFBr qu\u2019il y a un tutu rose. Ce jeu est bas\xE9 sur le bon go\xFBt, voyons
-    ! \",\"parentUIDs\":[14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[],\"EditorInfo\":{\"isRoot\":false,\"xPos\":586.6668,\"yPos\":1034.332},\"ID\":17,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Allez
+    ! \",\"parentUIDs\":[14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0},{\"Connections\":[],\"EditorInfo\":{\"isRoot\":false,\"xPos\":679.000061,\"yPos\":648.9988},\"ID\":17,\"ParamActions\":[],\"TMPFontGUID\":null,\"Text\":\"Allez
     maintenant, va briller, va bondir, et grimpe comme si ta moustache en d\xE9pendait
     ! \",\"parentUIDs\":[16,13,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Rumba\",\"OptionUIDs\":null,\"SpeechUID\":0,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 110
@@ -5312,7 +5312,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2626731236495751121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0024170377, y: -0.000045055713, z: 0.000012755974, w: 0.9999971}
+  m_LocalRotation: {x: 0.002417023, y: -0.000045068078, z: 0.000012759474, w: 0.9999971}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7140,7 +7140,7 @@ RectTransform:
   m_GameObject: {fileID: 2746069319280574865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.29, y: 2.29, z: 2.29}
+  m_LocalScale: {x: 1.5883669, y: 1.5883669, z: 1.5883669}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2746069319618746007}
@@ -7149,7 +7149,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -364}
+  m_AnchoredPosition: {x: 0, y: -112}
   m_SizeDelta: {x: 620, y: 188}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2746069319617915618
@@ -7535,7 +7535,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 17
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
   Audio: {fileID: 0}
 --- !u!223 &2786733675228108343
@@ -10794,7 +10794,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 14
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!1 &4346929194451366468
@@ -12259,7 +12259,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 13
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!4 &4893783215660156869
@@ -12345,7 +12345,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 15
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!23 &4923660524755264176
@@ -12655,7 +12655,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 10
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
   Audio: {fileID: 0}
 --- !u!4 &5064406327549165923
@@ -13383,7 +13383,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 6
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!224 &5298095063878575568
@@ -13793,8 +13793,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 16
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
+  Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &5438227055447552052
 MonoBehaviour:
@@ -14134,7 +14134,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 2
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!224 &5635302230140043968
@@ -17404,8 +17404,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330645893663162760}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000029796156, y: -0.00000863578, z: 0.0000024226188, w: 1}
-  m_LocalPosition: {x: 0.000003638114, y: 0.00000030982116, z: 0.0000011045602}
+  m_LocalRotation: {x: -0.000029810917, y: -0.000008635714, z: 0.0000024225983, w: 1}
+  m_LocalPosition: {x: -0.0000011471889, y: 0.000000982545, z: 0.0000035029245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18847,7 +18847,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 8
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
   Audio: {fileID: 0}
 --- !u!65 &7559824733037077409
@@ -19893,7 +19893,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 3
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!114 &7877912546924487273
@@ -20066,7 +20066,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 7
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!23 &7927287019839109816
@@ -22265,8 +22265,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   NodeID: 5
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: a45ea74ef3af54542b2da180be6bd575, type: 2}
+  Icon: {fileID: 21300000, guid: 83a3241d23d73e241ae2cb0b5aa22827, type: 3}
   Audio: {fileID: 0}
 --- !u!33 &9102752302448782767
 MeshFilter:
@@ -22380,8 +22380,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293934767623424197}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.044065014, y: -0.00004561154, z: 0.000010650733, w: 0.99902874}
-  m_LocalPosition: {x: 0.000003638114, y: 0.00000030982116, z: 0.0000011045602}
+  m_LocalRotation: {x: -0.04406503, y: -0.000045612425, z: 0.00001065094, w: 0.99902874}
+  m_LocalPosition: {x: -0.0000011471889, y: 0.000000982545, z: 0.0000035029245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
