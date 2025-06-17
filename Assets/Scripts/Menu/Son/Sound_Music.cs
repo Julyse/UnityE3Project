@@ -21,6 +21,10 @@ public class Sound_Music : MonoBehaviour
     public AudioClip RunStepGrass4;
     public AudioClip RunStepGrass5;
     public AudioClip Crouch;
+    public AudioClip Checkpoint;
+    public AudioClip StartSFX;
+    public AudioClip FinishSFX;
+
    
     // public AudioClip x;
 
@@ -34,10 +38,10 @@ public class Sound_Music : MonoBehaviour
     }
 
 }
-// A mettre dans les scripts pour les sounds effects:
-
-// AudioManager audioManager;
-//private void Awake(){
-//audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();//(mettre un tag Audio sur
-// //Pour mettre le sfx:
-//audioManager.PlaySFX(audioManager.LeNomDuSFX);
+// Exemple d'utilisation dans un autre script:
+// Sound_Music soundManager;
+// private void Awake(){
+//     soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Sound_Music>();
+// }
+// Pour jouer un son:
+// soundManager.PlaySFX(soundManager.Checkpoint);
