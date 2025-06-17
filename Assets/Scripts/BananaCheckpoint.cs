@@ -118,13 +118,14 @@ public class BananaCheckpoint : MonoBehaviour
         }
     }
     
-    // Méthode statique pour désactiver tous les messages UI des checkpoints
-    public static void DesactiverTousLesMessagesUI()
-    {
-        BananaCheckpoint[] tousCheckpoints = FindObjectsOfType<BananaCheckpoint>();
-        foreach (BananaCheckpoint checkpoint in tousCheckpoints)
-        {
-            checkpoint.DesactiverMessageUI();
-        }
-    }
+   public static void DesactiverTriggers()
+{
+    triggersDesactives = true;
+}
+
+public static void ReactiverTriggers()
+{
+    triggersDesactives = false;
+}
+
 }
