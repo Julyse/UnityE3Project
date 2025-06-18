@@ -65,8 +65,11 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.0.42f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/platforme/Piston/Movement.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/OrbitPlatform.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsBase.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BloomOptimized.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/ManègeStick.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Tonemapping.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Twirl.cs" />
     <Compile Include="Assets/Scripts/Zipline.cs" />
@@ -74,19 +77,29 @@
     <Compile Include="Assets/Scripts/Menu/Son/Sound_Music.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientObscurance.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Fisheye.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/Menu/Son/Volume settings.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BlurOptimized.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/Movement_builtin.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Triangles.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ScreenOverlay.cs" />
     <Compile Include="Assets/Scripts/OrbitPlatform.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Antialiasing.cs" />
     <Compile Include="Assets/Scripts/PistonParent.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/Zipline.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/OrbitStick.cs" />
     <Compile Include="Assets/Scripts/PenduleScript.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/AnimatorController.cs" />
     <Compile Include="Assets/Scripts/Menu/Son/Volume settings.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/Menu/Son/Sound_Music.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/TiltShift.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/PenduleScript.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/MovingPlatforme.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Grayscale.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/PlateformeChute.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsHelper.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/NoiseAndScratches.cs" />
     <Compile Include="Assets/Settings/InputSystem_Actions.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/ThirdPersonCam.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Quads.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/CreaseShading.cs" />
     <Compile Include="Assets/Scripts/PistonScript.cs" />
@@ -101,17 +114,23 @@
     <Compile Include="Assets/Import/Polytope Studio/Lowpoly_Demos/Environment_Free/Helpers/MouseLook.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/EdgeDetection.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionCurves.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/BreakablePlatform.cs" />
     <Compile Include="Assets/Scripts/SpiningCylinder.cs" />
     <Compile Include="Assets/Scripts/ThirdPersonCam.cs" />
     <Compile Include="Assets/Scripts/PlatformCollision.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/PlayerMovement.cs" />
     <Compile Include="Assets/Scripts/MovingPlatforme.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/Ascenseur.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/Menu/Pause/Toggles.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Blur.cs" />
     <Compile Include="Assets/Scripts/Ascenseur.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionLookup.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BloomAndFlares.cs" />
+    <Compile Include="Assets/Scripts/ManègeStick.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/SunShafts.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Bloom.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/PlatformCollision.cs" />
     <Compile Include="Assets/Scripts/ZiplinePlayer.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ImageEffects.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/MotionBlur.cs" />
@@ -121,15 +140,17 @@
     <Compile Include="Assets/Scripts/ManègeRotation.cs" />
     <Compile Include="Assets/Settings/PlayerInput.cs" />
     <Compile Include="Assets/Scripts/Menu/Pause/Toggles.cs" />
-    <Compile Include="Assets/Scripts/ManègeStick.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/DepthOfField.cs" />
     <Compile Include="Assets/Scripts/Movement.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ImageEffectBase.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionRamp.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/SpiningCylinder.cs" />
     <Compile Include="Assets/Import/Polytope Studio/Lowpoly_Demos/Environment_Free/Helpers/PlayerMovement.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ContrastEnhance.cs" />
     <Compile Include="Assets/Scripts/PlateformeChute.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/ZiplinePlayer.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/SepiaTone.cs" />
+    <Compile Include="Assets/Scripts/platforme/Piston/ManègeRotation.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/DepthOfFieldDeprecated.cs" />
   </ItemGroup>
   <ItemGroup>
