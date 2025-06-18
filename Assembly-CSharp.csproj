@@ -69,7 +69,9 @@
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BloomOptimized.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Tonemapping.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Twirl.cs" />
+    <Compile Include="Assets/Scripts/Zipline.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/VignetteAndChromaticAberration.cs" />
+    <Compile Include="Assets/Scripts/Menu/Son/Sound_Music.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientObscurance.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Fisheye.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BlurOptimized.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Antialiasing.cs" />
     <Compile Include="Assets/Scripts/PistonParent.cs" />
     <Compile Include="Assets/Scripts/PenduleScript.cs" />
+    <Compile Include="Assets/Scripts/Menu/Son/Volume settings.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/TiltShift.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Grayscale.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsHelper.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/CameraMotionBlur.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientOcclusion.cs" />
     <Compile Include="Assets/Scripts/OrbitStick.cs" />
+    <Compile Include="Assets/Scripts/AnimatorController.cs" />
     <Compile Include="Assets/Scripts/Movement_builtin.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/NoiseAndGrain.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/GlobalFog.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BloomAndFlares.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/SunShafts.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Bloom.cs" />
+    <Compile Include="Assets/Scripts/ZiplinePlayer.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ImageEffects.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/MotionBlur.cs" />
     <Compile Include="Assets/Scripts/PlayerMovement.cs" />
@@ -115,6 +120,7 @@
     <Compile Include="Assets/Scripts/BreakablePlatform.cs" />
     <Compile Include="Assets/Scripts/ManègeRotation.cs" />
     <Compile Include="Assets/Settings/PlayerInput.cs" />
+    <Compile Include="Assets/Scripts/Menu/Pause/Toggles.cs" />
     <Compile Include="Assets/Scripts/ManègeStick.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/DepthOfField.cs" />
     <Compile Include="Assets/Scripts/Movement.cs" />
@@ -143,8 +149,10 @@
     <None Include="Assets/Import/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/VignettingShader.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/ColorCorrectionCurves.shader" />
+    <None Include="Assets/Import/BOXOPHOBIC/Skybox Cubemap Extended/Core/Shaders/Skybox Cubemap Extended.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/Projectors/Guidelines.txt" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/_BloomAndFlares/MultiPassHollywoodFlares.shader" />
+    <None Include="Assets/Import/BOXOPHOBIC/Utils/Shaders/Channel Preview.shader" />
     <None Include="Assets/Import/Polytope Studio/Lowpoly_Environments/Sources/Shaders/PT_Vegetation_Plants_Shader.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/SSAOShader.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/ColorCorrectionCurvesSimple.shader" />
@@ -182,6 +190,7 @@
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/_DepthOfField/Bokeh34.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/ColorCorrectionEffect.shader" />
     <None Include="Assets/Import/Polytope Studio/Lowpoly_Environments/Sources/Shaders/PT_Vegetation_Foliage_Shader.shader" />
+    <None Include="Assets/Import/BOXOPHOBIC/Skybox Cubemap Extended/Core/Shaders/Skybox Cubemap Blend.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/FisheyeShader.shader" />
     <None Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Shaders/_BloomAndFlares/BlendOneOne.shader" />
     <None Include="Assets/Import/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
@@ -1224,12 +1233,12 @@
       <HintPath>Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.AI.Navigation">
-      <HintPath>Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
@@ -1422,6 +1431,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Boxophobic.SkyboxCubemapExtended.Editor.csproj" />
+    <ProjectReference Include="Boxophobic.Utils.Editor.csproj" />
+    <ProjectReference Include="Boxophobic.Utils.Scripts.csproj" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <ItemGroup>
