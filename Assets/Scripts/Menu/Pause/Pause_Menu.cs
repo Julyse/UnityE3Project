@@ -7,16 +7,16 @@ public class Pause_Menu : MonoBehaviour
     public GameObject PausePanelOption;
     public static bool isPaused;
 
-    public Transform fakePlayerTransform; // R�f�rence au joueur
-    public Rigidbody fakePlayerRb;        // R�f�rence au Rigidbody du joueur
-    public Vector3 pointDeDepart;        // Position initiale m�moris�e
+    public Transform fakePlayerTransform; // Référence au joueur
+    public Rigidbody fakePlayerRb;        // Référence au Rigidbody du joueur
+    public Vector3 pointDeDepart;        // Position initiale mémorisée
 
     void Start()
     {
         PausePanelMenu.SetActive(false);
         PausePanelOption.SetActive(false);
 
-        // Sauvegarder la position de d�part du joueur
+        // Sauvegarder la position de départ du joueur
         pointDeDepart = fakePlayerTransform.position;
     }
 
@@ -80,16 +80,23 @@ public class Pause_Menu : MonoBehaviour
 
     public void RestartLevel()
     {
+        BananaCheckpoint.DesactiverTriggers();
+        
         fakePlayerTransform.position = pointDeDepart;
         fakePlayerRb.linearVelocity = Vector3.zero;
+        
+        if (DonneesManager.Instance != null)
+        {
+            DonneesManager.Instance.MettreAJourPositionPrecedente();
+        }
+        
+        BananaCheckpoint.ReactiverTriggers();
+        
         Time.timeScale = 1f;
         isPaused = false;
         PausePanelMenu.SetActive(false);
         PausePanelOption.SetActive(false);
-
-      
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
-    
-        
-    
 }
