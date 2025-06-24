@@ -37,6 +37,46 @@ public class Zipline : MonoBehaviour
             CreateRope();
     }
 
+    // Method to determine if zipline goes up (true) or down (false)
+    // Higher zipline  y>125.46 lower zipline y<125.46
+    private bool IsZiplineGoingUp()
+    {
+        if (targetZip == null || targetZip.ZipTransform == null)
+        {
+            Debug.LogError("TargetZip ou targetZip.ZipTransform est null dans IsZiplineGoingUp!");
+            return false; // Par défaut, on considère que ça ne monte pas
+        }
+        //debug
+        Debug.Log("IsZiplineGoingUp called - Target Zip Y Position: " + targetZip.ZipTransform.position.y);
+        return targetZip.ZipTransform.position.y > 125.46f;
+    }
+
+    // Method to set player direction before zipline starts
+    public void SetPlayerDirectionForZipline(GameObject player)
+{
+    if (targetZip == null || targetZip.ZipTransform == null) return;
+    
+    // Calculate direction to target zipline
+    Vector3 directionToTarget = (targetZip.ZipTransform.position - player.transform.position).normalized;
+    
+    // Apply rotation to playerObject (the visual representation)
+    Transform playerObject = player.transform.Find("PlayerObject"); // Adjust this to match your hierarchy
+    if (playerObject == null)
+    {
+        // If can't find PlayerObject, try to get it from ThirdPersonCam
+        ThirdPersonCam cam = FindObjectOfType<ThirdPersonCam>();
+        if (cam != null) playerObject = cam.playerObject;
+    }
+    
+    if (playerObject != null && directionToTarget != Vector3.zero)
+    {
+        // Create rotation that looks in the zipline direction
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        playerObject.rotation = targetRotation;
+        
+        Debug.Log($"Player oriented towards {targetZip.name} - Direction: {directionToTarget}");
+    }
+}
 private void Update()
 {
     if (!zipping || localZip == null) return;
@@ -73,18 +113,67 @@ private void Update()
     // Mettre à jour la position du joueur
     playerOnZip.transform.position = localZip.transform.position + Vector3.down * verticalOffset;
     
-    // Orienter le joueur vers la cible pendant le trajet (en world space)
-    Vector3 directionToTarget = (targetZip.ZipTransform.position - playerOnZip.transform.position).normalized;
-    directionToTarget.y = 0; // Garder seulement la rotation horizontale
-    if (directionToTarget != Vector3.zero)
+    // Only rotate if we're not too close to the target
+    if (distance > 3f) // Stop rotating when close
     {
-        // Utiliser world rotation au lieu de local rotation
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-        playerOnZip.transform.rotation = Quaternion.Slerp(
-            playerOnZip.transform.rotation, 
-            targetRotation, 
-            Time.deltaTime * 5f // Rotation plus rapide pour être sûr
-        );
+        // Calculate horizontal direction only
+        Vector3 directionToTarget = targetZip.ZipTransform.position - playerOnZip.transform.position;
+        directionToTarget.y = 0; // Remove vertical component completely
+        directionToTarget = directionToTarget.normalized;
+        
+        if (directionToTarget != Vector3.zero)
+        {
+            // Try to rotate playerObject instead of the player root
+            Transform playerObject = playerOnZip.transform.Find("PlayerObject");
+            if (playerObject == null)
+            {
+                ThirdPersonCam cam = FindObjectOfType<ThirdPersonCam>();
+                if (cam != null) playerObject = cam.playerObject;
+            }
+            
+            if (playerObject != null)
+            {
+                // Create rotation with locked pitch and roll
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+                // Ensure we only rotate around Y axis (yaw)
+                targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+                
+                playerObject.rotation = Quaternion.Slerp(
+                    playerObject.rotation, 
+                    targetRotation, 
+                    Time.deltaTime * 5f
+                );
+            }
+            else
+            {
+                // Fallback to rotating player root
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+                targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+                
+                playerOnZip.transform.rotation = Quaternion.Slerp(
+                    playerOnZip.transform.rotation, 
+                    targetRotation, 
+                    Time.deltaTime * 5f
+                );
+            }
+        }
+    }
+    else
+    {
+        // When close to target, ensure player is upright
+        Transform playerObject = playerOnZip.transform.Find("PlayerObject");
+        if (playerObject == null)
+        {
+            ThirdPersonCam cam = FindObjectOfType<ThirdPersonCam>();
+            if (cam != null) playerObject = cam.playerObject;
+        }
+        
+        if (playerObject != null)
+        {
+            // Lock to only Y rotation (keep player upright)
+            Vector3 currentEuler = playerObject.rotation.eulerAngles;
+            playerObject.rotation = Quaternion.Euler(0, currentEuler.y, 0);
+        }
     }
 }    private void LateUpdate()
     {
@@ -160,6 +249,9 @@ public void StartZipline(GameObject player)
         return;
     }
 
+    // Set player direction BEFORE locking
+    SetPlayerDirectionForZipline(player);
+
     localZip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
     localZip.name = "ZiplineTransport";
     localZip.transform.position = ZipTransform.position;
@@ -187,16 +279,27 @@ public void StartZipline(GameObject player)
     player.transform.localPosition = new Vector3(0, -1.5f, 0);
 
     // Orienter le joueur vers la zipline cible APRÈS l'avoir attaché
-    Vector3 directionToTarget = (targetZip.ZipTransform.position - player.transform.position).normalized;
-    directionToTarget.y = 0; // Garder seulement la rotation horizontale
-    if (directionToTarget != Vector3.zero)
+Vector3 directionToTarget = (targetZip.ZipTransform.position - player.transform.position).normalized;
+if (directionToTarget != Vector3.zero)
+{
+    // Find the player's visual object
+    Transform playerObject = player.transform.Find("PlayerObject");
+    if (playerObject == null)
     {
-        // Rotation immédiate au début
-        player.transform.rotation = Quaternion.LookRotation(directionToTarget);
-        Debug.Log("Joueur orienté vers la cible : " + targetZip.name);
+        ThirdPersonCam cam = FindObjectOfType<ThirdPersonCam>();
+        if (cam != null) playerObject = cam.playerObject;
     }
-
-    zipping = true;
+    
+    if (playerObject != null)
+    {
+        playerObject.rotation = Quaternion.LookRotation(directionToTarget);
+    }
+    else
+    {
+        // Fallback: rotate the player itself
+        player.transform.rotation = Quaternion.LookRotation(directionToTarget);
+    }
+}    zipping = true;
 }    private void DisablePlayerControls(GameObject player)
     {
         foreach (MonoBehaviour component in player.GetComponents<MonoBehaviour>())
