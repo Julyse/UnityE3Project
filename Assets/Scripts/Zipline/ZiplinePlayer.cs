@@ -54,6 +54,19 @@ public class ZiplinePlayer : MonoBehaviour
             currentZipline.StartZipline(gameObject);
         }
     }
+
+    // Method to call direction face zip for current zipline
+    public void SetDirectionForCurrentZipline()
+    {
+        if (currentZipline != null)
+        {
+            currentZipline.SetPlayerDirectionForZipline(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("Aucune zipline actuelle pour SetDirectionForCurrentZipline");
+        }
+    }
    
     private void CheckForZipline()
     {
@@ -77,7 +90,7 @@ public class ZiplinePlayer : MonoBehaviour
                 // Vérification que le composant Zipline existe
                 if (currentZipline != null)
                 {
-                    Debug.Log("Zipline détectée : " + collider.name);
+                    //Debug.Log("Zipline détectée : " + collider.name);
                     break;
                 }
                 else

@@ -41312,7 +41312,7 @@ GameObject:
   - component: {fileID: 1090202705880652690}
   - component: {fileID: 4928340763056957334}
   m_Layer: 0
-  m_Name: Zipline3
+  m_Name: ZiplineUp
   m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46863,7 +46863,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2626731236495751121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0024304723, y: -0.00023532729, z: 0.00006661941, w: 0.999997}
+  m_LocalRotation: {x: 0.002391945, y: -0.00019802764, z: 0.00005607142, w: 0.9999972}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -47903,6 +47903,8 @@ MonoBehaviour:
   playerObject: {fileID: 1451754566310044076}
   Rb: {fileID: 7355203888288367612}
   rotationSpeed: 7
+  upZiplineRotation: {x: 0.009147686, y: 0.99391866, z: 0.00056216936, w: 0.10973387}
+  downZiplineRotation: {x: -0.004135247, y: 0.10973625, z: -0.0011150003, w: -0.9939515}
 --- !u!1 &2309918255947820592
 GameObject:
   m_ObjectHideFlags: 0
@@ -56285,8 +56287,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2518377593923390454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.007739788, y: -0.8770532, z: 0.0052582514, w: 0.4803021}
-  m_LocalPosition: {x: 206.78, y: 122.027, z: 138.275}
+  m_LocalRotation: {x: 0.0074670184, y: 0.8385152, z: -0.0051405607, w: -0.5448028}
+  m_LocalPosition: {x: 205.43, y: 125.46, z: 147.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56294,7 +56296,7 @@ Transform:
   - {fileID: 3617380032672468038}
   - {fileID: 1451754566310044076}
   m_Father: {fileID: 5544487143648831891}
-  m_LocalEulerAnglesHint: {x: 0.102, y: -122.586, z: 1.067}
+  m_LocalEulerAnglesHint: {x: 0.028, y: -473.974, z: 1.038}
 --- !u!65 &4465103019337507032
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58156,7 +58158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetZip: {fileID: 3822987560532236045}
-  zipSpeed: 1000
+  zipSpeed: 500
   zipScale: 0.2
   arrivalThreshold: 0.1
   showRope: 1
@@ -59588,8 +59590,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821809218535401659}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.083980754, y: -0.7528215, z: 0.10357474, w: 0.6445769}
-  m_LocalPosition: {x: 213.70895, y: 123.98461, z: 139.35114}
+  m_LocalRotation: {x: 0.084001556, y: -0.7528425, z: 0.10360734, w: 0.6445445}
+  m_LocalPosition: {x: 212.35895, y: 127.4176, z: 148.09616}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -60363,7 +60365,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -65996,8 +65998,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330645893663162760}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000029523926, y: 0.00000010851659, z: -0.000000029188776, w: 1}
-  m_LocalPosition: {x: 0.000050840055, y: -0.000018777544, z: -0.00006718092}
+  m_LocalRotation: {x: -0.000027421635, y: 0.000034050325, z: -0.000009547625, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66553,8 +66555,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9217722360921086664}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.016019229, y: 0.87702495, z: -0.05985178, w: -0.47643304}
-  m_LocalPosition: {x: -29.77, y: 139.84, z: -111.69}
+  m_LocalRotation: {x: -0.016004626, y: 0.87713206, z: -0.059852365, w: -0.47623616}
+  m_LocalPosition: {x: -29.77, y: 139.96, z: -111.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66562,7 +66564,7 @@ Transform:
   - {fileID: 8910879791144694121}
   - {fileID: 5800488162533107219}
   m_Father: {fileID: 7758661888286029019}
-  m_LocalEulerAnglesHint: {x: 0, y: 58, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.906, y: 237.1, z: 1.67}
 --- !u!33 &7115609450402055238
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -73620,8 +73622,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293934767623424197}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.044051576, y: -0.00023814055, z: 0.00005560276, w: 0.9990293}
-  m_LocalPosition: {x: 0.000050840055, y: -0.000018777544, z: -0.00006718092}
+  m_LocalRotation: {x: -0.04409006, y: -0.00020040694, z: 0.000046803583, w: 0.99902755}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -73787,7 +73789,7 @@ GameObject:
   - component: {fileID: 2810324154449653025}
   - component: {fileID: 3822987560532236045}
   m_Layer: 0
-  m_Name: Zipline (1)
+  m_Name: ZiplineDown
   m_TagString: Zipline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
