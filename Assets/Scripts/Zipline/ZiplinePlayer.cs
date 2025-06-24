@@ -134,6 +134,9 @@ public class ZiplinePlayer : MonoBehaviour
         {
             Debug.LogError("playerAnimator est null dans StartZiplineAnimation!");
         }
+
+        // Déclencher l'événement zipline (simple, sans Transform)
+        GameEvents.TriggerZiplineStart();
     }
 
     // This method should be called by the Zipline script when the zipline ends
@@ -145,6 +148,9 @@ public class ZiplinePlayer : MonoBehaviour
             playerAnimator.SetBool(animatorBoolName, false);
             Debug.Log("Animation zipline désactivée");
         }
+
+        // Déclencher l'événement de fin de zipline
+        GameEvents.TriggerZiplineEnd();
     }
 
     // Public getter for other scripts to check if player is on zipline

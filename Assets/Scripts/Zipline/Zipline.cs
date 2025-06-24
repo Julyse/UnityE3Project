@@ -37,29 +37,56 @@ public class Zipline : MonoBehaviour
             CreateRope();
     }
 
-    private void Update()
+private void Update()
+{
+    if (!zipping || localZip == null) return;
+
+    // Vérifications de sécurité pour éviter les NullReference
+    if (targetZip == null || targetZip.ZipTransform == null)
     {
-        if (!zipping || localZip == null) return;
-
-        Vector3 direction = (targetZip.ZipTransform.position - localZip.transform.position).normalized;
-
-        Rigidbody zipRb = localZip.GetComponent<Rigidbody>();
-        if (zipRb != null)
-            zipRb.AddForce(direction * zipSpeed * Time.deltaTime, ForceMode.Acceleration);
-
-        float distance = Vector3.Distance(localZip.transform.position, targetZip.ZipTransform.position);
-        if (distance <= arrivalThreshold)
-        {
-            ResetZipline();
-        }
-
-        if (playerOnZip != null)
-        {
-            playerOnZip.transform.position = localZip.transform.position + Vector3.down * verticalOffset;
-        }
+        Debug.LogError("TargetZip ou targetZip.ZipTransform est null dans Update!");
+        ResetZipline();
+        return;
     }
 
-    private void LateUpdate()
+    Vector3 direction = (targetZip.ZipTransform.position - localZip.transform.position).normalized;
+
+    Rigidbody zipRb = localZip.GetComponent<Rigidbody>();
+    if (zipRb != null)
+        zipRb.AddForce(direction * zipSpeed * Time.deltaTime, ForceMode.Acceleration);
+
+    float distance = Vector3.Distance(localZip.transform.position, targetZip.ZipTransform.position);
+    if (distance <= arrivalThreshold)
+    {
+        ResetZipline();
+        return;
+    }
+
+    // Vérification critique : s'assurer que playerOnZip existe toujours
+    if (playerOnZip == null)
+    {
+        Debug.LogWarning("PlayerOnZip est devenu null pendant la zipline!");
+        ResetZipline();
+        return;
+    }
+
+    // Mettre à jour la position du joueur
+    playerOnZip.transform.position = localZip.transform.position + Vector3.down * verticalOffset;
+    
+    // Orienter le joueur vers la cible pendant le trajet (en world space)
+    Vector3 directionToTarget = (targetZip.ZipTransform.position - playerOnZip.transform.position).normalized;
+    directionToTarget.y = 0; // Garder seulement la rotation horizontale
+    if (directionToTarget != Vector3.zero)
+    {
+        // Utiliser world rotation au lieu de local rotation
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        playerOnZip.transform.rotation = Quaternion.Slerp(
+            playerOnZip.transform.rotation, 
+            targetRotation, 
+            Time.deltaTime * 5f // Rotation plus rapide pour être sûr
+        );
+    }
+}    private void LateUpdate()
     {
         if (showRope && ropeRenderer != null)
             UpdateRopePoints();
@@ -123,47 +150,54 @@ public class Zipline : MonoBehaviour
         ropeRenderer.SetPositions(ropePoints);
     }
 
-    public void StartZipline(GameObject player)
+public void StartZipline(GameObject player)
+{
+    if (zipping) return;
+
+    if (targetZip == null || ZipTransform == null)
     {
-        if (zipping) return;
-
-        if (targetZip == null || ZipTransform == null)
-        {
-            Debug.LogError("Configuration zipline incomplète");
-            return;
-        }
-
-        localZip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        localZip.name = "ZiplineTransport";
-        localZip.transform.position = ZipTransform.position;
-        localZip.transform.localScale = new Vector3(zipScale, zipScale, zipScale);
-
-        Rigidbody zipRb = localZip.AddComponent<Rigidbody>();
-        zipRb.useGravity = false;
-        zipRb.linearDamping = 1f;
-
-        Collider zipCollider = localZip.GetComponent<Collider>();
-        zipCollider.isTrigger = true;
-
-        Rigidbody playerRb = player.GetComponent<Rigidbody>();
-        if (playerRb != null)
-        {
-            playerRb.useGravity = false;
-            playerRb.isKinematic = true;
-            playerRb.linearVelocity = Vector3.zero;
-        }
-
-        DisablePlayerControls(player);
-
-        playerOnZip = player;
-
-        player.transform.SetParent(localZip.transform);
-        player.transform.localPosition = new Vector3(0, -1.5f, 0);
-
-        zipping = true;
+        Debug.LogError("Configuration zipline incomplète");
+        return;
     }
 
-    private void DisablePlayerControls(GameObject player)
+    localZip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    localZip.name = "ZiplineTransport";
+    localZip.transform.position = ZipTransform.position;
+    localZip.transform.localScale = new Vector3(zipScale, zipScale, zipScale);
+
+    Rigidbody zipRb = localZip.AddComponent<Rigidbody>();
+    zipRb.useGravity = false;
+    zipRb.linearDamping = 1f;
+
+    Collider zipCollider = localZip.GetComponent<Collider>();
+    zipCollider.isTrigger = true;
+
+    Rigidbody playerRb = player.GetComponent<Rigidbody>();
+    if (playerRb != null)
+    {
+        playerRb.linearVelocity = Vector3.zero; // Remettre à zéro AVANT de passer en kinematic
+        playerRb.useGravity = false;
+        playerRb.isKinematic = true;
+    }
+
+    playerOnZip = player;
+
+    // Attacher le joueur SANS changer sa rotation pour l'instant
+    player.transform.SetParent(localZip.transform);
+    player.transform.localPosition = new Vector3(0, -1.5f, 0);
+
+    // Orienter le joueur vers la zipline cible APRÈS l'avoir attaché
+    Vector3 directionToTarget = (targetZip.ZipTransform.position - player.transform.position).normalized;
+    directionToTarget.y = 0; // Garder seulement la rotation horizontale
+    if (directionToTarget != Vector3.zero)
+    {
+        // Rotation immédiate au début
+        player.transform.rotation = Quaternion.LookRotation(directionToTarget);
+        Debug.Log("Joueur orienté vers la cible : " + targetZip.name);
+    }
+
+    zipping = true;
+}    private void DisablePlayerControls(GameObject player)
     {
         foreach (MonoBehaviour component in player.GetComponents<MonoBehaviour>())
         {
@@ -182,7 +216,6 @@ public class Zipline : MonoBehaviour
                 component.enabled = true;
         }
     }
-
 private void ResetZipline()
 {
     if (!zipping || localZip == null) return;
@@ -199,9 +232,9 @@ private void ResetZipline()
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
         if (playerRb != null)
         {
+            playerRb.isKinematic = false; // Remettre en mode physique AVANT de modifier la vélocité
             playerRb.useGravity = true;
-            playerRb.isKinematic = false;
-            playerRb.linearVelocity = Vector3.zero;
+            playerRb.linearVelocity = Vector3.zero; // Maintenant c'est safe
 
             playerRb.detectCollisions = false;
             playerOnZip = player;
@@ -215,13 +248,14 @@ private void ResetZipline()
             ziplinePlayer.EndZiplineAnimation();
         }
 
-        EnablePlayerControls(player);
+        // Plus de EnablePlayerControls - on utilise les événements
     }
 
     Destroy(localZip);
     localZip = null;
     zipping = false;
-}    private void EnablePlayerCollision()
+}
+    private void EnablePlayerCollision()
     {
         if (playerOnZip != null)
         {

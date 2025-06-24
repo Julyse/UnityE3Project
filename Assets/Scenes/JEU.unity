@@ -46863,7 +46863,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2626731236495751121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.002430443, y: -0.0002353273, z: 0.0000666194, w: 0.999997}
+  m_LocalRotation: {x: 0.0024304427, y: -0.0002353169, z: 0.00006661646, w: 0.99999696}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -48674,6 +48674,7 @@ GameObject:
   - component: {fileID: 7355203888288367612}
   - component: {fileID: 7654260688486451802}
   - component: {fileID: 7852210625203079345}
+  - component: {fileID: 7852210625203079346}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -56284,8 +56285,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2518377593923390454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0077397875, y: -0.8770532, z: 0.0052582514, w: 0.4803021}
-  m_LocalPosition: {x: -22.75, y: 1.02, z: 39.02}
+  m_LocalRotation: {x: -0.007739788, y: -0.8770532, z: 0.0052582514, w: 0.4803021}
+  m_LocalPosition: {x: 206.78, y: 122.027, z: 138.275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59588,7 +59589,7 @@ Transform:
   m_GameObject: {fileID: 1821809218535401659}
   serializedVersion: 2
   m_LocalRotation: {x: 0.083980754, y: -0.7528215, z: 0.10357474, w: 0.6445769}
-  m_LocalPosition: {x: -15.821096, y: 2.9776137, z: 40.09613}
+  m_LocalPosition: {x: 213.70895, y: 123.98461, z: 139.35114}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -65995,8 +65996,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330645893663162760}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000029524513, y: -0.00000002332737, z: 0.000000007784931, w: 1}
-  m_LocalPosition: {x: 0.000011898332, y: 0.0000006759599, z: 0.0000018838309}
+  m_LocalRotation: {x: -0.000000006638659, y: 0.00000010853104, z: -0.000000029190787, w: 1}
+  m_LocalPosition: {x: 0.000030983636, y: -0.000033341676, z: -0.00009199966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -69428,6 +69429,26 @@ CapsuleCollider:
   m_Height: 1.69
   m_Direction: 1
   m_Center: {x: 0, y: 0.52, z: 0}
+--- !u!114 &7852210625203079346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518377593923390454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66216abb6ec2e4b44a614ce0cbdce662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkOffset: 1
+  checkRadius: 2
+  ziplineKey: 101
+  messageUI: {fileID: 0}
+  messageText: {fileID: 0}
+  messageContent: Appuyez sur E pour utiliser la zipline
+  animatorBoolName: IsOnZipline
+  playerAnimator: {fileID: 8366867225936157299}
 --- !u!4 &7853382396484416347
 Transform:
   m_ObjectHideFlags: 0
@@ -73599,8 +73620,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293934767623424197}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0440516, y: -0.0002381694, z: 0.000055609486, w: 0.9990292}
-  m_LocalPosition: {x: 0.000011898332, y: 0.0000006759599, z: 0.0000018838309}
+  m_LocalRotation: {x: -0.044051584, y: -0.0002381694, z: 0.000055609496, w: 0.9990293}
+  m_LocalPosition: {x: 0.000030983636, y: -0.000033341676, z: -0.00009199966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

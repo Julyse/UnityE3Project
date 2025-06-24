@@ -14,7 +14,7 @@ public static class GameEvents
     public static event Action OnConversationEnded;
 
     // Événements pour la zipline
-    public static event Action<Transform> OnZiplineStarted;  // Transform = target zipline pour orienter la caméra
+    public static event Action OnZiplineStarted;
     public static event Action OnZiplineEnded;
 
     // Méthodes pour déclencher les événements
@@ -49,16 +49,16 @@ public static class GameEvents
         TriggerPlayerControlsLock(false);
     }
 
-    // Événements de zipline
-    public static void TriggerZiplineStart(Transform targetZiplineTransform)
+    // Événements de zipline (juste mouvement/rotation, pas caméra)
+    public static void TriggerZiplineStart()
     {
-        OnZiplineStarted?.Invoke(targetZiplineTransform);
-        TriggerPlayerControlsLock(true);
+        OnZiplineStarted?.Invoke();
+        TriggerPlayerMovementLock(true); // Seulement le mouvement/rotation du joueur
     }
 
     public static void TriggerZiplineEnd()
     {
         OnZiplineEnded?.Invoke();
-        TriggerPlayerControlsLock(false);
+        TriggerPlayerMovementLock(false); // Déverrouiller seulement le mouvement/rotation
     }
 }
