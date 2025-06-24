@@ -8,22 +8,26 @@ public static class GameEvents
     public static event Action<bool> OnPlayerMovementLockChanged;
     public static event Action<bool> OnCameraLockChanged;
     public static event Action<bool> OnPlayerControlsLockChanged;
-    
+
     // Événements pour les états de conversation
     public static event Action OnConversationStarted;
     public static event Action OnConversationEnded;
-    
+
+    // Événements pour la zipline
+    public static event Action OnZiplineStarted;
+    public static event Action OnZiplineEnded;
+
     // Méthodes pour déclencher les événements
     public static void TriggerPlayerMovementLock(bool isLocked)
     {
         OnPlayerMovementLockChanged?.Invoke(isLocked);
     }
-    
+
     public static void TriggerCameraLock(bool isLocked)
     {
         OnCameraLockChanged?.Invoke(isLocked);
     }
-    
+
     // Verrouille tous les contrôles du joueur
     public static void TriggerPlayerControlsLock(bool isLocked)
     {
@@ -31,17 +35,30 @@ public static class GameEvents
         OnPlayerMovementLockChanged?.Invoke(isLocked);
         OnCameraLockChanged?.Invoke(isLocked);
     }
-    
+
     // Événements de conversation
     public static void TriggerConversationStart()
     {
         OnConversationStarted?.Invoke();
         TriggerPlayerControlsLock(true);
     }
-    
+
     public static void TriggerConversationEnd()
     {
         OnConversationEnded?.Invoke();
         TriggerPlayerControlsLock(false);
+    }
+
+    // Événements de zipline (juste mouvement/rotation, pas caméra)
+    public static void TriggerZiplineStart()
+    {
+        OnZiplineStarted?.Invoke();
+        TriggerPlayerMovementLock(true); // Seulement le mouvement/rotation du joueur
+    }
+
+    public static void TriggerZiplineEnd()
+    {
+        OnZiplineEnded?.Invoke();
+        TriggerPlayerMovementLock(false); // Déverrouiller seulement le mouvement/rotation
     }
 }
