@@ -183,40 +183,45 @@ public class Zipline : MonoBehaviour
         }
     }
 
-    private void ResetZipline()
+private void ResetZipline()
+{
+    if (!zipping || localZip == null) return;
+
+    if (localZip.transform.childCount > 0)
     {
-        if (!zipping || localZip == null) return;
+        GameObject player = localZip.transform.GetChild(0).gameObject;
 
-        if (localZip.transform.childCount > 0)
+        player.transform.SetParent(null);
+        Vector3 arrivalPos = targetZip.ZipTransform.position;
+        arrivalPos.y -= 1.5f;
+        player.transform.position = arrivalPos;
+
+        Rigidbody playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb != null)
         {
-            GameObject player = localZip.transform.GetChild(0).gameObject;
+            playerRb.useGravity = true;
+            playerRb.isKinematic = false;
+            playerRb.linearVelocity = Vector3.zero;
 
-            player.transform.SetParent(null);
-            Vector3 arrivalPos = targetZip.ZipTransform.position;
-            arrivalPos.y -= 1.5f;
-            player.transform.position = arrivalPos;
-
-            Rigidbody playerRb = player.GetComponent<Rigidbody>();
-            if (playerRb != null)
-            {
-                playerRb.useGravity = true;
-                playerRb.isKinematic = false;
-                playerRb.linearVelocity = Vector3.zero;
-
-                playerRb.detectCollisions = false;
-                playerOnZip = player;
-                Invoke(nameof(EnablePlayerCollision), 0.05f);
-            }
-
-            EnablePlayerControls(player);
+            playerRb.detectCollisions = false;
+            playerOnZip = player;
+            Invoke(nameof(EnablePlayerCollision), 0.05f);
         }
 
-        Destroy(localZip);
-        localZip = null;
-        zipping = false;
+        // Call the ZiplinePlayer's EndZiplineAnimation method
+        ZiplinePlayer ziplinePlayer = player.GetComponent<ZiplinePlayer>();
+        if (ziplinePlayer != null)
+        {
+            ziplinePlayer.EndZiplineAnimation();
+        }
+
+        EnablePlayerControls(player);
     }
 
-    private void EnablePlayerCollision()
+    Destroy(localZip);
+    localZip = null;
+    zipping = false;
+}    private void EnablePlayerCollision()
     {
         if (playerOnZip != null)
         {

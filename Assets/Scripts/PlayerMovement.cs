@@ -26,7 +26,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private float startYScale;
 
     [Header("Ledge Grab")]
-    public bool ledgeGrabEnabled = true;
+    public bool ledgeGrabEnabled = true; // NEW: Toggle for ledge grabbing
     public float ledgeDetectionRadius = 1f;
     public float ledgeGrabSmoothing = 15f;
     public float playerHandsOffset = 1.8f;
@@ -40,21 +40,18 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
-    public KeyCode toggleLedgeGrabKey = KeyCode.L;
+    public KeyCode toggleLedgeGrabKey = KeyCode.L; // NEW: Key to toggle ledge grab
 
     [Header("Ground Check (Sphere)")]
     public Transform groundCheck;
-    public float groundDistance = 0.5f;
+    public float groundDistance = 0.2f;
     public LayerMask whatIsGround;
     bool grounded;
-    bool wasGrounded; // NEW: Track previous ground state
 
     [Header("Slope Handling")]
     public float maxSlopeAngle = 50f;
     private RaycastHit slopeHit;
     private bool exitingSlope;
-    private bool wasOnSlope; // NEW: Track previous slope state
-    private float slopeExitTimer = 0f; // NEW: Timer for slope exit
 
     public Transform orientation;
 
@@ -81,7 +78,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     [Header("Movement Lock")]
     private bool isMovementLocked = false;
     public bool IsMovementLocked => isMovementLocked;
-    
     public enum MovementState
     {
         idling,
@@ -91,29 +87,24 @@ public class PlayerMovementAdvanced : MonoBehaviour
         air,
         ledgeGrab
     }
-    
     private void OnEnable()
     {
-        GameEvents.OnPlayerMovementLockChanged += HandleMovementLockChanged;
-        GameEvents.OnPlayerControlsLockChanged += HandleMovementLockChanged;
-    }
-    
+    GameEvents.OnPlayerMovementLockChanged += HandleMovementLockChanged;
+    GameEvents.OnPlayerControlsLockChanged += HandleMovementLockChanged;    }
     private void OnDisable()
     {
         GameEvents.OnPlayerMovementLockChanged -= HandleMovementLockChanged;
         GameEvents.OnPlayerControlsLockChanged -= HandleMovementLockChanged;
     }
-    
     private void HandleMovementLockChanged(bool isLocked)
-    {
-        LockMovement(isLocked);
-    }
+{
+    LockMovement(isLocked);
+}
 
+    // Méthode publique pour verrouiller le mouvement
+ 
     private void Awake()
     {
-        CapsuleCollider capsule = GetComponent<CapsuleCollider>();
-        if (capsule) capsule.enabled = false;
-        
         GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
         if (audioObject != null)
         {
@@ -131,8 +122,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb.freezeRotation = true;
         rb.useGravity = false;
 
-        StartCoroutine(EnableColliderNextFrame());
-
         readyToJump = true;
         startYScale = transform.localScale.y;
 
@@ -142,62 +131,24 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
 
         previousState = state;
-        wasGrounded = true;
     }
 
-    private IEnumerator EnableColliderNextFrame()
+private void Update()
+{
+    // NEW: Handle ledge grab toggle input
+    if (Input.GetKeyDown(toggleLedgeGrabKey))
     {
-        yield return new WaitForFixedUpdate();
-        CapsuleCollider capsule = GetComponent<CapsuleCollider>();
-        if (capsule) capsule.enabled = true;
+        ToggleLedgeGrab();
     }
 
-    private void Update()
+    // Si le mouvement est verrouillé, on ne fait que les checks de base
+    if (isMovementLocked)
     {
-        if (Input.GetKeyDown(toggleLedgeGrabKey))
-        {
-            ToggleLedgeGrab();
-        }
-
-        if (isMovementLocked)
-        {
-            grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
-            return;
-        }
-
-        // Store previous ground state
-        wasGrounded = grounded;
         grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
+        return;
+    }
 
-        // Handle slope exit timer
-        if (slopeExitTimer > 0)
-        {
-            slopeExitTimer -= Time.deltaTime;
-            if (slopeExitTimer <= 0)
-            {
-                exitingSlope = false;
-            }
-        }
-
-        // Check if we just left the ground
-        if (wasGrounded && !grounded)
-        {
-            // If we were on a slope, handle the exit properly
-            if (wasOnSlope)
-            {
-                exitingSlope = true;
-                slopeExitTimer = 0.3f; // Give some time to clear slope physics
-                
-                // Clamp upward velocity to prevent floating
-                if (rb.linearVelocity.y > 0)
-                {
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, 
-                                                    Mathf.Min(rb.linearVelocity.y, 2f), 
-                                                    rb.linearVelocity.z);
-                }
-            }
-        }
-
+        // Only check for ledge grabbing if it's enabled
         if (!isGrabbingLedge && ledgeGrabEnabled)
         {
             LedgeGrab();
@@ -206,6 +157,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             HandleLedgeGrabInput();
         }
+
+        grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
 
         if (!isGrabbingLedge)
         {
@@ -219,15 +172,14 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb.linearDamping = grounded ? groundDrag : 0f;
     }
 
-    private void FixedUpdate()
+private void FixedUpdate()
+{
+    // Si le mouvement est verrouillé, on applique juste la gravité
+    if (isMovementLocked)
     {
-        if (isMovementLocked)
-        {
-            ApplyCustomGravity();
-            return;
-        }
-        
-        if (!isGrabbingLedge)
+        ApplyCustomGravity();
+        return;
+    }        if (!isGrabbingLedge)
         {
             MovePlayer();
             ApplyCustomGravity();
@@ -236,15 +188,14 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             MaintainLedgePosition();
         }
-
-        // Update slope tracking
-        wasOnSlope = OnSlope();
     }
 
+    // NEW: Method to toggle ledge grabbing
     private void ToggleLedgeGrab()
     {
         ledgeGrabEnabled = !ledgeGrabEnabled;
 
+        // If we're currently grabbing a ledge and ledge grab is disabled, release the ledge
         if (!ledgeGrabEnabled && isGrabbingLedge)
         {
             ReleaseLedge();
@@ -253,6 +204,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         Debug.Log("Ledge grabbing " + (ledgeGrabEnabled ? "enabled" : "disabled"));
     }
 
+    // NEW: Method to release ledge (useful when disabling ledge grab while grabbing)
     private void ReleaseLedge()
     {
         if (isGrabbingLedge)
@@ -261,6 +213,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
             rb.useGravity = true;
             canGrabLedge = false;
 
+            // Add a small delay before allowing ledge grab again
             Invoke(nameof(EnableLedgeGrab), 0.5f);
         }
     }
@@ -269,13 +222,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         if (!grounded && !OnSlope())
         {
-            // Apply stronger gravity when falling
-            Vector3 downForce = Physics.gravity * fallMultiplier;
-            rb.AddForce(downForce, ForceMode.Acceleration);
+            rb.AddForce(Physics.gravity * fallMultiplier, ForceMode.Acceleration);
         }
         else if (grounded)
         {
-            // Light downward force to keep grounded
             rb.AddForce(Physics.gravity, ForceMode.Acceleration);
         }
     }
@@ -283,7 +233,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void MyInput()
     {
         if (isMovementLocked) return;
-        
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -365,17 +314,25 @@ public class PlayerMovementAdvanced : MonoBehaviour
             {
                 case MovementState.idling:
                     break;
+
                 case MovementState.walking:
+                    // handled in HandleFootsteps
                     break;
+
                 case MovementState.sprinting:
+                    // handled in HandleFootsteps
                     break;
+
                 case MovementState.air:
                     break;
+
                 case MovementState.crouching:
                     if (audioManager != null)
                         audioManager.PlaySFX(audioManager.Crouch);
                     break;
+
                 case MovementState.ledgeGrab:
+                    // Optional ledge grab sound
                     break;
             }
 
@@ -395,7 +352,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
                 if (state == MovementState.walking)
                 {
-                    footstepCooldown = 0.5f;
+                    footstepCooldown = 0.5f; // slower footsteps
                     if (audioManager != null)
                     {
                         switch (rand)
@@ -410,7 +367,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
                 }
                 else if (state == MovementState.sprinting)
                 {
-                    footstepCooldown = 0.25f;
+                    footstepCooldown = 0.25f; // faster footsteps
                     if (audioManager != null)
                     {
                         switch (rand)
@@ -429,7 +386,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
         else
         {
-            footstepTimer = 0f;
+            footstepTimer = 0f; // Reset timer when not walking/sprinting
         }
     }
 
@@ -437,53 +394,27 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // Check if we're on a slope and not trying to exit
         if (OnSlope() && !exitingSlope)
         {
-            // Get slope-aligned movement direction
-            Vector3 slopeMoveDirection = GetSlopeMoveDirection();
-            
-            // Apply movement force
-            rb.AddForce(slopeMoveDirection * moveSpeed * 10f, ForceMode.Force);
+            Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+            float uphillBoost = Mathf.Lerp(1f, 1.2f, 1f - slopeHit.normal.y);
+            rb.AddForce(slopeMoveDirection * moveSpeed * 10f * uphillBoost, ForceMode.Force);
 
-            // Only apply downward force if moving up the slope
             if (rb.linearVelocity.y > 0.1f)
-            {
                 rb.AddForce(Vector3.down * 5f, ForceMode.Force);
-            }
         }
         else if (grounded)
         {
-            // Normal ground movement
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
         else
         {
-            // Air movement
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
 
-    private Vector3 GetSlopeMoveDirection()
-    {
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    }
-
     private void SpeedControl()
     {
-        // Special handling when leaving a slope
-        if (exitingSlope && !grounded)
-        {
-            // Limit velocity more aggressively when exiting slope
-            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-            if (flatVel.magnitude > moveSpeed * 0.8f)
-            {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed * 0.8f;
-                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
-            }
-            return;
-        }
-
         if (OnSlope() && !exitingSlope)
         {
             if (rb.linearVelocity.magnitude > moveSpeed)
@@ -508,15 +439,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
 
         exitingSlope = true;
-        slopeExitTimer = 0.5f; // Set timer for slope exit
-        
-        // Clear velocity before jumping
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x * 0.5f, 0f, rb.linearVelocity.z * 0.5f);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
         if (audioManager != null)
         {
             int rand = Random.Range(1, 21);
+
             switch (rand)
             {
                 case 1: audioManager.PlaySFX(audioManager.CriSaut1); break;
@@ -528,7 +457,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
-        // Don't reset exitingSlope here - let the timer handle it
+        exitingSlope = false;
     }
 
     private bool OnSlope()
@@ -649,6 +578,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         Gizmos.color = grounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
 
+        // Only show ledge grab gizmos if ledge grabbing is enabled
         if (!isGrabbingLedge && orientation != null && ledgeGrabEnabled)
         {
             Vector3 forwardCheckOrigin = transform.position + Vector3.up * 1.5f;
@@ -665,25 +595,27 @@ public class PlayerMovementAdvanced : MonoBehaviour
             Gizmos.DrawWireSphere(grabTargetPosition, 0.15f);
         }
     }
-
-    public void LockMovement(bool lockState)
+public void LockMovement(bool lockState)
+{
+    isMovementLocked = lockState;
+    
+    if (lockState)
     {
-        isMovementLocked = lockState;
+        // Arrête immédiatement le mouvement
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+        rb.angularVelocity = Vector3.zero;
         
-        if (lockState)
+        // Force l'état idle
+        state = MovementState.idling;
+        moveSpeed = 0f;
+        
+        // Met à jour l'animation
+        if (animator != null)
         {
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-            rb.angularVelocity = Vector3.zero;
-            
-            state = MovementState.idling;
-            moveSpeed = 0f;
-            
-            if (animator != null)
-            {
-                animator.SetBool("IsIdle", true);
-                animator.SetBool("IsWalking", false);
-                animator.SetBool("IsRunning", false);
-            }
+            animator.SetBool("IsIdle", true);
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
         }
     }
+}
 }
