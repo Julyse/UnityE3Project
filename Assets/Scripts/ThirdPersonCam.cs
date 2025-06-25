@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ThirdPersonCam : MonoBehaviour
 
 
@@ -11,7 +10,6 @@ public class ThirdPersonCam : MonoBehaviour
     public Rigidbody Rb;
 
     public float rotationSpeed;
-
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -30,7 +28,14 @@ public class ThirdPersonCam : MonoBehaviour
 
         if(inputDir != Vector3.zero)
         {
-            playerObject.forward = Vector3.Slerp(playerObject.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
+           
+            if(inputDir != Vector3.zero)
+            {
+                playerObject.forward = Vector3.Slerp(playerObject.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+            }
         }
     }
 }

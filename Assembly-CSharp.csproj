@@ -79,6 +79,7 @@
     <Compile Include="Assets/Scripts/Menu/Son/Sound_Music.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientObscurance.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Fisheye.cs" />
+    <Compile Include="Assets/DebugMenu.cs" />
     <Compile Include="Assets/Scripts/platforme/Piston/Menu/Son/Volume settings.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BlurOptimized.cs" />
     <Compile Include="Assets/Scripts/platforme/Piston/Movement_builtin.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Assets/Scripts/platforme/Orbit/OrbitPlatform.cs" />
     <Compile Include="Assets/Import/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionCurves.cs" />
+    <Compile Include="Assets/Import/BOKI/LowPolyNature/Scripts/FadeInOut.cs" />
     <Compile Include="Assets/Scripts/platforme/Piston/BreakablePlatform.cs" />
     <Compile Include="Assets/Scripts/SpiningCylinder.cs" />
     <Compile Include="Assets/Scripts/platforme/PlatformCollision.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Assets/Import/DialogueEditor/Assets/Scripts/Conversation.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/BloomAndFlares.cs" />
     <Compile Include="Assets/Scripts/ManègeStick.cs" />
+    <Compile Include="Assets/Import/BOKI/LowPolyNature/Scripts/SimpleCameraController.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/SunShafts.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/Bloom.cs" />
     <Compile Include="Assets/Scripts/platforme/Piston/PlatformCollision.cs" />
@@ -170,6 +173,7 @@
     <Compile Include="Assets/Settings/PlayerInput.cs" />
     <Compile Include="Assets/Import/DialogueEditor/Assets/Scripts/ConversationNode.cs" />
     <Compile Include="Assets/Scripts/platforme/Ascenseur.cs" />
+    <Compile Include="Assets/Import/BOKI/LowPolyNature/Scripts/WaterfallAudio.cs" />
     <Compile Include="Assets/Scripts/Menu/Pause/Toggles.cs" />
     <Compile Include="Assets/Import/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" />
     <Compile Include="Assets/Import/Free_Rocks/Standard Assets/Effects/ImageEffects/Scripts/DepthOfField.cs" />
@@ -1305,6 +1309,18 @@
       <HintPath>Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.TerrainTools.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.TerrainTools.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Animation.Rigging.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.Animation.Rigging.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Recorder">
+      <HintPath>Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
       <Private>False</Private>
@@ -1321,8 +1337,8 @@
       <HintPath>Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+    <Reference Include="Unity.TerrainTools">
+      <HintPath>Library/ScriptAssemblies/Unity.TerrainTools.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Timeline">
@@ -1335,6 +1351,10 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
@@ -1357,12 +1377,20 @@
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Bindings.OpenImageIO.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.Bindings.OpenImageIO.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PPv2URPConverters">
       <HintPath>Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Recorder.Base">
+      <HintPath>Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Editor">
@@ -1383,6 +1411,10 @@
     </Reference>
     <Reference Include="Unity.Collections.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Animation.Rigging">
+      <HintPath>Library/ScriptAssemblies/Unity.Animation.Rigging.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
@@ -1441,6 +1473,10 @@
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
       <Private>False</Private>
@@ -1457,12 +1493,16 @@
       <HintPath>Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    <Reference Include="Unity.Recorder.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Burst">
