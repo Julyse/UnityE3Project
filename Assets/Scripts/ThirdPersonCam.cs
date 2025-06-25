@@ -13,6 +13,8 @@ public class ThirdPersonCam : MonoBehaviour
     private bool isMovementLocked = false; // Nouveau: verrouillage du mouvement
     public bool IsCameraLocked => isCameraLocked;
     public bool IsMovementLocked => isMovementLocked; // Getter public
+    public Quaternion upZiplineRotation = Quaternion.Euler(0.028f, -473.974f, 1.038f); // Rotation pour la zipline en haut
+    public Quaternion downZiplineRotation = Quaternion.Euler(0.432f, -294.058f, 0.053f);
    
     void Start()
     {
@@ -55,6 +57,20 @@ public class ThirdPersonCam : MonoBehaviour
     public void LockMovement(bool lockState)
     {
         isMovementLocked = lockState;
+    }
+    public void DirectionFaceZip(bool direction)
+    {
+        // Cette méthode est appelée pour orienter le joueur vers la direction de la zipline
+        if (direction)
+        {
+            // Si la zipline est en haut, oriente le joueur vers le haut
+            playerObject.rotation = upZiplineRotation;
+        }
+        else
+        {
+            // Si la zipline est en bas, oriente le joueur vers le bas
+            playerObject.rotation = downZiplineRotation;
+        }
     }
    
     void Update()
