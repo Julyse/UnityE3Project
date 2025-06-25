@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/travail local nico.unity.meta
+guid: 6b056ea3608504ca784db60a416ad880
+========
 guid: 613b9a031d0b25045b2be50774e55d3e
+>>>>>>>> fa73700f289a0262354a1762d6362ee63298839a:Assets/Scenes/particule.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
