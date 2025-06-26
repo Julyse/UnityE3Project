@@ -135,11 +135,12 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
 private void Update()
 {
+        DebugFloating();
     // NEW: Handle ledge grab toggle input
-    if (Input.GetKeyDown(toggleLedgeGrabKey))
-    {
-        ToggleLedgeGrab();
-    }
+        if (Input.GetKeyDown(toggleLedgeGrabKey))
+        {
+            ToggleLedgeGrab();
+        }
 
     // Si le mouvement est verrouillé, on ne fait que les checks de base
     if (isMovementLocked)
@@ -172,14 +173,28 @@ private void Update()
         rb.linearDamping = grounded ? groundDrag : 0f;
     }
 
-private void FixedUpdate()
-{
-    // Si le mouvement est verrouillé, on applique juste la gravité
-    if (isMovementLocked)
+    private void DebugFloating()
     {
-        ApplyCustomGravity();
-        return;
-    }        if (!isGrabbingLedge)
+    Vector3 origin = transform.position;
+    Vector3 direction = Vector3.down;
+
+    Debug.DrawRay(origin, direction * 10f, Color.red);
+
+    if (Physics.Raycast(origin, direction, out RaycastHit hit, 10f, ~0, QueryTriggerInteraction.Ignore))
+    {
+        Debug.Log("Hit: " + hit.collider.name);
+    }
+}
+
+    private void FixedUpdate()
+    {
+        // Si le mouvement est verrouillé, on applique juste la gravité
+        if (isMovementLocked)
+        {
+            ApplyCustomGravity();
+            return;
+        }
+        if (!isGrabbingLedge)
         {
             MovePlayer();
             ApplyCustomGravity();
