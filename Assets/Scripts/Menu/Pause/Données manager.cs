@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
 
 public class DonneesManager : MonoBehaviour
 {
@@ -24,8 +23,6 @@ public class DonneesManager : MonoBehaviour
     private bool chronoActive = false;
     private bool chronoEnPause = false;
     private Sound_Music audioManager;
-
-    public TextMeshProUGUI messageFin;
     
     void Awake()
     {
@@ -49,36 +46,6 @@ public class DonneesManager : MonoBehaviour
         
         positionPrecedente = fakePlayerTransform.position;
         niveauText.text = nomNiveau;
-        
-        // Configuration du message de fin
-        if (messageFin != null)
-        {
-            messageFin.gameObject.SetActive(false);
-            
-            // Centrage du texte
-            messageFin.alignment = TextAlignmentOptions.Center;
-            
-            // Configuration de la position (centrage simple et efficace)
-            RectTransform rectTransform = messageFin.GetComponent<RectTransform>();
-            if (rectTransform != null)
-            {
-                // Ancrage au centre de l'écran
-                rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-                rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-                rectTransform.pivot = new Vector2(0.5f, 0.5f);
-                
-                // Position centrée avec décalage vers le bas
-                rectTransform.anchoredPosition = new Vector2(0f, -100f);
-                
-                // Taille fixe pour le texte
-                rectTransform.sizeDelta = new Vector2(800f, 60f);
-            }
-            
-            // Style du texte - centré verticalement et horizontalement
-            messageFin.fontSize = 28f;
-            messageFin.color = Color.white;
-            messageFin.alignment = TextAlignmentOptions.Center; // Centre horizontal ET vertical
-        }
     }
     
     void Update()
@@ -132,31 +99,18 @@ public class DonneesManager : MonoBehaviour
     {
         if (!chronoActive)
         {
-            // Cacher le message de fin au démarrage
-            if (messageFin != null)
-            {
-                messageFin.gameObject.SetActive(false);
-            }
+            chronoActive = true;
+            chrono = 0f; 
+            distanceParcourue = 0f; 
             
-            // Jouer le SFX immédiatement
+            
             if (audioManager != null)
             {
+               
                 audioManager.PlaySFX(audioManager.StartSFX);
+               
             }
-            
-            // Démarrer le chrono après 3 secondes
-            StartCoroutine(DemarrerChronoApresDelai(3f));
         }
-    }
-    
-    IEnumerator DemarrerChronoApresDelai(float delai)
-    {
-        yield return new WaitForSeconds(delai);
-        
-        // Maintenant on active vraiment le chrono
-        chronoActive = true;
-        chrono = 0f; 
-        distanceParcourue = 0f;
     }
     
 
@@ -166,31 +120,13 @@ public class DonneesManager : MonoBehaviour
         {
             chronoEnPause = true;
             
-            // Affichage du message avec le bon temps (chrono au lieu de Time.timeSinceLevelLoad)
-            if (messageFin != null)
-            {
-                messageFin.text = $"Bravo jeune Monkey tu es arrivé jusqu'au saint Bananier en {FormatTime(chrono)} !";
-                messageFin.gameObject.SetActive(true);
-                
-                // Cacher le message après 3 secondes
-                StartCoroutine(CacherMessageApresDelai(3f));
-            }
             
             if (audioManager != null)
             {
                 
                 audioManager.PlaySFX(audioManager.FinishSFX);
-            
+                Debug.Log("Course termin�e ! Son finish jou�. Temps final : " + FormatTime(chrono));
             }
-        }
-    }
-    
-    IEnumerator CacherMessageApresDelai(float delai)
-    {
-        yield return new WaitForSeconds(delai);
-        if (messageFin != null)
-        {
-            messageFin.gameObject.SetActive(false);
         }
     }
     
@@ -201,12 +137,6 @@ public class DonneesManager : MonoBehaviour
         chronoEnPause = false;
         chrono = 0f;
         distanceParcourue = 0f;
-        
-        // Cacher le message de fin lors du reset
-        if (messageFin != null)
-        {
-            messageFin.gameObject.SetActive(false);
-        }
     }
     
     public void MettreAJourPositionPrecedente()
