@@ -256,7 +256,7 @@ public void StartZipline(GameObject player)
     localZip.name = "ZiplineTransport";
     localZip.transform.position = ZipTransform.position;
     localZip.transform.localScale = new Vector3(zipScale, zipScale, zipScale);
-
+        localZip.GetComponent<MeshRenderer>().enabled = false;
     Rigidbody zipRb = localZip.AddComponent<Rigidbody>();
     zipRb.useGravity = false;
     zipRb.linearDamping = 1f;
