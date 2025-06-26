@@ -8,8 +8,8 @@ public class DebugMenu : MonoBehaviour
     public KeyCode toucheDebug = KeyCode.F1;
     
     [Header("Checkpoints")]
-    [Tooltip("Positions des 3 checkpoints")]
-    public Transform[] checkpointPositions = new Transform[3];
+    [Tooltip("Positions des 4 checkpoints")]
+    public Transform[] checkpointPositions = new Transform[4];
     
     [Tooltip("Position de la fin du niveau")]
     public Transform positionFin;
@@ -76,9 +76,9 @@ public class DebugMenu : MonoBehaviour
             InitialiserStyles();
         }
         
-        // Fenêtre du menu debug
+        // Fenêtre du menu debug - augmentée pour accommoder le 4ème checkpoint
         float largeur = 300f;
-        float hauteur = 400f;
+        float hauteur = 450f; // Augmenté de 50px pour le 4ème checkpoint
         float x = (Screen.width - largeur) / 2;
         float y = (Screen.height - hauteur) / 2;
         
@@ -97,8 +97,8 @@ public class DebugMenu : MonoBehaviour
         GUI.Label(new Rect(x + 20, y + yOffset, largeur - 40, 30), "Téléportation aux Checkpoints:", styleMenu);
         yOffset += 35f;
         
-        // Boutons pour les 3 checkpoints
-        for (int i = 0; i < 3; i++)
+        // Boutons pour tous les checkpoints (maintenant 4)
+        for (int i = 0; i < checkpointPositions.Length; i++)
         {
             if (GUI.Button(new Rect(x + 20, y + yOffset, largeur - 40, 35), $"Checkpoint {i + 1}", styleBouton))
             {
@@ -260,8 +260,8 @@ public class DebugMenuIntegration : MonoBehaviour
         // Trier les checkpoints par nom ou position
         System.Array.Sort(tousLesCheckpoints, (a, b) => a.name.CompareTo(b.name));
         
-        // Assigner les 3 premiers checkpoints trouvés
-        for (int i = 0; i < Mathf.Min(3, tousLesCheckpoints.Length); i++)
+        // Assigner les 4 premiers checkpoints trouvés (au lieu de 3)
+        for (int i = 0; i < Mathf.Min(4, tousLesCheckpoints.Length); i++)
         {
             debugMenu.DefinirCheckpoint(i, tousLesCheckpoints[i].transform.position);
             checkpointsDetectes.Add(tousLesCheckpoints[i]);
