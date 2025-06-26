@@ -135,7 +135,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
 private void Update()
 {
-        DebugFloating();
+        //DebugFloating();
     // NEW: Handle ledge grab toggle input
         if (Input.GetKeyDown(toggleLedgeGrabKey))
         {

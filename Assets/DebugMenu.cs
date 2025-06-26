@@ -41,6 +41,26 @@ public class DebugMenu : MonoBehaviour
         {
             characterController = joueur.GetComponent<CharacterController>();
         }
+        
+        // Vérifier les checkpoints assignés
+        VerifierCheckpoints();
+    }
+    
+    private void VerifierCheckpoints()
+    {
+        Debug.Log("=== Vérification des checkpoints ===");
+        for (int i = 0; i < checkpointPositions.Length; i++)
+        {
+            if (checkpointPositions[i] != null)
+            {
+                Debug.Log($"Checkpoint {i + 1}: {checkpointPositions[i].name} à la position {checkpointPositions[i].position}");
+            }
+            else
+            {
+                Debug.LogWarning($"Checkpoint {i + 1} n'est pas assigné!");
+            }
+        }
+        Debug.Log("===================================");
     }
     
     private void Update()
@@ -76,9 +96,9 @@ public class DebugMenu : MonoBehaviour
             InitialiserStyles();
         }
         
-        // Fenêtre du menu debug - augmentée pour accommoder le 4ème checkpoint
+        // Fenêtre du menu debug
         float largeur = 300f;
-        float hauteur = 450f; // Augmenté de 50px pour le 4ème checkpoint
+        float hauteur = 450f;
         float x = (Screen.width - largeur) / 2;
         float y = (Screen.height - hauteur) / 2;
         
@@ -97,10 +117,22 @@ public class DebugMenu : MonoBehaviour
         GUI.Label(new Rect(x + 20, y + yOffset, largeur - 40, 30), "Téléportation aux Checkpoints:", styleMenu);
         yOffset += 35f;
         
-        // Boutons pour tous les checkpoints (maintenant 4)
+        // Boutons pour tous les checkpoints
         for (int i = 0; i < checkpointPositions.Length; i++)
         {
-            if (GUI.Button(new Rect(x + 20, y + yOffset, largeur - 40, 35), $"Checkpoint {i + 1}", styleBouton))
+            string nomBouton = $"Checkpoint {i + 1}";
+            
+            // Ajouter des infos de debug si le checkpoint est assigné
+            if (checkpointPositions[i] != null)
+            {
+                nomBouton += " ✓";
+            }
+            else
+            {
+                nomBouton += " ✗";
+            }
+            
+            if (GUI.Button(new Rect(x + 20, y + yOffset, largeur - 40, 35), nomBouton, styleBouton))
             {
                 TeleporterAuCheckpoint(i);
             }
@@ -170,6 +202,9 @@ public class DebugMenu : MonoBehaviour
             return;
         }
         
+        // Log de debug pour vérifier la position
+        Debug.Log($"Téléportation au checkpoint {index + 1} ({checkpointPositions[index].name}) à la position: {checkpointPositions[index].position}");
+        
         TeleporterJoueur(checkpointPositions[index].position);
         
         // Mettre à jour le point de départ dans Pause_Menu
@@ -177,8 +212,6 @@ public class DebugMenu : MonoBehaviour
         {
             pauseMenu.pointDeDepart = checkpointPositions[index].position;
         }
-        
-        Debug.Log($"Téléporté au checkpoint {index + 1}");
     }
     
     private void TeleporterALaFin()
@@ -201,6 +234,10 @@ public class DebugMenu : MonoBehaviour
             return;
         }
         
+        // Log de debug
+        Debug.Log($"Position actuelle du joueur: {joueur.transform.position}");
+        Debug.Log($"Téléportation vers: {position}");
+        
         // Désactiver temporairement le CharacterController pour la téléportation
         if (characterController != null)
         {
@@ -216,57 +253,122 @@ public class DebugMenu : MonoBehaviour
             characterController.enabled = true;
         }
         
+        // Vérifier que la téléportation a bien fonctionné
+        Debug.Log($"Nouvelle position du joueur: {joueur.transform.position}");
+        
         // Fermer le menu après téléportation
         menuOuvert = false;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    
-    // Méthode utilitaire pour définir les positions des checkpoints par code
-    public void DefinirCheckpoint(int index, Vector3 position)
-    {
-        if (index >= 0 && index < checkpointPositions.Length)
-        {
-            GameObject temp = new GameObject($"Checkpoint_{index + 1}_Position");
-            temp.transform.position = position;
-            checkpointPositions[index] = temp.transform;
-        }
-    }
 }
 
-// Extension optionnelle pour intégration automatique avec vos checkpoints existants
+// Version améliorée de DebugMenuIntegration qui évite les conflits
+[RequireComponent(typeof(DebugMenu))]
 public class DebugMenuIntegration : MonoBehaviour
 {
-    private DebugMenu debugMenu;
-    private List<BananaCheckpoint> checkpointsDetectes = new List<BananaCheckpoint>();
+    [Header("Configuration")]
+    [Tooltip("Utiliser la détection automatique des checkpoints?")]
+    public bool detectionAutomatique = true;
     
-    private void Start()
+    [Tooltip("Préfixe des noms de checkpoints à détecter")]
+    public string prefixeCheckpoint = "BananaCheckpoint";
+    
+    private DebugMenu debugMenu;
+    
+    private void Awake()
     {
         debugMenu = GetComponent<DebugMenu>();
-        if (debugMenu == null)
-        {
-            debugMenu = gameObject.AddComponent<DebugMenu>();
-        }
         
-        // Détecter automatiquement les BananaCheckpoints dans la scène
+        if (detectionAutomatique)
+        {
+            // Attendre un frame pour s'assurer que tous les objets sont créés
+            StartCoroutine(DetecterCheckpointsCoroutine());
+        }
+    }
+    
+    private System.Collections.IEnumerator DetecterCheckpointsCoroutine()
+    {
+        yield return null; // Attendre un frame
+        
         DetecterCheckpoints();
     }
     
     private void DetecterCheckpoints()
     {
-        BananaCheckpoint[] tousLesCheckpoints = FindObjectsOfType<BananaCheckpoint>();
-        
-        // Trier les checkpoints par nom ou position
-        System.Array.Sort(tousLesCheckpoints, (a, b) => a.name.CompareTo(b.name));
-        
-        // Assigner les 4 premiers checkpoints trouvés (au lieu de 3)
-        for (int i = 0; i < Mathf.Min(4, tousLesCheckpoints.Length); i++)
+        // Ne pas écraser les checkpoints déjà assignés manuellement
+        bool tousAssignes = true;
+        for (int i = 0; i < debugMenu.checkpointPositions.Length; i++)
         {
-            debugMenu.DefinirCheckpoint(i, tousLesCheckpoints[i].transform.position);
-            checkpointsDetectes.Add(tousLesCheckpoints[i]);
+            if (debugMenu.checkpointPositions[i] == null)
+            {
+                tousAssignes = false;
+                break;
+            }
         }
         
-        Debug.Log($"DebugMenu: {checkpointsDetectes.Count} checkpoints détectés et assignés");
+        if (tousAssignes)
+        {
+            Debug.Log("DebugMenuIntegration: Tous les checkpoints sont déjà assignés manuellement. Détection automatique ignorée.");
+            return;
+        }
+        
+        BananaCheckpoint[] tousLesCheckpoints = FindObjectsOfType<BananaCheckpoint>();
+        
+        if (tousLesCheckpoints.Length == 0)
+        {
+            Debug.LogWarning("DebugMenuIntegration: Aucun BananaCheckpoint trouvé dans la scène!");
+            return;
+        }
+        
+        // Trier les checkpoints par nom pour garantir un ordre cohérent
+        System.Array.Sort(tousLesCheckpoints, (a, b) => 
+        {
+            // Essayer d'extraire les numéros des noms
+            int numA = ExtraireNumero(a.name);
+            int numB = ExtraireNumero(b.name);
+            
+            if (numA != -1 && numB != -1)
+                return numA.CompareTo(numB);
+            
+            return a.name.CompareTo(b.name);
+        });
+        
+        // Assigner les checkpoints détectés aux positions nulles uniquement
+        int checkpointIndex = 0;
+        for (int i = 0; i < debugMenu.checkpointPositions.Length && checkpointIndex < tousLesCheckpoints.Length; i++)
+        {
+            if (debugMenu.checkpointPositions[i] == null)
+            {
+                debugMenu.checkpointPositions[i] = tousLesCheckpoints[checkpointIndex].transform;
+                Debug.Log($"DebugMenuIntegration: Checkpoint {i + 1} assigné automatiquement à {tousLesCheckpoints[checkpointIndex].name}");
+                checkpointIndex++;
+            }
+        }
+        
+        Debug.Log($"DebugMenuIntegration: {checkpointIndex} checkpoints assignés automatiquement");
+    }
+    
+    private int ExtraireNumero(string nom)
+    {
+        // Extraire le numéro du nom (ex: "BananaCheckpoint_3" -> 3)
+        string[] parties = nom.Split('_', '-', ' ');
+        foreach (string partie in parties)
+        {
+            if (int.TryParse(partie, out int numero))
+            {
+                return numero;
+            }
+        }
+        
+        // Chercher aussi des nombres dans le nom complet
+        System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(nom, @"\d+");
+        if (match.Success)
+        {
+            return int.Parse(match.Value);
+        }
+        
+        return -1;
     }
 }
