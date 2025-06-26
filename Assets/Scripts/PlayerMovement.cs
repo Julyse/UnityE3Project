@@ -135,8 +135,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
 private void Update()
 {
+    DebugGroundCheck();
         //DebugFloating();
-    // NEW: Handle ledge grab toggle input
+        // NEW: Handle ledge grab toggle input
         if (Input.GetKeyDown(toggleLedgeGrabKey))
         {
             ToggleLedgeGrab();
@@ -145,7 +146,7 @@ private void Update()
     // Si le mouvement est verrouillé, on ne fait que les checks de base
     if (isMovementLocked)
     {
-        grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
+        grounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, whatIsGround, QueryTriggerInteraction.Ignore);
         return;
     }
 
@@ -159,8 +160,7 @@ private void Update()
             HandleLedgeGrabInput();
         }
 
-        grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
-
+grounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, whatIsGround, QueryTriggerInteraction.Ignore);
         if (!isGrabbingLedge)
         {
             MyInput();
@@ -172,7 +172,30 @@ private void Update()
 
         rb.linearDamping = grounded ? groundDrag : 0f;
     }
-
+private void DebugGroundCheck()
+{
+    // Visualiser le ground check
+    Vector3 origin = groundCheck.position;
+    
+    // Test avec raycast qui ignore les triggers
+    if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 10f, whatIsGround, QueryTriggerInteraction.Ignore))
+    {
+        Debug.Log($"Raycast hit: {hit.collider.name} at distance: {hit.distance}, Is Trigger: {hit.collider.isTrigger}");
+        Debug.DrawRay(origin, Vector3.down * hit.distance, Color.green);
+    }
+    else
+    {
+        Debug.Log("Raycast didn't hit anything!");
+        Debug.DrawRay(origin, Vector3.down * 10f, Color.red);
+    }
+    
+    // Test avec CheckSphere original
+    bool sphereCheck = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
+    Debug.Log($"CheckSphere result: {sphereCheck}, groundDistance: {groundDistance}");
+    
+    // Vérifier la position du groundCheck
+    Debug.Log($"GroundCheck position Y: {groundCheck.position.y}, Player position Y: {transform.position.y}");
+}
     private void DebugFloating()
     {
     Vector3 origin = transform.position;
