@@ -73,26 +73,22 @@ public class ThirdPersonCam : MonoBehaviour
         }
     }
    
-    void Update()
+    void LateUpdate()
     {
-        // Vérifie si le jeu est en pause ou si la caméra est verrouillée
         if (Pause_Menu.isPaused || isCameraLocked)
             return;
-           
+
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
         orientation.forward = viewDir.normalized;
-       
-        // Nouveau: vérifier si le mouvement est verrouillé avant de bouger le joueur
+
         if (!isMovementLocked)
         {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
-           
-            if(inputDir != Vector3.zero)
-            {
+
+            if (inputDir != Vector3.zero)
                 playerObject.forward = Vector3.Slerp(playerObject.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-            }
         }
     }
 }

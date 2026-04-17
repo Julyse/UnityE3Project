@@ -1,539 +1,315 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using KinematicCharacterController;
 
-public class PlayerMovementAdvanced : MonoBehaviour
+public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
 {
-    [Header("Movement")]
-    private float moveSpeed;
-    public float walkSpeed;
-    public float sprintSpeed;
-    public float groundDrag;
+    [Header("References")]
+    public KinematicCharacterMotor Motor;
+    public Transform orientation;
+    public Animator animator;
+
+    [Header("Ground Movement")]
+    public float walkSpeed = 7f;
+    public float sprintSpeed = 12f;
+    public float crouchSpeed = 3.5f;
+    public float StableMovementSharpness = 15f;
+    public float OrientationSharpness = 10f;
+
+    [Header("Air Movement")]
+    public float MaxAirMoveSpeed = 10f;
+    public float AirAccelerationSpeed = 10f;
+    public float Drag = 0.1f;
 
     [Header("Jumping")]
-    public float jumpForce;
-    public float jumpCooldown;
-    public float airMultiplier;
-    bool readyToJump;
+    public float JumpUpSpeed = 10f;
+    public float JumpPostGroundingGraceTime = 0.15f;
 
-    [Header("Falling")]
-    public float fallMultiplier = 2.5f;
+    [Header("Gravity")]
+    public Vector3 Gravity = new Vector3(0, -25f, 0);
+    public float FallMultiplier = 2f;
 
     [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchYScale;
-    private float startYScale;
+    public float CrouchedCapsuleHeight = 1f;
 
     [Header("Ledge Grab")]
-    public bool ledgeGrabEnabled = true; // NEW: Toggle for ledge grabbing
+    public bool ledgeGrabEnabled = true;
     public float ledgeDetectionRadius = 1f;
     public float ledgeGrabSmoothing = 15f;
     public float playerHandsOffset = 1.8f;
-    private bool isGrabbingLedge = false;
-    private bool canGrabLedge = true;
-    private Vector3 ledgePosition;
-    private Vector3 ledgeNormal;
-    private Vector3 grabTargetPosition;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
-    public KeyCode toggleLedgeGrabKey = KeyCode.L; // NEW: Key to toggle ledge grab
-
-    [Header("Ground Check (Sphere)")]
-    public Transform groundCheck;
-    public float groundDistance = 0.2f;
-    public LayerMask whatIsGround;
-    bool grounded;
-
-    [Header("Slope Handling")]
-    public float maxSlopeAngle = 50f;
-    private RaycastHit slopeHit;
-    private bool exitingSlope;
-
-    public Transform orientation;
-
-    float horizontalInput;
-    float verticalInput;
-    Vector3 moveDirection;
-
-    Rigidbody rb;
-
-    [Header("Animation")]
-    public Animator animator;
-    private bool isWalking;
-    private bool isRunning;
-    private bool isIdle;
-    private bool isInAir;
-
-    private Sound_Music audioManager;
-    private float footstepTimer = 0f;
-    private float footstepCooldown = 0.4f;
+    public KeyCode toggleLedgeGrabKey = KeyCode.L;
 
     public MovementState state;
-    private MovementState previousState;
+    public bool IsMovementLocked => _isMovementLocked;
 
-    [Header("Movement Lock")]
-    private bool isMovementLocked = false;
-    public bool IsMovementLocked => isMovementLocked;
-    public enum MovementState
-    {
-        idling,
-        walking,
-        sprinting,
-        crouching,
-        air,
-        ledgeGrab
-    }
+    public enum MovementState { idling, walking, sprinting, crouching, air, ledgeGrab }
+
+    // Input state (gathered in Update, consumed in KCC callbacks)
+    private Vector3 _moveInputVector;
+    private Vector3 _lookInputVector;
+    private bool _isSprinting;
+    private bool _jumpRequested;
+    private bool _jumpConsumed;
+    private bool _jumpedThisFrame;
+    private float _timeSinceJumpRequested = Mathf.Infinity;
+    private float _timeSinceLastAbleToJump;
+
+    // Ledge grab
+    private bool _isGrabbingLedge;
+    private bool _canGrabLedge = true;
+    private Vector3 _ledgePosition;
+    private Vector3 _ledgeNormal;
+    private Vector3 _grabTargetPosition;
+    private bool _applyClimbVelocity;
+    private Vector3 _climbVelocity;
+
+    // Crouch
+    private bool _shouldBeCrouching;
+    private bool _isCrouching;
+
+    // Lock
+    private bool _isMovementLocked;
+
+    // Audio
+    private Sound_Music _audioManager;
+    private float _footstepTimer;
+    private const float FootstepCooldownWalk = 0.5f;
+    private const float FootstepCooldownRun = 0.25f;
+
+    private MovementState _previousState;
+    private Collider[] _probedColliders = new Collider[8];
+
     private void OnEnable()
     {
-    GameEvents.OnPlayerMovementLockChanged += HandleMovementLockChanged;
-    GameEvents.OnPlayerControlsLockChanged += HandleMovementLockChanged;    }
+        GameEvents.OnPlayerMovementLockChanged += HandleMovementLockChanged;
+        GameEvents.OnPlayerControlsLockChanged += HandleMovementLockChanged;
+    }
+
     private void OnDisable()
     {
         GameEvents.OnPlayerMovementLockChanged -= HandleMovementLockChanged;
         GameEvents.OnPlayerControlsLockChanged -= HandleMovementLockChanged;
     }
-    private void HandleMovementLockChanged(bool isLocked)
-{
-    LockMovement(isLocked);
-}
 
-    // Méthode publique pour verrouiller le mouvement
- 
+    private void HandleMovementLockChanged(bool locked) => LockMovement(locked);
+
     private void Awake()
     {
-        GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
-        if (audioObject != null)
-        {
-            audioManager = audioObject.GetComponent<Sound_Music>();
-        }
-        else
-        {
-            Debug.LogError("No GameObject with 'Audio' tag found in the scene!");
-        }
+        Motor.CharacterController = this;
+        GameObject audioObj = GameObject.FindGameObjectWithTag("Audio");
+        if (audioObj != null)
+            _audioManager = audioObj.GetComponent<Sound_Music>();
     }
 
-    private void Start()
+    private void Start() { }
+
+    private void Update()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-        rb.useGravity = false;
-
-        readyToJump = true;
-        startYScale = transform.localScale.y;
-
-        if (animator == null)
-        {
-            Debug.LogWarning("No Animator assigned on the player.");
-        }
-
-        previousState = state;
-    }
-
-private void Update()
-{
-    DebugGroundCheck();
-        //DebugFloating();
-        // NEW: Handle ledge grab toggle input
         if (Input.GetKeyDown(toggleLedgeGrabKey))
         {
-            ToggleLedgeGrab();
+            ledgeGrabEnabled = !ledgeGrabEnabled;
+            if (!ledgeGrabEnabled && _isGrabbingLedge) ReleaseLedge();
         }
 
-    // Si le mouvement est verrouillé, on ne fait que les checks de base
-    if (isMovementLocked)
-    {
-        grounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, whatIsGround, QueryTriggerInteraction.Ignore);
-        return;
-    }
+        if (_isMovementLocked) return;
 
-        // Only check for ledge grabbing if it's enabled
-        if (!isGrabbingLedge && ledgeGrabEnabled)
-        {
+        if (!_isGrabbingLedge && ledgeGrabEnabled)
             LedgeGrab();
-        }
-        else if (isGrabbingLedge)
-        {
+        else if (_isGrabbingLedge)
             HandleLedgeGrabInput();
-        }
 
-grounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, whatIsGround, QueryTriggerInteraction.Ignore);
-        if (!isGrabbingLedge)
-        {
-            MyInput();
-            SpeedControl();
-        }
-
-        StateHandler();
+        GatherInput();
+        UpdateAnimatorState();
         HandleFootsteps();
-
-        rb.linearDamping = grounded ? groundDrag : 0f;
     }
-private void DebugGroundCheck()
-{
-    // Visualiser le ground check
-    Vector3 origin = groundCheck.position;
-    
-    // Test avec raycast qui ignore les triggers
-    if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 10f, whatIsGround, QueryTriggerInteraction.Ignore))
-    {
-        Debug.Log($"Raycast hit: {hit.collider.name} at distance: {hit.distance}, Is Trigger: {hit.collider.isTrigger}");
-        Debug.DrawRay(origin, Vector3.down * hit.distance, Color.green);
-    }
-    else
-    {
-        Debug.Log("Raycast didn't hit anything!");
-        Debug.DrawRay(origin, Vector3.down * 10f, Color.red);
-    }
-    
-    // Test avec CheckSphere original
-    bool sphereCheck = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
-    Debug.Log($"CheckSphere result: {sphereCheck}, groundDistance: {groundDistance}");
-    
-    // Vérifier la position du groundCheck
-    Debug.Log($"GroundCheck position Y: {groundCheck.position.y}, Player position Y: {transform.position.y}");
-}
-    private void DebugFloating()
-    {
-    Vector3 origin = transform.position;
-    Vector3 direction = Vector3.down;
 
-    Debug.DrawRay(origin, direction * 10f, Color.red);
-
-    if (Physics.Raycast(origin, direction, out RaycastHit hit, 10f, ~0, QueryTriggerInteraction.Ignore))
+    private void GatherInput()
     {
-        Debug.Log("Hit: " + hit.collider.name);
-    }
-}
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        _isSprinting = Input.GetKey(sprintKey);
 
-    private void FixedUpdate()
-    {
-        // Si le mouvement est verrouillé, on applique juste la gravité
-        if (isMovementLocked)
+        Vector3 raw = Vector3.ClampMagnitude(new Vector3(h, 0f, v), 1f);
+
+        if (orientation != null)
         {
-            ApplyCustomGravity();
+            Vector3 fwd = Vector3.ProjectOnPlane(orientation.forward, Vector3.up).normalized;
+            Vector3 right = Vector3.ProjectOnPlane(orientation.right, Vector3.up).normalized;
+            _moveInputVector = fwd * raw.z + right * raw.x;
+        }
+        else
+        {
+            _moveInputVector = raw;
+        }
+
+        if (_moveInputVector.sqrMagnitude > 0.01f)
+            _lookInputVector = _moveInputVector.normalized;
+
+        if (Input.GetKeyDown(jumpKey) && !_isGrabbingLedge)
+        {
+            _timeSinceJumpRequested = 0f;
+            _jumpRequested = true;
+        }
+
+        if (Input.GetKeyDown(crouchKey) && !_isCrouching)
+        {
+            _isCrouching = true;
+            _shouldBeCrouching = true;
+            Motor.SetCapsuleDimensions(0.5f, CrouchedCapsuleHeight, CrouchedCapsuleHeight * 0.5f);
+        }
+        else if (Input.GetKeyUp(crouchKey))
+        {
+            _shouldBeCrouching = false;
+        }
+    }
+
+    // ---- ICharacterController ----
+
+    public void BeforeCharacterUpdate(float deltaTime)
+    {
+        if (_isGrabbingLedge)
+            Motor.SetTransientPosition(_grabTargetPosition);
+    }
+
+    public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
+    {
+        if (_isGrabbingLedge)
+        {
+            Vector3 look = -_ledgeNormal;
+            look.y = 0f;
+            if (look.sqrMagnitude > 0.001f)
+                currentRotation = Quaternion.Slerp(currentRotation, Quaternion.LookRotation(look, Vector3.up), 1f - Mathf.Exp(-ledgeGrabSmoothing * deltaTime));
+        }
+        // ThirdPersonCam rotates playerObject directly — don't rotate the KCC root
+    }
+
+    public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
+    {
+        if (_isMovementLocked || _isGrabbingLedge)
+        {
+            currentVelocity = Vector3.zero;
             return;
         }
-        if (!isGrabbingLedge)
+
+        if (_applyClimbVelocity)
         {
-            MovePlayer();
-            ApplyCustomGravity();
+            currentVelocity = _climbVelocity;
+            _applyClimbVelocity = false;
+            return;
+        }
+
+        float moveSpeed = _isCrouching ? crouchSpeed : (_isSprinting ? sprintSpeed : walkSpeed);
+
+        if (Motor.GroundingStatus.IsStableOnGround)
+        {
+            float mag = currentVelocity.magnitude;
+            currentVelocity = Motor.GetDirectionTangentToSurface(currentVelocity, Motor.GroundingStatus.GroundNormal) * mag;
+
+            Vector3 inputRight = Vector3.Cross(_moveInputVector, Motor.CharacterUp);
+            Vector3 reoriented = Vector3.Cross(Motor.GroundingStatus.GroundNormal, inputRight).normalized * _moveInputVector.magnitude;
+            currentVelocity = Vector3.Lerp(currentVelocity, reoriented * moveSpeed, 1f - Mathf.Exp(-StableMovementSharpness * deltaTime));
         }
         else
         {
-            MaintainLedgePosition();
-        }
-    }
-
-    // NEW: Method to toggle ledge grabbing
-    private void ToggleLedgeGrab()
-    {
-        ledgeGrabEnabled = !ledgeGrabEnabled;
-
-        // If we're currently grabbing a ledge and ledge grab is disabled, release the ledge
-        if (!ledgeGrabEnabled && isGrabbingLedge)
-        {
-            ReleaseLedge();
-        }
-
-        Debug.Log("Ledge grabbing " + (ledgeGrabEnabled ? "enabled" : "disabled"));
-    }
-
-    // NEW: Method to release ledge (useful when disabling ledge grab while grabbing)
-    private void ReleaseLedge()
-    {
-        if (isGrabbingLedge)
-        {
-            isGrabbingLedge = false;
-            rb.useGravity = true;
-            canGrabLedge = false;
-
-            // Add a small delay before allowing ledge grab again
-            Invoke(nameof(EnableLedgeGrab), 0.5f);
-        }
-    }
-
-    private void ApplyCustomGravity()
-    {
-        if (!grounded && !OnSlope())
-        {
-            rb.AddForce(Physics.gravity * fallMultiplier, ForceMode.Acceleration);
-        }
-        else if (grounded)
-        {
-            rb.AddForce(Physics.gravity, ForceMode.Acceleration);
-        }
-    }
-
-    private void MyInput()
-    {
-        if (isMovementLocked) return;
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
-        {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
-
-        if (Input.GetKeyDown(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        }
-
-        if (Input.GetKeyUp(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-        }
-    }
-
-    private void StateHandler()
-    {
-        if (isGrabbingLedge)
-        {
-            state = MovementState.ledgeGrab;
-        }
-        else if (Input.GetKey(crouchKey))
-        {
-            state = MovementState.crouching;
-            moveSpeed = crouchSpeed;
-        }
-        else if (!grounded)
-        {
-            state = MovementState.air;
-        }
-        else
-        {
-            if (Input.GetKey(sprintKey))
+            if (_moveInputVector.sqrMagnitude > 0f)
             {
-                state = MovementState.sprinting;
-                moveSpeed = sprintSpeed;
+                Vector3 added = _moveInputVector * AirAccelerationSpeed * deltaTime;
+                Vector3 flatVel = Vector3.ProjectOnPlane(currentVelocity, Motor.CharacterUp);
+
+                if (flatVel.magnitude < MaxAirMoveSpeed)
+                    added = Vector3.ClampMagnitude(flatVel + added, MaxAirMoveSpeed) - flatVel;
+                else if (Vector3.Dot(flatVel, added) > 0f)
+                    added = Vector3.ProjectOnPlane(added, flatVel.normalized);
+
+                currentVelocity += added;
             }
+
+            float gravScale = currentVelocity.y < 0f ? FallMultiplier : 1f;
+            currentVelocity += Gravity * gravScale * deltaTime;
+            currentVelocity *= 1f / (1f + Drag * deltaTime);
+        }
+
+        // Jump
+        _jumpedThisFrame = false;
+        _timeSinceJumpRequested += deltaTime;
+
+        if (_jumpRequested && !_jumpConsumed)
+        {
+            bool canJump = Motor.GroundingStatus.IsStableOnGround || _timeSinceLastAbleToJump <= JumpPostGroundingGraceTime;
+            if (canJump)
+            {
+                Motor.ForceUnground();
+                currentVelocity += (Motor.CharacterUp * JumpUpSpeed) - Vector3.Project(currentVelocity, Motor.CharacterUp);
+                _jumpRequested = false;
+                _jumpConsumed = true;
+                _jumpedThisFrame = true;
+                FireJumpEffects();
+            }
+        }
+
+        if (_jumpRequested && _timeSinceJumpRequested > 0.2f)
+            _jumpRequested = false;
+    }
+
+    public void AfterCharacterUpdate(float deltaTime)
+    {
+        if (Motor.GroundingStatus.IsStableOnGround)
+        {
+            if (!_jumpedThisFrame) _jumpConsumed = false;
+            _timeSinceLastAbleToJump = 0f;
+        }
+        else
+        {
+            _timeSinceLastAbleToJump += deltaTime;
+        }
+
+        if (_isCrouching && !_shouldBeCrouching)
+        {
+            Motor.SetCapsuleDimensions(0.5f, 2f, 1f);
+            if (Motor.CharacterOverlap(Motor.TransientPosition, Motor.TransientRotation, _probedColliders, Motor.CollidableLayers, QueryTriggerInteraction.Ignore) > 0)
+                Motor.SetCapsuleDimensions(0.5f, CrouchedCapsuleHeight, CrouchedCapsuleHeight * 0.5f);
             else
-            {
-                bool anyHorizontal = !Mathf.Approximately(horizontalInput, 0f);
-                bool anyVertical = !Mathf.Approximately(verticalInput, 0f);
-
-                if (anyHorizontal || anyVertical)
-                {
-                    state = MovementState.walking;
-                    moveSpeed = walkSpeed;
-                }
-                else
-                {
-                    state = MovementState.idling;
-                    moveSpeed = 0f;
-                }
-            }
-        }
-
-        isIdle = (state == MovementState.idling);
-        isWalking = (state == MovementState.walking);
-        isRunning = (state == MovementState.sprinting);
-        isInAir = (state == MovementState.air);
-
-        if (animator != null)
-        {
-            animator.SetBool("IsIdle", isIdle);
-            animator.SetBool("IsWalking", isWalking);
-            animator.SetBool("IsRunning", isRunning);
-            animator.SetBool("IsInAir", isInAir);
-        }
-
-        if (state != previousState)
-        {
-            switch (state)
-            {
-                case MovementState.idling:
-                    break;
-
-                case MovementState.walking:
-                    // handled in HandleFootsteps
-                    break;
-
-                case MovementState.sprinting:
-                    // handled in HandleFootsteps
-                    break;
-
-                case MovementState.air:
-                    break;
-
-                case MovementState.crouching:
-                    if (audioManager != null)
-                        audioManager.PlaySFX(audioManager.Crouch);
-                    break;
-
-                case MovementState.ledgeGrab:
-                    // Optional ledge grab sound
-                    break;
-            }
-
-            previousState = state;
+                _isCrouching = false;
         }
     }
 
-    private void HandleFootsteps()
-    {
-        if (state == MovementState.walking || state == MovementState.sprinting)
-        {
-            footstepTimer -= Time.deltaTime;
+    public void PostGroundingUpdate(float deltaTime) { }
+    public bool IsColliderValidForCollisions(Collider coll) => true;
+    public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport) { }
+    public void OnDiscreteCollisionDetected(Collider hitCollider) { }
 
-            if (footstepTimer <= 0f)
-            {
-                int rand = Random.Range(1, 6);
-
-                if (state == MovementState.walking)
-                {
-                    footstepCooldown = 0.5f; // slower footsteps
-                    if (audioManager != null)
-                    {
-                        switch (rand)
-                        {
-                            case 1: audioManager.PlaySFX(audioManager.WalkStepGrass1); break;
-                            case 2: audioManager.PlaySFX(audioManager.WalkStepGrass2); break;
-                            case 3: audioManager.PlaySFX(audioManager.WalkStepGrass3); break;
-                            case 4: audioManager.PlaySFX(audioManager.WalkStepGrass4); break;
-                            case 5: audioManager.PlaySFX(audioManager.WalkStepGrass5); break;
-                        }
-                    }
-                }
-                else if (state == MovementState.sprinting)
-                {
-                    footstepCooldown = 0.25f; // faster footsteps
-                    if (audioManager != null)
-                    {
-                        switch (rand)
-                        {
-                            case 1: audioManager.PlaySFX(audioManager.RunStepGrass1); break;
-                            case 2: audioManager.PlaySFX(audioManager.RunStepGrass2); break;
-                            case 3: audioManager.PlaySFX(audioManager.RunStepGrass3); break;
-                            case 4: audioManager.PlaySFX(audioManager.RunStepGrass4); break;
-                            case 5: audioManager.PlaySFX(audioManager.RunStepGrass5); break;
-                        }
-                    }
-                }
-
-                footstepTimer = footstepCooldown;
-            }
-        }
-        else
-        {
-            footstepTimer = 0f; // Reset timer when not walking/sprinting
-        }
-    }
-
-    private void MovePlayer()
-    {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        if (OnSlope() && !exitingSlope)
-        {
-            Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-            float uphillBoost = Mathf.Lerp(1f, 1.2f, 1f - slopeHit.normal.y);
-            rb.AddForce(slopeMoveDirection * moveSpeed * 10f * uphillBoost, ForceMode.Force);
-
-            if (rb.linearVelocity.y > 0.1f)
-                rb.AddForce(Vector3.down * 5f, ForceMode.Force);
-        }
-        else if (grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
-        else
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-        }
-    }
-
-    private void SpeedControl()
-    {
-        if (OnSlope() && !exitingSlope)
-        {
-            if (rb.linearVelocity.magnitude > moveSpeed)
-                rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
-        }
-        else
-        {
-            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-            if (flatVel.magnitude > moveSpeed)
-            {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
-            }
-        }
-    }
-
-    private void Jump()
-    {
-        if (animator != null)
-        {
-            animator.SetTrigger("IsJumping");
-        }
-
-        exitingSlope = true;
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-
-        if (audioManager != null)
-        {
-            int rand = Random.Range(1, 21);
-
-            switch (rand)
-            {
-                case 1: audioManager.PlaySFX(audioManager.CriSaut1); break;
-                case 2: audioManager.PlaySFX(audioManager.CriSaut2); break;
-            }
-        }
-    }
-
-    private void ResetJump()
-    {
-        readyToJump = true;
-        exitingSlope = false;
-    }
-
-    private bool OnSlope()
-    {
-        if (Physics.Raycast(groundCheck.position, Vector3.down, out slopeHit, groundDistance + 0.3f))
-        {
-            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
-        }
-        return false;
-    }
+    // ---- Ledge grab ----
 
     private void LedgeGrab()
     {
-        if (!grounded && canGrabLedge && rb.linearVelocity.y < 5f)
+        if (Motor.GroundingStatus.IsStableOnGround || !_canGrabLedge) return;
+
+        Vector3 fwd = orientation != null ? orientation.forward : transform.forward;
+        Vector3 origin = transform.position + Vector3.up * 1.5f;
+        RaycastHit hit;
+
+        if (Physics.Raycast(origin, fwd, out hit, ledgeDetectionRadius) ||
+            Physics.SphereCast(origin, 0.3f, fwd, out hit, ledgeDetectionRadius))
         {
-            Vector3 forwardCheckOrigin = transform.position + Vector3.up * 1.5f;
-            Vector3 forwardDir = orientation.forward;
-            RaycastHit hit;
+            TryGrabAtPoint(hit.point, hit.normal);
+            return;
+        }
 
-            if (Physics.Raycast(forwardCheckOrigin, forwardDir, out hit, ledgeDetectionRadius, whatIsGround) ||
-                Physics.SphereCast(forwardCheckOrigin, 0.3f, forwardDir, out hit, ledgeDetectionRadius, whatIsGround))
+        for (int i = -2; i <= 2; i++)
+        {
+            Vector3 dir = Quaternion.Euler(0, i * 15f, 0) * fwd;
+            for (float h = 1.0f; h <= 2.0f; h += 0.3f)
             {
-                TryGrabAtPoint(hit.point, hit.normal);
-                return;
-            }
-
-            for (int i = -2; i <= 2; i++)
-            {
-                Vector3 checkDir = Quaternion.Euler(0, i * 15f, 0) * forwardDir;
-                for (float h = 1.0f; h <= 2.0f; h += 0.3f)
+                if (Physics.Raycast(transform.position + Vector3.up * h, dir, out hit, ledgeDetectionRadius))
                 {
-                    Vector3 origin = transform.position + Vector3.up * h;
-                    if (Physics.Raycast(origin, checkDir, out hit, ledgeDetectionRadius, whatIsGround))
-                    {
-                        TryGrabAtPoint(hit.point, hit.normal);
-                        return;
-                    }
+                    TryGrabAtPoint(hit.point, hit.normal);
+                    return;
                 }
             }
         }
@@ -541,119 +317,172 @@ private void DebugGroundCheck()
 
     private void TryGrabAtPoint(Vector3 hitPoint, Vector3 hitNormal)
     {
-        float heightDifference = hitPoint.y - transform.position.y;
-        if (heightDifference > 0.3f && heightDifference < 3f)
+        float diff = hitPoint.y - transform.position.y;
+        if (diff > 0.3f && diff < 3f)
         {
-            GrabLedge(hitPoint, hitNormal);
+            _isGrabbingLedge = true;
+            _ledgePosition = hitPoint;
+            _ledgeNormal = hitNormal;
+            _grabTargetPosition = hitPoint - hitNormal * 0.3f - Vector3.up * playerHandsOffset;
+            Motor.ForceUnground();
         }
-    }
-
-    private void GrabLedge(Vector3 ledgePos, Vector3 wallNormal)
-    {
-        isGrabbingLedge = true;
-        ledgePosition = ledgePos;
-        ledgeNormal = wallNormal;
-
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.useGravity = false;
-
-        grabTargetPosition = ledgePosition - wallNormal * 0.3f - Vector3.up * playerHandsOffset;
-        transform.position = grabTargetPosition;
-        rb.position = grabTargetPosition;
-
-        Vector3 lookDirection = -wallNormal;
-        lookDirection.y = 0;
-        transform.rotation = Quaternion.LookRotation(lookDirection);
-    }
-
-    private void MaintainLedgePosition()
-    {
-        rb.MovePosition(grabTargetPosition);
-
-        Vector3 lookDirection = -ledgeNormal;
-        lookDirection.y = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), Time.fixedDeltaTime * 10f);
-
-        rb.linearVelocity = Vector3.zero;
     }
 
     private void HandleLedgeGrabInput()
     {
         if (Input.GetKeyDown(jumpKey))
-        {
             ClimbUpLedge();
-        }
     }
 
     private void ClimbUpLedge()
     {
-        isGrabbingLedge = false;
-        canGrabLedge = false;
-        rb.useGravity = true;
-
-        Vector3 climbEndPosition = ledgePosition + Vector3.up * 0.2f - ledgeNormal * 0.8f;
-        transform.position = climbEndPosition;
-        rb.linearVelocity = (Vector3.up * 4f) + (-ledgeNormal * 2f);
-
+        _isGrabbingLedge = false;
+        _canGrabLedge = false;
+        Motor.SetTransientPosition(_ledgePosition + Vector3.up * 0.2f - _ledgeNormal * 0.8f);
+        _climbVelocity = Vector3.up * 4f - _ledgeNormal * 2f;
+        _applyClimbVelocity = true;
         Invoke(nameof(EnableLedgeGrab), 0.8f);
+        animator?.SetTrigger("ClimbLedge");
+    }
+
+    private void ReleaseLedge()
+    {
+        _isGrabbingLedge = false;
+        _canGrabLedge = false;
+        Invoke(nameof(EnableLedgeGrab), 0.5f);
+    }
+
+    private void EnableLedgeGrab() => _canGrabLedge = true;
+
+    // ---- Animation / Audio ----
+
+    private void UpdateAnimatorState()
+    {
+        bool grounded = Motor.GroundingStatus.IsStableOnGround;
+        MovementState newState;
+
+        if (_isGrabbingLedge)
+            newState = MovementState.ledgeGrab;
+        else if (Input.GetKey(crouchKey))
+            newState = MovementState.crouching;
+        else if (!grounded)
+            newState = MovementState.air;
+        else if (_isSprinting && _moveInputVector.sqrMagnitude > 0.01f)
+            newState = MovementState.sprinting;
+        else if (_moveInputVector.sqrMagnitude > 0.01f)
+            newState = MovementState.walking;
+        else
+            newState = MovementState.idling;
+
+        state = newState;
 
         if (animator != null)
         {
-            animator.SetTrigger("ClimbLedge");
+            animator.SetBool("IsIdle", state == MovementState.idling);
+            animator.SetBool("IsWalking", state == MovementState.walking);
+            animator.SetBool("IsRunning", state == MovementState.sprinting);
+            animator.SetBool("IsInAir", state == MovementState.air);
         }
-    }
 
-    private void EnableLedgeGrab()
-    {
-        canGrabLedge = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (groundCheck == null) return;
-
-        Gizmos.color = grounded ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-
-        // Only show ledge grab gizmos if ledge grabbing is enabled
-        if (!isGrabbingLedge && orientation != null && ledgeGrabEnabled)
+        if (state != _previousState)
         {
-            Vector3 forwardCheckOrigin = transform.position + Vector3.up * 1.5f;
-            Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
-            Gizmos.DrawWireSphere(forwardCheckOrigin, ledgeDetectionRadius);
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(forwardCheckOrigin, orientation.forward * ledgeDetectionRadius);
-        }
-        else if (isGrabbingLedge)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(ledgePosition, 0.2f);
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(grabTargetPosition, 0.15f);
+            if (state == MovementState.crouching && _audioManager != null)
+                _audioManager.PlaySFX(_audioManager.Crouch);
+            _previousState = state;
         }
     }
-public void LockMovement(bool lockState)
-{
-    isMovementLocked = lockState;
-    
-    if (lockState)
+
+    private void HandleFootsteps()
     {
-        // Arrête immédiatement le mouvement
-        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-        rb.angularVelocity = Vector3.zero;
-        
-        // Force l'état idle
+        if (state != MovementState.walking && state != MovementState.sprinting)
+        {
+            _footstepTimer = 0f;
+            return;
+        }
+
+        _footstepTimer -= Time.deltaTime;
+        if (_footstepTimer > 0f) return;
+
+        int rand = Random.Range(1, 6);
+        if (state == MovementState.walking)
+        {
+            _footstepTimer = FootstepCooldownWalk;
+            if (_audioManager != null)
+                switch (rand)
+                {
+                    case 1: _audioManager.PlaySFX(_audioManager.WalkStepGrass1); break;
+                    case 2: _audioManager.PlaySFX(_audioManager.WalkStepGrass2); break;
+                    case 3: _audioManager.PlaySFX(_audioManager.WalkStepGrass3); break;
+                    case 4: _audioManager.PlaySFX(_audioManager.WalkStepGrass4); break;
+                    case 5: _audioManager.PlaySFX(_audioManager.WalkStepGrass5); break;
+                }
+        }
+        else
+        {
+            _footstepTimer = FootstepCooldownRun;
+            if (_audioManager != null)
+                switch (rand)
+                {
+                    case 1: _audioManager.PlaySFX(_audioManager.RunStepGrass1); break;
+                    case 2: _audioManager.PlaySFX(_audioManager.RunStepGrass2); break;
+                    case 3: _audioManager.PlaySFX(_audioManager.RunStepGrass3); break;
+                    case 4: _audioManager.PlaySFX(_audioManager.RunStepGrass4); break;
+                    case 5: _audioManager.PlaySFX(_audioManager.RunStepGrass5); break;
+                }
+        }
+    }
+
+    private void FireJumpEffects()
+    {
+        animator?.SetTrigger("IsJumping");
+        if (_audioManager != null)
+        {
+            int rand = Random.Range(1, 21);
+            if (rand == 1) _audioManager.PlaySFX(_audioManager.CriSaut1);
+            else if (rand == 2) _audioManager.PlaySFX(_audioManager.CriSaut2);
+        }
+    }
+
+    // ---- Public API ----
+
+    public void LockMovement(bool locked)
+    {
+        _isMovementLocked = locked;
+        if (!locked) return;
+
         state = MovementState.idling;
-        moveSpeed = 0f;
-        
-        // Met à jour l'animation
         if (animator != null)
         {
             animator.SetBool("IsIdle", true);
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsRunning", false);
+            animator.SetBool("IsInAir", false);
         }
     }
-}
+
+    public void SetMotorActive(bool active)
+    {
+        Motor.enabled = active;
+    }
+
+    // ---- Gizmos ----
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!_isGrabbingLedge && orientation != null && ledgeGrabEnabled)
+        {
+            Vector3 origin = transform.position + Vector3.up * 1.5f;
+            Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
+            Gizmos.DrawWireSphere(origin, ledgeDetectionRadius);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(origin, orientation.forward * ledgeDetectionRadius);
+        }
+        else if (_isGrabbingLedge)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(_ledgePosition, 0.2f);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(_grabTargetPosition, 0.15f);
+        }
+    }
 }

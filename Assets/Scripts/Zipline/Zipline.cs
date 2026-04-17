@@ -264,13 +264,9 @@ public void StartZipline(GameObject player)
     Collider zipCollider = localZip.GetComponent<Collider>();
     zipCollider.isTrigger = true;
 
-    Rigidbody playerRb = player.GetComponent<Rigidbody>();
-    if (playerRb != null)
-    {
-        playerRb.linearVelocity = Vector3.zero; // Remettre à zéro AVANT de passer en kinematic
-        playerRb.useGravity = false;
-        playerRb.isKinematic = true;
-    }
+    PlayerMovementAdvanced playerMovement = player.GetComponent<PlayerMovementAdvanced>();
+    if (playerMovement != null)
+        playerMovement.SetMotorActive(false);
 
     playerOnZip = player;
 
@@ -332,24 +328,13 @@ private void ResetZipline()
         arrivalPos.y -= 1.5f;
         player.transform.position = arrivalPos;
 
-        Rigidbody playerRb = player.GetComponent<Rigidbody>();
-        if (playerRb != null)
-        {
-            playerRb.isKinematic = false; // Remettre en mode physique AVANT de modifier la vélocité
-            playerRb.useGravity = true;
-            playerRb.linearVelocity = Vector3.zero; // Maintenant c'est safe
+        PlayerMovementAdvanced playerMovement = player.GetComponent<PlayerMovementAdvanced>();
+        if (playerMovement != null)
+            playerMovement.SetMotorActive(true);
 
-            playerRb.detectCollisions = false;
-            playerOnZip = player;
-            Invoke(nameof(EnablePlayerCollision), 0.05f);
-        }
-
-        // Call the ZiplinePlayer's EndZiplineAnimation method
         ZiplinePlayer ziplinePlayer = player.GetComponent<ZiplinePlayer>();
         if (ziplinePlayer != null)
-        {
             ziplinePlayer.EndZiplineAnimation();
-        }
 
         // Plus de EnablePlayerControls - on utilise les événements
     }
@@ -358,16 +343,6 @@ private void ResetZipline()
     localZip = null;
     zipping = false;
 }
-    private void EnablePlayerCollision()
-    {
-        if (playerOnZip != null)
-        {
-            Rigidbody rb = playerOnZip.GetComponent<Rigidbody>();
-            if (rb != null) rb.detectCollisions = true;
-            playerOnZip = null;
-        }
-    }
-
     private void OnDestroy()
     {
         if (ropeRenderer != null)
