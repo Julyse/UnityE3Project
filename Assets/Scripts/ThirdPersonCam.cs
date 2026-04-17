@@ -75,20 +75,18 @@ public class ThirdPersonCam : MonoBehaviour
    
     void LateUpdate()
     {
-        if (Pause_Menu.isPaused || isCameraLocked)
-            return;
-
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
-
-        if (!isMovementLocked)
+        if (Pause_Menu.isPaused || isCameraLocked) return;
+        
+        // Directly use the camera's forward vector for orientation
+        Vector3 camForward = transform.forward;
+        Vector3 flattenedForward = new Vector3(camForward.x, 0, camForward.z).normalized;
+        
+        if (flattenedForward.sqrMagnitude > 0.01f)
         {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-            if (inputDir != Vector3.zero)
-                playerObject.forward = Vector3.Slerp(playerObject.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+            // Low-pass filter: Use RotateTowards to filter out micro-jitter from the camera's rotation
+            // 360 degrees per second is snappy enough for input but blocks sub-frame 'vibrations'
+            orientation.forward = Vector3.RotateTowards(orientation.forward, flattenedForward, 360f * Mathf.Deg2Rad * Time.deltaTime, 0f);
         }
     }
+
 }

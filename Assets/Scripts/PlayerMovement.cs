@@ -6,6 +6,7 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
     [Header("References")]
     public KinematicCharacterMotor Motor;
     public Transform orientation;
+    public Transform playerObject;
     public Animator animator;
 
     [Header("Ground Movement")]
@@ -50,6 +51,7 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
 
     // Input state (gathered in Update, consumed in KCC callbacks)
     private Vector3 _moveInputVector;
+    private Vector3 _smoothedMoveInput;
     private Vector3 _lookInputVector;
     private bool _isSprinting;
     private bool _jumpRequested;
@@ -73,6 +75,7 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
 
     // Lock
     private bool _isMovementLocked;
+    private Vector3 _smoothedGroundNormal = Vector3.up; // NEW: For terrain smoothing
 
     // Audio
     private Sound_Music _audioManager;
@@ -100,6 +103,60 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
     private void Awake()
     {
         Motor.CharacterController = this;
+        
+        // Boost physics frequency
+        Time.fixedDeltaTime = 0.01f;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.interpolation = RigidbodyInterpolation.Interpolate; 
+        }
+
+        // Force a zero-bounciness physics material on the collider
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            PhysicsMaterial mat = new PhysicsMaterial("NoBounce");
+            mat.bounciness = 0f;
+            mat.bounceCombine = PhysicsMaterialCombine.Minimum;
+            mat.dynamicFriction = 0.6f;
+            mat.staticFriction = 0.6f;
+            mat.frictionCombine = PhysicsMaterialCombine.Average;
+            col.material = mat;
+        }
+
+        // Force orientation to be perfectly centered on the root
+        if (orientation != null)
+        {
+            orientation.localPosition = Vector3.zero;
+        }
+
+        // Sync Camera
+        GameObject mainCam = GameObject.Find("Camera"); 
+        if (mainCam != null)
+        {
+            mainCam.tag = "MainCamera";
+            Component brain = mainCam.GetComponent("CinemachineBrain");
+            if (brain != null)
+            {
+                try {
+                    var updateProp = brain.GetType().GetProperty("m_UpdateMethod");
+                    if (updateProp != null) {
+                        updateProp.SetValue(brain, 2); // SmartUpdate
+                    }
+                } catch { }
+            }
+        }
+
+        // Disable root motion
+        if (animator != null)
+        {
+            animator.applyRootMotion = false;
+            animator.updateMode = AnimatorUpdateMode.Normal; 
+        }
+
         GameObject audioObj = GameObject.FindGameObjectWithTag("Audio");
         if (audioObj != null)
             _audioManager = audioObj.GetComponent<Sound_Music>();
@@ -139,7 +196,11 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
         {
             Vector3 fwd = Vector3.ProjectOnPlane(orientation.forward, Vector3.up).normalized;
             Vector3 right = Vector3.ProjectOnPlane(orientation.right, Vector3.up).normalized;
-            _moveInputVector = fwd * raw.z + right * raw.x;
+            Vector3 targetInput = fwd * raw.z + right * raw.x;
+
+            // Smooth input to break camera feedback loop
+            _smoothedMoveInput = Vector3.Lerp(_smoothedMoveInput, targetInput, Time.deltaTime * 15f);
+            _moveInputVector = _smoothedMoveInput;
         }
         else
         {
@@ -182,9 +243,34 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
             Vector3 look = -_ledgeNormal;
             look.y = 0f;
             if (look.sqrMagnitude > 0.001f)
-                currentRotation = Quaternion.Slerp(currentRotation, Quaternion.LookRotation(look, Vector3.up), 1f - Mathf.Exp(-ledgeGrabSmoothing * deltaTime));
+            {
+                Quaternion targetLedgeRot = Quaternion.LookRotation(look, Vector3.up);
+                currentRotation = Quaternion.RotateTowards(currentRotation, targetLedgeRot, ledgeGrabSmoothing * 10f * deltaTime);
+            }
+            return;
         }
-        // ThirdPersonCam rotates playerObject directly — don't rotate the KCC root
+
+        // Determine rotation target
+        Vector3 rotDir = Vector3.ProjectOnPlane(Motor.Velocity, Vector3.up);
+        
+        // Use move input for rotation if we have significant input, both on ground and in air.
+        // This prevents the character from snapping rotation when hitting walls in the air.
+        if (_moveInputVector.sqrMagnitude > 0.01f)
+        {
+            rotDir = _moveInputVector;
+        }
+        else if (rotDir.sqrMagnitude < 0.2f)
+        {
+            // maintain current rotation if low velocity and no input
+            rotDir = transform.forward;
+        }
+
+        if (rotDir.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(rotDir.normalized, Vector3.up);
+            // Use RotateTowards for perfectly linear, non-oscillating rotation
+            currentRotation = Quaternion.RotateTowards(currentRotation, targetRot, OrientationSharpness * 50f * deltaTime);
+        }
     }
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
@@ -206,16 +292,35 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
 
         if (Motor.GroundingStatus.IsStableOnGround)
         {
-            float mag = currentVelocity.magnitude;
-            currentVelocity = Motor.GetDirectionTangentToSurface(currentVelocity, Motor.GroundingStatus.GroundNormal) * mag;
+            // Smoothly interpolate the ground normal to filter out high-frequency geometry noise
+            _smoothedGroundNormal = Vector3.Slerp(_smoothedGroundNormal, Motor.GroundingStatus.GroundNormal, 1f - Mathf.Exp(-15f * deltaTime));
+            
+            // FIX: Project only the HORIZONTAL part of currentVelocity to the ground.
+            // This prevents falling momentum from turning into a forward 'bounce'.
+            Vector3 horizontalVel = Vector3.ProjectOnPlane(currentVelocity, Motor.CharacterUp);
+            float mag = horizontalVel.magnitude;
+            currentVelocity = Motor.GetDirectionTangentToSurface(horizontalVel, _smoothedGroundNormal) * mag;
 
             Vector3 inputRight = Vector3.Cross(_moveInputVector, Motor.CharacterUp);
-            Vector3 reoriented = Vector3.Cross(Motor.GroundingStatus.GroundNormal, inputRight).normalized * _moveInputVector.magnitude;
-            currentVelocity = Vector3.Lerp(currentVelocity, reoriented * moveSpeed, 1f - Mathf.Exp(-StableMovementSharpness * deltaTime));
+            Vector3 reoriented = Vector3.Cross(_smoothedGroundNormal, inputRight).normalized;
+            
+            // Only reorient if the input magnitude is significant to avoid micro-shaking
+            float inputMag = _moveInputVector.magnitude;
+            Vector3 targetVelocity = reoriented * (inputMag * moveSpeed);
+            
+            // Revert to Lerp for organic feel, but use a high sharpness
+            currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, 1f - Mathf.Exp(-StableMovementSharpness * deltaTime));
+
+            // SNAP: If we are very close to target, snap to it to stop micro-shaking
+            if (Vector3.Distance(currentVelocity, targetVelocity) < 0.01f)
+            {
+                currentVelocity = targetVelocity;
+            }
         }
         else
         {
-            if (_moveInputVector.sqrMagnitude > 0f)
+            _smoothedGroundNormal = Vector3.up; // Reset in air
+            if (_moveInputVector.sqrMagnitude > 0.001f)
             {
                 Vector3 added = _moveInputVector * AirAccelerationSpeed * deltaTime;
                 Vector3 flatVel = Vector3.ProjectOnPlane(currentVelocity, Motor.CharacterUp);
@@ -280,7 +385,15 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
     public void PostGroundingUpdate(float deltaTime) { }
     public bool IsColliderValidForCollisions(Collider coll) => true;
     public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
-    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) 
+    {
+        // FIX: Zero out the velocity component pointing into the hit surface.
+        // This prevents "bouncing" off objects and "jittering" against walls, especially in the air.
+        if (!Motor.GroundingStatus.IsStableOnGround)
+        {
+            Motor.BaseVelocity = Vector3.ProjectOnPlane(Motor.BaseVelocity, hitNormal);
+        }
+    }
     public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport) { }
     public void OnDiscreteCollisionDetected(Collider hitCollider) { }
 
@@ -361,15 +474,19 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
         bool grounded = Motor.GroundingStatus.IsStableOnGround;
         MovementState newState;
 
+        // Use a small deadzone to prevent state flickering
+        float moveMag = _moveInputVector.sqrMagnitude;
+        bool isMoving = moveMag > 0.05f;
+
         if (_isGrabbingLedge)
             newState = MovementState.ledgeGrab;
         else if (Input.GetKey(crouchKey))
             newState = MovementState.crouching;
         else if (!grounded)
             newState = MovementState.air;
-        else if (_isSprinting && _moveInputVector.sqrMagnitude > 0.01f)
+        else if (_isSprinting && moveMag > 0.1f)
             newState = MovementState.sprinting;
-        else if (_moveInputVector.sqrMagnitude > 0.01f)
+        else if (isMoving)
             newState = MovementState.walking;
         else
             newState = MovementState.idling;
@@ -435,6 +552,14 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
     private void FireJumpEffects()
     {
         animator?.SetTrigger("IsJumping");
+        // Immediately push animator to air state — don't wait for next Update
+        if (animator != null)
+        {
+            animator.SetBool("IsInAir", true);
+            animator.SetBool("IsIdle", false);
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
+        }
         if (_audioManager != null)
         {
             int rand = Random.Range(1, 21);
@@ -463,6 +588,14 @@ public class PlayerMovementAdvanced : MonoBehaviour, ICharacterController
     public void SetMotorActive(bool active)
     {
         Motor.enabled = active;
+    }
+
+    private void LateUpdate()
+    {
+        if (_isMovementLocked || _isGrabbingLedge || playerObject == null) return;
+
+        // Visual object now follows the root rotation (which is updated in UpdateRotation)
+        playerObject.localRotation = Quaternion.identity;
     }
 
     // ---- Gizmos ----

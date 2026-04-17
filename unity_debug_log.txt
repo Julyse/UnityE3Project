@@ -1,0 +1,29 @@
+--- Unity Project Debugger ---
+Time: 17/04/2026 18:07:25
+
+Player Found: Player
+[Rigidbody]
+  - IsKinematic: True
+  - Interpolation: Interpolate
+  - Constraints: FreezeRotation
+[KCC Motor]
+  - IsActive: True
+[Transforms]
+  - Root Scale: (1.00, 1.00, 1.00)
+  - Child: Orientation (LocalPos: (0.00, 0.00, 0.00), LocalRot: (0.00, 0.00, 0.00))
+  - Child: GroundCheck (LocalPos: (0.00, -0.11, 0.00), LocalRot: (0.00, 0.00, 0.00))
+  - Child: PlayerObject (LocalPos: (0.00, 0.00, 0.00), LocalRot: (0.00, 0.00, 0.00))
+
+[Cameras Found: 2]
+  - Name: DialogueCamera (Tag: Untagged)
+  - Name: Camera (Tag: MainCamera)
+    * CinemachineBrain: FOUND
+
+[FreeLook Camera: FreeLook Camera]
+  - Following: Player
+  - Looking At: Player
+  - X Axis MaxSpeed: 300
+  - Y Axis MaxSpeed: 2
+  - Orbit Heights: [0: H=6, R=3] [1: H=2, R=7] [2: H=-1,05, R=4,59] 
+  - Time.fixedDeltaTime: 0,009999993
+  - Noise/Lookahead: Probing...
